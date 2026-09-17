@@ -1,365 +1,392 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Finance CRM</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚗 Heritage Auto Finance CRM</title>
+  <style>
+    :root {
+      --bg: #0d0f14;
+      --card-bg: #161922;
+      --card-border: #262a38;
+      --primary: #e5b842;
+      --primary-hover: #c99e2e;
+      --text: #f3f4f6;
+      --text-muted: #949ba8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background: var(--bg); color: var(--text); padding: 20px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--card-border); }
+    h1 { color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
+    
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    .metric-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; text-align: center; }
+    .metric-title { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .metric-value { font-size: 1.25rem; font-weight: 700; margin-top: 6px; color: var(--text); }
+    .metric-gold { color: var(--primary); }
+
+    .crm-container { display: grid; grid-template-columns: 380px 1fr; gap: 20px; }
+    @media (max-width: 1024px) { .crm-container { grid-template-columns: 1fr; } }
+    
+    .panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 16px; }
+    .panel-title { font-size: 1.05rem; color: var(--primary); margin-bottom: 14px; font-weight: 600; }
+    
+    .form-group { margin-bottom: 10px; }
+    label { display: block; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 3px; }
+    input, select, textarea { width: 100%; padding: 7px 9px; background: #10121a; border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); font-size: 0.85rem; }
+    input:focus, select:focus, textarea:focus { outline: 1px solid var(--primary); border-color: var(--primary); }
+    
+    .checkbox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .check-item { display: flex; align-items: center; gap: 4px; font-size: 0.76rem; color: var(--text); }
+    .check-item input { width: auto; }
+
+    .btn-submit { width: 100%; background: var(--primary); color: #000; font-weight: 600; padding: 10px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 0.9rem; }
+    .btn-submit:hover { background: var(--primary-hover); }
+
+    .table-responsive { overflow-x: auto; max-height: 650px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.82rem; }
+    th { background: #10121a; padding: 9px; border-bottom: 1px solid var(--card-border); color: var(--text-muted); white-space: nowrap; position: sticky; top: 0; z-index: 2; }
+    td { padding: 9px; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
+    
+    .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
+    .badge-New { background: rgba(234, 179, 8, 0.15); color: #eab308; }
+    .badge-Contacted { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+    .badge-DocumentsPending { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
+    .badge-LoginDone { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+    .badge-Sanctioned { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
+    .badge-Disbursed { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+    .badge-Rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+    .badge-NotInterested { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
+    
+    .action-btn { background: transparent; border: 1px solid var(--card-border); color: #f87171; padding: 3px 6px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
+    .action-btn:hover { background: rgba(239, 68, 68, 0.1); }
+  </style>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <!-- Navbar -->
-    <nav class="bg-indigo-700 p-4 text-white flex justify-between items-center shadow-md">
-        <div class="flex items-center space-x-2">
-            <i class="fas fa-car-side text-2xl"></i>
-            <span class="font-bold text-xl tracking-tight">AutoFinance CRM</span>
-        </div>
-        <div class="space-x-4 text-sm font-medium">
-            <button onclick="switchTab('dashboard')" class="hover:text-indigo-200">Dashboard</button>
-            <button onclick="switchTab('leads')" class="hover:text-indigo-200">Leads</button>
-            <button onclick="switchTab('calculator')" class="hover:text-indigo-200">Calculator</button>
-        </div>
-    </nav>
+<body>
 
-    <!-- Main Container -->
-    <div class="container mx-auto p-4 md:p-6">
-        <!-- Dashboard Tab -->
-        <div id="dashboard-tab" class="tab-content">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-indigo-500">
-                    <p class="text-xs text-gray-500 uppercase font-semibold">Total Leads</p>
-                    <p id="stat-total" class="text-2xl font-bold text-gray-800">0</p>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-yellow-500">
-                    <p class="text-xs text-gray-500 uppercase font-semibold">Pending Review</p>
-                    <p id="stat-pending" class="text-2xl font-bold text-gray-800">0</p>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-500">
-                    <p class="text-xs text-gray-500 uppercase font-semibold">Approved</p>
-                    <p id="stat-approved" class="text-2xl font-bold text-gray-800">0</p>
-                </div>
-                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-blue-500">
-                    <p class="text-xs text-gray-500 uppercase font-semibold">Pipeline Value</p>
-                    <p id="stat-pipeline" class="text-2xl font-bold text-gray-800">$0</p>
-                </div>
-            </div>
+  <header>
+    <h1>🚗 Heritage Auto Finance CRM</h1>
+    <div style="color: var(--text-muted); font-size: 0.85rem;" id="current-date"></div>
+  </header>
 
-            <!-- Recent Leads Section -->
-            <div class="bg-white p-4 rounded-lg shadow mb-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-semibold text-gray-700">Recent Applications</h3>
-                    <button onclick="openLeadModal()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 text-sm rounded transition duration-200"><i class="fas fa-plus mr-1"></i> Add Lead</button>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Customer</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Vehicle Requested</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Loan Amount</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Status</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="recent-leads-tbody" class="divide-y divide-gray-200">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+  <div class="dashboard-grid">
+    <div class="metric-card">
+      <div class="metric-title">Today's Leads</div>
+      <div class="metric-value" id="m-today-leads">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">Pending Follow-ups</div>
+      <div class="metric-value" id="m-pending-followups">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">New Leads</div>
+      <div class="metric-value" id="m-new-leads">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">Login Done</div>
+      <div class="metric-value" id="m-login-leads">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">Sanctioned</div>
+      <div class="metric-value" id="m-sanction-leads">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">Disbursed</div>
+      <div class="metric-value" id="m-disburse-leads">0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">Total Loan Amount</div>
+      <div class="metric-value metric-gold" id="m-total-amount">₹0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">Monthly Business</div>
+      <div class="metric-value metric-gold" id="m-month-business">₹0</div>
+    </div>
+  </div>
+
+  <div class="crm-container">
+    <div class="panel">
+      <div class="panel-title">Add / Manage Lead</div>
+      <form id="leadForm">
+        <div class="form-group">
+          <label>Customer Name *</label>
+          <input type="text" id="custName" required placeholder="Full Name">
+        </div>
+        <div class="form-group" style="display: flex; gap: 8px;">
+          <div style="flex: 1;">
+            <label>Mobile Number *</label>
+            <input type="tel" id="mobile" required placeholder="10-digit number">
+          </div>
+          <div style="flex: 1;">
+            <label>City</label>
+            <input type="text" id="city" placeholder="e.g. Mehsana">
+          </div>
+        </div>
+        <div class="form-group" style="display: flex; gap: 8px;">
+          <div style="flex: 1;">
+            <label>Vehicle Model</label>
+            <input type="text" id="vehModel" placeholder="e.g. Bolero Pik-Up / WagonR">
+          </div>
+          <div style="flex: 1;">
+            <label>Type</label>
+            <select id="vehType">
+              <option value="New">New</option>
+              <option value="Used">Used</option>
+              <option value="Commercial">Commercial</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="display: flex; gap: 8px;">
+          <div style="flex: 1;">
+            <label>Loan Amount (₹) *</label>
+            <input type="number" id="loanAmount" required placeholder="e.g. 650000">
+          </div>
+          <div style="flex: 1;">
+            <label>Source</label>
+            <select id="source">
+              <option value="Calling">Calling</option>
+              <option value="WhatsApp">WhatsApp</option>
+              <option value="Reference">Reference</option>
+              <option value="Instagram">Instagram</option>
+              <option value="Facebook">Facebook</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" style="display: flex; gap: 8px;">
+          <div style="flex: 1;">
+            <label>Lead Date</label>
+            <input type="date" id="leadDate" required>
+          </div>
+          <div style="flex: 1;">
+            <label>Bank & NBFC (Logged In)</label>
+            <input type="text" id="bankNbfc" placeholder="e.g. HDFC / AU / Chola / Sundaram">
+          </div>
         </div>
 
-        <!-- Leads Tab -->
-        <div id="leads-tab" class="tab-content hidden">
-            <div class="bg-white p-4 rounded-lg shadow">
-                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
-                    <h3 class="text-lg font-semibold text-gray-700">All Finance Leads</h3>
-                    <div class="flex w-full md:w-auto gap-2">
-                        <input type="text" id="search-input" oninput="renderLeads()" placeholder="Search leads..." class="border rounded px-3 py-1.5 text-sm w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                        <select id="filter-status" onchange="renderLeads()" class="border rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                            <option value="all">All Statuses</option>
-                            <option value="New">New</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
-                        <thead class="bg-gray-50">
-                            <tr>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Customer</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Contact</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Vehicle</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Loan Details</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Status</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500 uppercase">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="all-leads-tbody" class="divide-y divide-gray-200">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div class="form-group">
+          <label>Lead Status</label>
+          <select id="status">
+            <option value="New">🟡 New</option>
+            <option value="Contacted">🔵 Contacted</option>
+            <option value="Documents Pending">🟠 Documents Pending</option>
+            <option value="Login Done">🟣 Login Done</option>
+            <option value="Sanctioned">🟢 Sanctioned</option>
+            <option value="Disbursed">✅ Disbursed</option>
+            <option value="Rejected">🔴 Rejected</option>
+            <option value="Not Interested">⚫ Not Interested</option>
+          </select>
         </div>
 
-        <!-- Calculator Tab -->
-        <div id="calculator-tab" class="tab-content hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-lg font-semibold text-gray-700 mb-4">Auto Loan Calculator</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600">Vehicle Price ($)</label>
-                            <input type="number" id="calc-price" value="30000" oninput="calculateLoan()" class="mt-1 w-full border rounded p-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600">Down Payment ($)</label>
-                            <input type="number" id="calc-down" value="5000" oninput="calculateLoan()" class="mt-1 w-full border rounded p-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600">Interest Rate (%)</label>
-                            <input type="number" id="calc-rate" value="4.5" step="0.1" oninput="calculateLoan()" class="mt-1 w-full border rounded p-2 focus:ring-indigo-500 focus:border-indigo-500">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-600">Loan Term (Months)</label>
-                            <select id="calc-term" onchange="calculateLoan()" class="mt-1 w-full border rounded p-2 focus:ring-indigo-500 focus:border-indigo-500">
-                                <option value="36">36 Months</option>
-                                <option value="48">48 Months</option>
-                                <option value="60" selected>60 Months</option>
-                                <option value="72">72 Months</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-indigo-50 p-6 rounded-lg shadow flex flex-col justify-between border border-indigo-100">
-                    <div>
-                        <h3 class="text-lg font-semibold text-indigo-900 mb-4">Payment Summary</h3>
-                        <div class="space-y-3">
-                            <div class="flex justify-between text-indigo-700">
-                                <span>Total Loan Amount:</span>
-                                <span id="summary-loan" class="font-bold">$25,000.00</span>
-                            </div>
-                            <div class="flex justify-between text-indigo-700">
-                                <span>Total Interest Paid:</span>
-                                <span id="summary-interest" class="font-bold">$2,971.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-6 p-4 bg-white rounded-lg shadow-sm text-center">
-                        <p class="text-sm font-medium text-gray-500 uppercase">Estimated Monthly Payment</p>
-                        <p id="summary-monthly" class="text-4xl font-extrabold text-indigo-700 mt-1">$466.18</p>
-                    </div>
-                </div>
-            </div>
+        <div class="form-group" style="display: flex; gap: 8px;">
+          <div style="flex: 1;">
+            <label>Next Follow-up Date</label>
+            <input type="date" id="followDate">
+          </div>
+          <div style="flex: 1;">
+            <label>Follow-up Time</label>
+            <input type="time" id="followTime">
+          </div>
         </div>
+        <div class="form-group">
+          <label>Last Conversation / Remarks</label>
+          <textarea id="lastConv" rows="2" placeholder="Customer notes..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Next Action / Reminder</label>
+          <input type="text" id="nextAction" placeholder="e.g. Collect RC copy / KYC approval">
+        </div>
+
+        <div class="form-group">
+          <label>Documents Received</label>
+          <div class="checkbox-grid">
+            <label class="check-item"><input type="checkbox" id="docAadhaar"> Aadhaar</label>
+            <label class="check-item"><input type="checkbox" id="docPan"> PAN</label>
+            <label class="check-item"><input type="checkbox" id="docBank"> Bank Stmt</label>
+            <label class="check-item"><input type="checkbox" id="docRc"> RC Book</label>
+            <label class="check-item"><input type="checkbox" id="docIncome"> Income Proof</label>
+            <label class="check-item"><input type="checkbox" id="docOther"> Other Docs</label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Save Lead</button>
+      </form>
     </div>
 
-    <!-- Lead Modal -->
-    <div id="lead-modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg shadow-xl w-full max-w-md overflow-hidden transform transition-all">
-            <div class="bg-indigo-700 p-4 text-white flex justify-between items-center">
-                <h3 id="modal-title" class="font-semibold text-lg">Add New Lead</h3>
-                <button onclick="closeLeadModal()" class="text-white hover:text-gray-200"><i class="fas fa-times"></i></button>
-            </div>
-            <form id="lead-form" onsubmit="saveLead(event)" class="p-4 space-y-3">
-                <input type="hidden" id="lead-id">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600">Customer Name</label>
-                    <input type="text" id="lead-name" required class="mt-1 w-full border rounded p-2 text-sm">
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600">Email</label>
-                        <input type="email" id="lead-email" required class="mt-1 w-full border rounded p-2 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600">Phone</label>
-                        <input type="text" id="lead-phone" required class="mt-1 w-full border rounded p-2 text-sm">
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600">Vehicle</label>
-                        <input type="text" id="lead-vehicle" required class="mt-1 w-full border rounded p-2 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600">Loan Amount ($)</label>
-                        <input type="number" id="lead-amount" required class="mt-1 w-full border rounded p-2 text-sm">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600">Status</label>
-                    <select id="lead-status" class="mt-1 w-full border rounded p-2 text-sm">
-                        <option value="New">New</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Approved">Approved</option>
-                        <option value="Rejected">Rejected</option>
-                    </select>
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeLeadModal()" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded text-sm font-medium">Cancel</button>
-                    <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded text-sm font-medium">Save Lead</button>
-                </div>
-            </form>
-        </div>
+    <div class="panel">
+      <div class="panel-title">Active Leads & Logged-In Files</div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Vehicle & Type</th>
+              <th>Loan Amount (₹)</th>
+              <th>Bank & NBFC</th>
+              <th>Status</th>
+              <th>Follow-up</th>
+              <th>Docs</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+          </tbody>
+        </table>
+      </div>
     </div>
+  </div>
 
-    <script>
-        const defaultLeads = [
-            { id: 1, name: 'John Doe', email: 'john@example.com', phone: '555-0199', vehicle: 'Ford F-150 2022', amount: 35000, status: 'New' },
-            { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '555-0144', vehicle: 'Tesla Model 3 2023', amount: 42000, status: 'In Progress' },
-            { id: 3, name: 'Michael Brown', email: 'michael@example.com', phone: '555-0177', vehicle: 'Honda Civic 2021', amount: 18000, status: 'Approved' }
-        ];
+  <script>
+    const STORAGE_KEY = 'heritage_crm_leads_v2';
+    let leads = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
 
-        let leads = JSON.parse(localStorage.getItem('crm_leads')) || defaultLeads;
-        if (!localStorage.getItem('crm_leads')) {
-            localStorage.setItem('crm_leads', JSON.stringify(leads));
+    const todayStr = new Date().toISOString().split('T')[0];
+    document.getElementById('leadDate').value = todayStr;
+    document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
+
+    function formatINR(val) {
+      if (!val || isNaN(val)) return '₹0';
+      return '₹' + Number(val).toLocaleString('en-IN');
+    }
+
+    function saveToStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+      render();
+    }
+
+    function renderMetrics() {
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+
+      let todayCount = 0;
+      let pendingFollowCount = 0;
+      let newCount = 0;
+      let loginCount = 0;
+      let sanctionCount = 0;
+      let disburseCount = 0;
+      let totalAmount = 0;
+      let monthlyBusiness = 0;
+
+      leads.forEach(l => {
+        const lDate = new Date(l.leadDate);
+        if (l.leadDate === todayStr) todayCount++;
+        if (l.followDate && l.followDate <= todayStr && l.status !== 'Disbursed' && l.status !== 'Rejected') {
+          pendingFollowCount++;
         }
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById(tabId + '-tab').classList.remove('hidden');
+        if (l.status === 'New') newCount++;
+        if (l.status === 'Login Done') loginCount++;
+        if (l.status === 'Sanctioned') sanctionCount++;
+        if (l.status === 'Disbursed') {
+          disburseCount++;
+          if (lDate.getMonth() === currentMonth && lDate.getFullYear() === currentYear) {
+            monthlyBusiness += Number(l.loanAmount || 0);
+          }
         }
+        totalAmount += Number(l.loanAmount || 0);
+      });
 
-        function updateStats() {
-            document.getElementById('stat-total').innerText = leads.length;
-            document.getElementById('stat-pending').innerText = leads.filter(l => l.status === 'New' || l.status === 'In Progress').length;
-            document.getElementById('stat-approved').innerText = leads.filter(l => l.status === 'Approved').length;
-            const pipeline = leads.reduce((acc, curr) => acc + (Number(curr.amount) || 0), 0);
-            document.getElementById('stat-pipeline').innerText = '$' + pipeline.toLocaleString();
+      document.getElementById('m-today-leads').textContent = todayCount;
+      document.getElementById('m-pending-followups').textContent = pendingFollowCount;
+      document.getElementById('m-new-leads').textContent = newCount;
+      document.getElementById('m-login-leads').textContent = loginCount;
+      document.getElementById('m-sanction-leads').textContent = sanctionCount;
+      document.getElementById('m-disburse-leads').textContent = disburseCount;
+      document.getElementById('m-total-amount').textContent = formatINR(totalAmount);
+      document.getElementById('m-month-business').textContent = formatINR(monthlyBusiness);
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('leadsTableBody');
+      tbody.innerHTML = '';
+
+      if (leads.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color: var(--text-muted); padding: 24px;">Abhi tak koi lead add nahi ki gayi hai.</td></tr>';
+        return;
+      }
+
+      leads.forEach((l, idx) => {
+        const row = document.createElement('tr');
+        const statusClass = 'badge-' + l.status.replace(/\s+/g, '');
+        
+        const docs = [];
+        if (l.docs.aadhaar) docs.push('Aadhaar');
+        if (l.docs.pan) docs.push('PAN');
+        if (l.docs.bank) docs.push('Bank');
+        if (l.docs.rc) docs.push('RC');
+        if (l.docs.income) docs.push('Income');
+        if (l.docs.other) docs.push('Other');
+
+        row.innerHTML = `
+          <td>
+            <strong>${l.name}</strong><br>
+            <span style="color:var(--text-muted); font-size:0.75rem;">📞 ${l.mobile} | ${l.city || 'N/A'}</span>
+          </td>
+          <td>
+            ${l.vehModel || '-'}<br>
+            <span style="color:var(--text-muted); font-size:0.72rem;">${l.vehType} (${l.source})</span>
+          </td>
+          <td><strong style="color: var(--primary);">${formatINR(l.loanAmount)}</strong></td>
+          <td>
+            <span style="font-weight: 600; color: #60a5fa;">${l.bankNbfc || 'Pending Login'}</span>
+          </td>
+          <td><span class="badge ${statusClass}">${l.status}</span></td>
+          <td>
+            ${l.followDate ? l.followDate + (l.followTime ? ' ' + l.followTime : '') : '-'}<br>
+            <span style="color:var(--text-muted); font-size:0.72rem;">${l.nextAction || ''}</span>
+          </td>
+          <td><span style="font-size: 0.72rem; color: var(--text-muted);">${docs.join(', ') || 'None'}</span></td>
+          <td><button class="action-btn" onclick="deleteLead(${idx})">Delete</button></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function render() {
+      renderMetrics();
+      renderTable();
+    }
+
+    document.getElementById('leadForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newLead = {
+        name: document.getElementById('custName').value,
+        mobile: document.getElementById('mobile').value,
+        city: document.getElementById('city').value,
+        vehType: document.getElementById('vehType').value,
+        vehModel: document.getElementById('vehModel').value,
+        loanAmount: document.getElementById('loanAmount').value,
+        source: document.getElementById('source').value,
+        leadDate: document.getElementById('leadDate').value,
+        bankNbfc: document.getElementById('bankNbfc').value || '',
+        status: document.getElementById('status').value,
+        followDate: document.getElementById('followDate').value,
+        followTime: document.getElementById('followTime').value,
+        lastConv: document.getElementById('lastConv').value,
+        nextAction: document.getElementById('nextAction').value,
+        docs: {
+          aadhaar: document.getElementById('docAadhaar').checked,
+          pan: document.getElementById('docPan').checked,
+          bank: document.getElementById('docBank').checked,
+          rc: document.getElementById('docRc').checked,
+          income: document.getElementById('docIncome').checked,
+          other: document.getElementById('docOther').checked,
         }
+      };
 
-        function getStatusClass(status) {
-            switch(status) {
-                case 'New': return 'bg-yellow-100 text-yellow-800';
-                case 'In Progress': return 'bg-blue-100 text-blue-800';
-                case 'Approved': return 'bg-green-100 text-green-800';
-                case 'Rejected': return 'bg-red-100 text-red-800';
-                default: return 'bg-gray-100 text-gray-800';
-            }
-        }
+      leads.unshift(newLead);
+      saveToStorage();
+      e.target.reset();
+      document.getElementById('leadDate').value = todayStr;
+    });
 
-        function renderLeads() {
-            updateStats();
-            const recentTbody = document.getElementById('recent-leads-tbody');
-            recentTbody.innerHTML = '';
-            const recentLeads = [...leads].reverse().slice(0, 5);
-            recentLeads.forEach(lead => {
-                recentTbody.innerHTML += `
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3 font-medium text-gray-900">${lead.name}</td>
-                        <td class="px-4 py-3 text-gray-600">${lead.vehicle}</td>
-                        <td class="px-4 py-3 font-semibold text-gray-700">$${Number(lead.amount).toLocaleString()}</td>
-                        <td class="px-4 py-3"><span class="px-2 py-1 text-xs rounded-full font-semibold ${getStatusClass(lead.status)}">${lead.status}</span></td>
-                        <td class="px-4 py-3"><button onclick="editLead(${lead.id})" class="text-indigo-600 hover:text-indigo-900"><i class="fas fa-edit"></i></button></td>
-                    </tr>
-                `;
-            });
+    window.deleteLead = function(index) {
+      if (confirm('Kya aap is lead ko delete karna chahte hain?')) {
+        leads.splice(index, 1);
+        saveToStorage();
+      }
+    };
 
-            const allTbody = document.getElementById('all-leads-tbody');
-            allTbody.innerHTML = '';
-            const search = document.getElementById('search-input').value.toLowerCase();
-            const filter = document.getElementById('filter-status').value;
-
-            leads.filter(lead => {
-                const matchesSearch = lead.name.toLowerCase().includes(search) || lead.vehicle.toLowerCase().includes(search);
-                const matchesFilter = filter === 'all' || lead.status === filter;
-                return matchesSearch && matchesFilter;
-            }).forEach(lead => {
-                allTbody.innerHTML += `
-                    <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3 font-medium text-gray-900">${lead.name}</td>
-                        <td class="px-4 py-3 text-gray-500 text-xs">${lead.email}<br>${lead.phone}</td>
-                        <td class="px-4 py-3 text-gray-600">${lead.vehicle}</td>
-                        <td class="px-4 py-3 font-semibold text-gray-700">$${Number(lead.amount).toLocaleString()}</td>
-                        <td class="px-4 py-3"><span class="px-2 py-1 text-xs rounded-full font-semibold ${getStatusClass(lead.status)}">${lead.status}</span></td>
-                        <td class="px-4 py-3 space-x-3"><button onclick="editLead(${lead.id})" class="text-indigo-600 hover:text-indigo-900"><i class="fas fa-edit"></i></button><button onclick="deleteLead(${lead.id})" class="text-red-600 hover:text-red-900"><i class="fas fa-trash"></i></button></td>
-                    </tr>
-                `;
-            });
-        }
-
-        function openLeadModal() {
-            document.getElementById('lead-form').reset();
-            document.getElementById('lead-id').value = '';
-            document.getElementById('modal-title').innerText = 'Add New Lead';
-            document.getElementById('lead-modal').classList.remove('hidden');
-        }
-
-        function closeLeadModal() {
-            document.getElementById('lead-modal').classList.add('hidden');
-        }
-
-        function saveLead(e) {
-            e.preventDefault();
-            const id = document.getElementById('lead-id').value;
-            const name = document.getElementById('lead-name').value;
-            const email = document.getElementById('lead-email').value;
-            const phone = document.getElementById('lead-phone').value;
-            const vehicle = document.getElementById('lead-vehicle').value;
-            const amount = document.getElementById('lead-amount').value;
-            const status = document.getElementById('lead-status').value;
-
-            if (id) {
-                leads = leads.map(l => l.id == id ? { id: Number(id), name, email, phone, vehicle, amount, status } : l);
-            } else {
-                const newId = leads.length ? Math.max(...leads.map(l => l.id)) + 1 : 1;
-                leads.push({ id: newId, name, email, phone, vehicle, amount, status });
-            }
-
-            localStorage.setItem('crm_leads', JSON.stringify(leads));
-            closeLeadModal();
-            renderLeads();
-        }
-
-        function editLead(id) {
-            const lead = leads.find(l => l.id == id);
-            if (!lead) return;
-            document.getElementById('lead-id').value = lead.id;
-            document.getElementById('lead-name').value = lead.name;
-            document.getElementById('lead-email').value = lead.email;
-            document.getElementById('lead-phone').value = lead.phone;
-            document.getElementById('lead-vehicle').value = lead.vehicle;
-            document.getElementById('lead-amount').value = lead.amount;
-            document.getElementById('lead-status').value = lead.status;
-            document.getElementById('modal-title').innerText = 'Edit Lead';
-            document.getElementById('lead-modal').classList.remove('hidden');
-        }
-
-        function deleteLead(id) {
-            if (confirm('Are you sure you want to delete this lead?')) {
-                leads = leads.filter(l => l.id != id);
-                localStorage.setItem('crm_leads', JSON.stringify(leads));
-                renderLeads();
-            }
-        }
-
-        function calculateLoan() {
-            const price = Number(document.getElementById('calc-price').value) || 0;
-            const down = Number(document.getElementById('calc-down').value) || 0;
-            const rate = Number(document.getElementById('calc-rate').value) || 0;
-            const months = Number(document.getElementById('calc-term').value) || 60;
-            const principal = price - down;
-            document.getElementById('summary-loan').innerText = '$' + principal.toLocaleString(undefined, {minimumFractionDigits: 2});
-            if (principal <= 0) {
-                document.getElementById('summary-monthly').innerText = '$0.00';
-                document.getElementById('summary-interest').innerText = '$0.00';
-                return;
-            }
-            if (rate === 0) {
-                document.getElementById('summary-monthly').innerText = '$' + (principal / months).toLocaleString(undefined, {minimumFractionDigits: 2});
-                document.getElementById('summary-interest').innerText = '$0.00';
-                return;
-            }
-            const monthlyRate = (rate / 100) / 12;
-            const monthlyPayment = (principal * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
-            document.getElementById('summary-monthly').innerText = '$' + monthlyPayment.toLocaleString(undefined, {minimumFractionDigits: 2});
-            document.getElementById('summary-interest').innerText = '$' + ((monthlyPayment * months) - principal).toLocaleString(undefined, {minimumFractionDigits: 2});
-        }
-
-        renderLeads();
-        calculateLoan();
-    </script>
+    render();
+  </script>
 </body>
 </html>
