@@ -11,12 +11,9 @@
       --card-border: #242938;
       --primary: #d4af37;
       --primary-hover: #b89628;
-      --accent-purple: #8b5cf6;
       --text: #f3f4f6;
       --text-muted: #8b92a5;
-      --success: #10b981;
       --danger: #ef4444;
-      --whatsapp: #25d366;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
     body { background: var(--bg); color: var(--text); padding: 20px; }
@@ -24,17 +21,17 @@
     h1 { color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
     
     .header-actions { display: flex; gap: 10px; align-items: center; }
-    .btn-export { background: #1e2433; color: var(--primary); border: 1px solid var(--primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .btn-export { background: #1e2433; color: var(--primary); border: 1px solid var(--primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 600; }
     .btn-export:hover { background: var(--primary); color: #000; }
 
-    /* Dashboard Grid */
+    /* Dashboard */
     .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
     .metric-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; text-align: center; }
     .metric-title { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
     .metric-value { font-size: 1.25rem; font-weight: 700; margin-top: 6px; color: var(--text); }
     .metric-gold { color: var(--primary); }
 
-    /* CRM Layout */
+    /* Layout */
     .crm-container { display: grid; grid-template-columns: 380px 1fr; gap: 20px; }
     @media (max-width: 1024px) { .crm-container { grid-template-columns: 1fr; } }
     
@@ -42,12 +39,10 @@
     .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
     .panel-title { font-size: 1.05rem; color: var(--primary); font-weight: 600; }
 
-    /* Search & Filter Bar */
     .filter-bar { display: flex; gap: 8px; width: 100%; max-width: 500px; }
     .filter-bar input, .filter-bar select { padding: 6px 10px; font-size: 0.8rem; background: #10121a; border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); }
     .filter-bar input { flex: 1; }
 
-    /* Form */
     .form-group { margin-bottom: 10px; }
     label { display: block; font-size: 0.76rem; color: var(--text-muted); margin-bottom: 3px; }
     input, select, textarea { width: 100%; padding: 7px 9px; background: #0f121a; border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); font-size: 0.83rem; }
@@ -60,7 +55,6 @@
     .btn-submit { width: 100%; background: var(--primary); color: #000; font-weight: 600; padding: 9px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 0.88rem; }
     .btn-submit:hover { background: var(--primary-hover); }
 
-    /* Table & Badges */
     .table-responsive { overflow-x: auto; max-height: 650px; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.82rem; }
     th { background: #0f121a; padding: 9px; border-bottom: 1px solid var(--card-border); color: var(--text-muted); white-space: nowrap; position: sticky; top: 0; z-index: 2; }
@@ -82,7 +76,6 @@
     .btn-wa { background: rgba(37, 211, 102, 0.15); color: #4ade80; border: 1px solid rgba(37, 211, 102, 0.3); }
     .btn-edit { background: rgba(212, 175, 55, 0.15); color: var(--primary); border: 1px solid rgba(212, 175, 55, 0.3); cursor: pointer; }
     .btn-del { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); cursor: pointer; }
-    
     .overdue-alert { color: var(--danger); font-weight: 600; font-size: 0.7rem; }
   </style>
 </head>
@@ -96,7 +89,6 @@
     </div>
   </header>
 
-  <!-- 5. Dashboard Grid -->
   <div class="dashboard-grid">
     <div class="metric-card">
       <div class="metric-title">Today's Leads</div>
@@ -133,7 +125,6 @@
   </div>
 
   <div class="crm-container">
-    <!-- Form Panel -->
     <div class="panel">
       <div class="panel-title" id="form-heading">Add New Lead</div>
       <form id="leadForm">
@@ -243,7 +234,6 @@
       </form>
     </div>
 
-    <!-- Pipeline & Records Table -->
     <div class="panel">
       <div class="panel-header">
         <div class="panel-title">Active Pipeline & Search</div>
@@ -278,7 +268,6 @@
             </tr>
           </thead>
           <tbody id="leadsTableBody">
-            <!-- Dynamic rows -->
           </tbody>
         </table>
       </div>
@@ -511,361 +500,6 @@
 
     renderMetrics();
     renderTable();
-  </script>
-</body>
-</html>    input:focus, select:focus, textarea:focus { outline: 1px solid var(--primary); border-color: var(--primary); }
-    
-    .checkbox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-    .check-item { display: flex; align-items: center; gap: 4px; font-size: 0.76rem; color: var(--text); }
-    .check-item input { width: auto; }
-
-    .btn-submit { width: 100%; background: var(--primary); color: #000; font-weight: 600; padding: 10px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 0.9rem; }
-    .btn-submit:hover { background: var(--primary-hover); }
-
-    .table-responsive { overflow-x: auto; max-height: 650px; }
-    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.82rem; }
-    th { background: #10121a; padding: 9px; border-bottom: 1px solid var(--card-border); color: var(--text-muted); white-space: nowrap; position: sticky; top: 0; z-index: 2; }
-    td { padding: 9px; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
-    
-    .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
-    .badge-New { background: rgba(234, 179, 8, 0.15); color: #eab308; }
-    .badge-Contacted { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-    .badge-DocumentsPending { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
-    .badge-LoginDone { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
-    .badge-Sanctioned { background: rgba(34, 197, 94, 0.15); color: #4ade80; }
-    .badge-Disbursed { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-    .badge-Rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-    .badge-NotInterested { background: rgba(107, 114, 128, 0.15); color: #9ca3af; }
-    
-    .action-btn { background: transparent; border: 1px solid var(--card-border); color: #f87171; padding: 3px 6px; border-radius: 4px; cursor: pointer; font-size: 0.7rem; }
-    .action-btn:hover { background: rgba(239, 68, 68, 0.1); }
-  </style>
-</head>
-<body>
-
-  <header>
-    <h1>🚗 Heritage Auto Finance CRM</h1>
-    <div style="color: var(--text-muted); font-size: 0.85rem;" id="current-date"></div>
-  </header>
-
-  <div class="dashboard-grid">
-    <div class="metric-card">
-      <div class="metric-title">Today's Leads</div>
-      <div class="metric-value" id="m-today-leads">0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Pending Follow-ups</div>
-      <div class="metric-value" id="m-pending-followups">0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">New Leads</div>
-      <div class="metric-value" id="m-new-leads">0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Login Done</div>
-      <div class="metric-value" id="m-login-leads">0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Sanctioned</div>
-      <div class="metric-value" id="m-sanction-leads">0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Disbursed</div>
-      <div class="metric-value" id="m-disburse-leads">0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Total Loan Amount</div>
-      <div class="metric-value metric-gold" id="m-total-amount">₹0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Monthly Business</div>
-      <div class="metric-value metric-gold" id="m-month-business">₹0</div>
-    </div>
-  </div>
-
-  <div class="crm-container">
-    <div class="panel">
-      <div class="panel-title">Add / Manage Lead</div>
-      <form id="leadForm">
-        <div class="form-group">
-          <label>Customer Name *</label>
-          <input type="text" id="custName" required placeholder="Full Name">
-        </div>
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Mobile Number *</label>
-            <input type="tel" id="mobile" required placeholder="10-digit number">
-          </div>
-          <div style="flex: 1;">
-            <label>City</label>
-            <input type="text" id="city" placeholder="e.g. Mehsana">
-          </div>
-        </div>
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Vehicle Model</label>
-            <input type="text" id="vehModel" placeholder="e.g. Bolero Pik-Up / WagonR">
-          </div>
-          <div style="flex: 1;">
-            <label>Type</label>
-            <select id="vehType">
-              <option value="New">New</option>
-              <option value="Used">Used</option>
-              <option value="Commercial">Commercial</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Loan Amount (₹) *</label>
-            <input type="number" id="loanAmount" required placeholder="e.g. 650000">
-          </div>
-          <div style="flex: 1;">
-            <label>Source</label>
-            <select id="source">
-              <option value="Calling">Calling</option>
-              <option value="WhatsApp">WhatsApp</option>
-              <option value="Reference">Reference</option>
-              <option value="Instagram">Instagram</option>
-              <option value="Facebook">Facebook</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Lead Date</label>
-            <input type="date" id="leadDate" required>
-          </div>
-          <div style="flex: 1;">
-            <label>Bank & NBFC (Logged In)</label>
-            <input type="text" id="bankNbfc" placeholder="e.g. HDFC / AU / Chola / Sundaram">
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Lead Status</label>
-          <select id="status">
-            <option value="New">🟡 New</option>
-            <option value="Contacted">🔵 Contacted</option>
-            <option value="Documents Pending">🟠 Documents Pending</option>
-            <option value="Login Done">🟣 Login Done</option>
-            <option value="Sanctioned">🟢 Sanctioned</option>
-            <option value="Disbursed">✅ Disbursed</option>
-            <option value="Rejected">🔴 Rejected</option>
-            <option value="Not Interested">⚫ Not Interested</option>
-          </select>
-        </div>
-
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Next Follow-up Date</label>
-            <input type="date" id="followDate">
-          </div>
-          <div style="flex: 1;">
-            <label>Follow-up Time</label>
-            <input type="time" id="followTime">
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Last Conversation / Remarks</label>
-          <textarea id="lastConv" rows="2" placeholder="Customer notes..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>Next Action / Reminder</label>
-          <input type="text" id="nextAction" placeholder="e.g. Collect RC copy / KYC approval">
-        </div>
-
-        <div class="form-group">
-          <label>Documents Received</label>
-          <div class="checkbox-grid">
-            <label class="check-item"><input type="checkbox" id="docAadhaar"> Aadhaar</label>
-            <label class="check-item"><input type="checkbox" id="docPan"> PAN</label>
-            <label class="check-item"><input type="checkbox" id="docBank"> Bank Stmt</label>
-            <label class="check-item"><input type="checkbox" id="docRc"> RC Book</label>
-            <label class="check-item"><input type="checkbox" id="docIncome"> Income Proof</label>
-            <label class="check-item"><input type="checkbox" id="docOther"> Other Docs</label>
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit">Save Lead</button>
-      </form>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">Active Leads & Logged-In Files</div>
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Customer</th>
-              <th>Vehicle & Type</th>
-              <th>Loan Amount (₹)</th>
-              <th>Bank & NBFC</th>
-              <th>Status</th>
-              <th>Follow-up</th>
-              <th>Docs</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="leadsTableBody">
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const STORAGE_KEY = 'heritage_crm_leads_v2';
-    let leads = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-
-    const todayStr = new Date().toISOString().split('T')[0];
-    document.getElementById('leadDate').value = todayStr;
-    document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
-
-    function formatINR(val) {
-      if (!val || isNaN(val)) return '₹0';
-      return '₹' + Number(val).toLocaleString('en-IN');
-    }
-
-    function saveToStorage() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
-      render();
-    }
-
-    function renderMetrics() {
-      const now = new Date();
-      const currentMonth = now.getMonth();
-      const currentYear = now.getFullYear();
-
-      let todayCount = 0;
-      let pendingFollowCount = 0;
-      let newCount = 0;
-      let loginCount = 0;
-      let sanctionCount = 0;
-      let disburseCount = 0;
-      let totalAmount = 0;
-      let monthlyBusiness = 0;
-
-      leads.forEach(l => {
-        const lDate = new Date(l.leadDate);
-        if (l.leadDate === todayStr) todayCount++;
-        if (l.followDate && l.followDate <= todayStr && l.status !== 'Disbursed' && l.status !== 'Rejected') {
-          pendingFollowCount++;
-        }
-        if (l.status === 'New') newCount++;
-        if (l.status === 'Login Done') loginCount++;
-        if (l.status === 'Sanctioned') sanctionCount++;
-        if (l.status === 'Disbursed') {
-          disburseCount++;
-          if (lDate.getMonth() === currentMonth && lDate.getFullYear() === currentYear) {
-            monthlyBusiness += Number(l.loanAmount || 0);
-          }
-        }
-        totalAmount += Number(l.loanAmount || 0);
-      });
-
-      document.getElementById('m-today-leads').textContent = todayCount;
-      document.getElementById('m-pending-followups').textContent = pendingFollowCount;
-      document.getElementById('m-new-leads').textContent = newCount;
-      document.getElementById('m-login-leads').textContent = loginCount;
-      document.getElementById('m-sanction-leads').textContent = sanctionCount;
-      document.getElementById('m-disburse-leads').textContent = disburseCount;
-      document.getElementById('m-total-amount').textContent = formatINR(totalAmount);
-      document.getElementById('m-month-business').textContent = formatINR(monthlyBusiness);
-    }
-
-    function renderTable() {
-      const tbody = document.getElementById('leadsTableBody');
-      tbody.innerHTML = '';
-
-      if (leads.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color: var(--text-muted); padding: 24px;">Abhi tak koi lead add nahi ki gayi hai.</td></tr>';
-        return;
-      }
-
-      leads.forEach((l, idx) => {
-        const row = document.createElement('tr');
-        const statusClass = 'badge-' + l.status.replace(/\s+/g, '');
-        
-        const docs = [];
-        if (l.docs.aadhaar) docs.push('Aadhaar');
-        if (l.docs.pan) docs.push('PAN');
-        if (l.docs.bank) docs.push('Bank');
-        if (l.docs.rc) docs.push('RC');
-        if (l.docs.income) docs.push('Income');
-        if (l.docs.other) docs.push('Other');
-
-        row.innerHTML = `
-          <td>
-            <strong>${l.name}</strong><br>
-            <span style="color:var(--text-muted); font-size:0.75rem;">📞 ${l.mobile} | ${l.city || 'N/A'}</span>
-          </td>
-          <td>
-            ${l.vehModel || '-'}<br>
-            <span style="color:var(--text-muted); font-size:0.72rem;">${l.vehType} (${l.source})</span>
-          </td>
-          <td><strong style="color: var(--primary);">${formatINR(l.loanAmount)}</strong></td>
-          <td>
-            <span style="font-weight: 600; color: #60a5fa;">${l.bankNbfc || 'Pending Login'}</span>
-          </td>
-          <td><span class="badge ${statusClass}">${l.status}</span></td>
-          <td>
-            ${l.followDate ? l.followDate + (l.followTime ? ' ' + l.followTime : '') : '-'}<br>
-            <span style="color:var(--text-muted); font-size:0.72rem;">${l.nextAction || ''}</span>
-          </td>
-          <td><span style="font-size: 0.72rem; color: var(--text-muted);">${docs.join(', ') || 'None'}</span></td>
-          <td><button class="action-btn" onclick="deleteLead(${idx})">Delete</button></td>
-        `;
-        tbody.appendChild(row);
-      });
-    }
-
-    function render() {
-      renderMetrics();
-      renderTable();
-    }
-
-    document.getElementById('leadForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const newLead = {
-        name: document.getElementById('custName').value,
-        mobile: document.getElementById('mobile').value,
-        city: document.getElementById('city').value,
-        vehType: document.getElementById('vehType').value,
-        vehModel: document.getElementById('vehModel').value,
-        loanAmount: document.getElementById('loanAmount').value,
-        source: document.getElementById('source').value,
-        leadDate: document.getElementById('leadDate').value,
-        bankNbfc: document.getElementById('bankNbfc').value || '',
-        status: document.getElementById('status').value,
-        followDate: document.getElementById('followDate').value,
-        followTime: document.getElementById('followTime').value,
-        lastConv: document.getElementById('lastConv').value,
-        nextAction: document.getElementById('nextAction').value,
-        docs: {
-          aadhaar: document.getElementById('docAadhaar').checked,
-          pan: document.getElementById('docPan').checked,
-          bank: document.getElementById('docBank').checked,
-          rc: document.getElementById('docRc').checked,
-          income: document.getElementById('docIncome').checked,
-          other: document.getElementById('docOther').checked,
-        }
-      };
-
-      leads.unshift(newLead);
-      saveToStorage();
-      e.target.reset();
-      document.getElementById('leadDate').value = todayStr;
-    });
-
-    window.deleteLead = function(index) {
-      if (confirm('Kya aap is lead ko delete karna chahte hain?')) {
-        leads.splice(index, 1);
-        saveToStorage();
-      }
-    };
-
-    render();
   </script>
 </body>
 </html>
