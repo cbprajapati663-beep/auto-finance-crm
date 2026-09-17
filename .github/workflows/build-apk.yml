@@ -1,0 +1,85 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Generate Flutter WebView Shell
+        run: |
+          flutter create --org com.heritage.autofinance --project-name heritage_crm app_shell
+          cd app_shell
+          flutter pub add webview_flutter
+          
+          cat << 'EOF' > lib/main.dart
+          import 'package:flutter/material.dart';
+          import 'package:webview_flutter/webview_flutter.dart';
+
+          void main() {
+            WidgetsFlutterBinding.ensureInitialized();
+            runApp(const MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: HeritageCrmApp(),
+            ));
+          }
+
+          class HeritageCrmApp extends StatefulWidget {
+            const HeritageCrmApp({super.key});
+
+            @override
+            State<HeritageCrmApp> createState() => _HeritageCrmAppState();
+          }
+
+          class _HeritageCrmAppState extends State<HeritageCrmApp> {
+            late final WebViewController _controller;
+
+            @override
+            void initState() {
+              super.initState();
+              _controller = WebViewController()
+                ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                ..setBackgroundColor(const Color(0xFF0B0D13))
+                ..loadRequest(Uri.parse('https://cbprajapati663-beep.github.io/auto-finance-crm/'));
+            }
+
+            @override
+            Widget build(BuildContext context) {
+              return Scaffold(
+                backgroundColor: const Color(0xFF0B0D13),
+                body: SafeArea(
+                  child: WebViewWidget(controller: _controller),
+                ),
+              );
+            }
+          }
+          EOF
+
+      - name: Build Release APK
+        run: |
+          cd app_shell
+          flutter build apk --release
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Heritage-Auto-Finance-CRM-APK
+          path: app_shell/build/app/outputs/flutter-apk/app-release.apk
