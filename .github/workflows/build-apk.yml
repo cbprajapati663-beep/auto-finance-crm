@@ -30,6 +30,8 @@ jobs:
           cd app_shell
           flutter pub add webview_flutter
           
+          sed -i '/<manifest/a \    <uses-permission android:name="android.permission.INTERNET"/>\n    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>' android/app/src/main/AndroidManifest.xml
+
           cat << 'EOF' > lib/main.dart
           import 'package:flutter/material.dart';
           import 'package:webview_flutter/webview_flutter.dart';
@@ -58,15 +60,33 @@ jobs:
               _controller = WebViewController()
                 ..setJavaScriptMode(JavaScriptMode.unrestricted)
                 ..setBackgroundColor(const Color(0xFF0B0D13))
+                ..setNavigationDelegate(
+                  NavigationDelegate(
+                    onWebResourceError: (WebResourceError error) {
+                      debugPrint('Webview Error: ${error.description}');
+                    },
+                  ),
+                )
                 ..loadRequest(Uri.parse('https://cbprajapati663-beep.github.io/auto-finance-crm/'));
             }
 
             @override
             Widget build(BuildContext context) {
-              return Scaffold(
-                backgroundColor: const Color(0xFF0B0D13),
-                body: SafeArea(
-                  child: WebViewWidget(controller: _controller),
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {
+                  if (didPop) return;
+                  if (await _controller.canGoBack()) {
+                    await _controller.goBack();
+                  } else {
+                    if (context.mounted) Navigator.of(context).pop();
+                  }
+                },
+                child: Scaffold(
+                  backgroundColor: const Color(0xFF0B0D13),
+                  body: SafeArea(
+                    child: WebViewWidget(controller: _controller),
+                  ),
                 ),
               );
             }
