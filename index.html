@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🚗 Heritage Auto Finance CRM Pro</title>
+  <title>🚗 Heritage Auto Finance CRM Ultimate</title>
   <style>
     :root {
       --bg: #0b0d13;
@@ -11,56 +11,65 @@
       --card-border: #242938;
       --primary: #d4af37;
       --primary-hover: #b89628;
+      --accent-purple: #8b5cf6;
       --text: #f3f4f6;
       --text-muted: #8b92a5;
+      --success: #10b981;
       --danger: #ef4444;
+      --info: #38bdf8;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background: var(--bg); color: var(--text); padding: 20px; }
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--card-border); }
-    h1 { color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
+    body { background: var(--bg); color: var(--text); padding: 18px; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); flex-wrap: wrap; gap: 10px; }
+    h1 { color: var(--primary); font-size: 1.45rem; display: flex; align-items: center; gap: 8px; }
     
-    .header-actions { display: flex; gap: 10px; align-items: center; }
-    .btn-export { background: #1e2433; color: var(--primary); border: 1px solid var(--primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-weight: 600; }
-    .btn-export:hover { background: var(--primary); color: #000; }
+    .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .btn-action { background: #1e2433; color: var(--primary); border: 1px solid var(--primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; text-decoration: none; }
+    .btn-action:hover { background: var(--primary); color: #000; }
+    .btn-ghost { background: #1a1e2b; color: var(--text-muted); border: 1px solid var(--card-border); }
+    .btn-ghost:hover { background: #262c3f; color: var(--text); }
 
-    /* Dashboard */
-    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+    /* Metrics */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 10px; margin-bottom: 18px; }
     .metric-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; text-align: center; }
-    .metric-title { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
-    .metric-value { font-size: 1.25rem; font-weight: 700; margin-top: 6px; color: var(--text); }
+    .metric-title { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .metric-value { font-size: 1.22rem; font-weight: 700; margin-top: 5px; color: var(--text); }
     .metric-gold { color: var(--primary); }
 
-    /* Layout */
-    .crm-container { display: grid; grid-template-columns: 380px 1fr; gap: 20px; }
-    @media (max-width: 1024px) { .crm-container { grid-template-columns: 1fr; } }
+    /* CRM Layout */
+    .crm-container { display: grid; grid-template-columns: 370px 1fr; gap: 18px; }
+    @media (max-width: 1080px) { .crm-container { grid-template-columns: 1fr; } }
     
-    .panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 16px; }
-    .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
-    .panel-title { font-size: 1.05rem; color: var(--primary); font-weight: 600; }
+    .panel { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 16px; margin-bottom: 18px; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+    .panel-title { font-size: 1rem; color: var(--primary); font-weight: 600; }
 
-    .filter-bar { display: flex; gap: 8px; width: 100%; max-width: 500px; }
-    .filter-bar input, .filter-bar select { padding: 6px 10px; font-size: 0.8rem; background: #10121a; border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); }
-    .filter-bar input { flex: 1; }
-
+    /* Form Fields */
     .form-group { margin-bottom: 10px; }
     label { display: block; font-size: 0.76rem; color: var(--text-muted); margin-bottom: 3px; }
-    input, select, textarea { width: 100%; padding: 7px 9px; background: #0f121a; border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); font-size: 0.83rem; }
+    input, select, textarea { width: 100%; padding: 7px 9px; background: #0f121a; border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); font-size: 0.82rem; }
     input:focus, select:focus, textarea:focus { outline: 1px solid var(--primary); border-color: var(--primary); }
     
     .checkbox-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-    .check-item { display: flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--text); }
+    .check-item { display: flex; align-items: center; gap: 4px; font-size: 0.74rem; color: var(--text); }
     .check-item input { width: auto; }
 
     .btn-submit { width: 100%; background: var(--primary); color: #000; font-weight: 600; padding: 9px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 0.88rem; }
     .btn-submit:hover { background: var(--primary-hover); }
 
-    .table-responsive { overflow-x: auto; max-height: 650px; }
-    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.82rem; }
+    /* Quick Filter & View Switch */
+    .view-toggle { display: flex; background: #0f121a; border-radius: 6px; border: 1px solid var(--card-border); padding: 2px; gap: 2px; }
+    .view-btn { background: transparent; border: none; color: var(--text-muted); padding: 5px 10px; font-size: 0.76rem; border-radius: 4px; cursor: pointer; }
+    .view-btn.active { background: var(--card-bg); color: var(--primary); font-weight: 600; }
+
+    /* Table */
+    .table-responsive { overflow-x: auto; max-height: 600px; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.81rem; }
     th { background: #0f121a; padding: 9px; border-bottom: 1px solid var(--card-border); color: var(--text-muted); white-space: nowrap; position: sticky; top: 0; z-index: 2; }
     td { padding: 9px; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
-    
-    .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
+
+    /* Status Badges */
+    .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
     .badge-New { background: rgba(234, 179, 8, 0.15); color: #eab308; }
     .badge-Contacted { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
     .badge-DocumentsPending { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
@@ -70,25 +79,39 @@
     .badge-Rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; }
     .badge-NotInterested { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
 
-    .quick-actions { display: flex; gap: 5px; margin-top: 4px; }
-    .btn-quick { text-decoration: none; padding: 3px 6px; font-size: 0.7rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 3px; font-weight: 600; }
+    /* Actions */
+    .quick-actions { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
+    .btn-quick { text-decoration: none; padding: 3px 6px; font-size: 0.7rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 3px; font-weight: 600; border: none; cursor: pointer; }
     .btn-call { background: #1e293b; color: #38bdf8; border: 1px solid #334155; }
     .btn-wa { background: rgba(37, 211, 102, 0.15); color: #4ade80; border: 1px solid rgba(37, 211, 102, 0.3); }
-    .btn-edit { background: rgba(212, 175, 55, 0.15); color: var(--primary); border: 1px solid rgba(212, 175, 55, 0.3); cursor: pointer; }
-    .btn-del { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); cursor: pointer; }
-    .overdue-alert { color: var(--danger); font-weight: 600; font-size: 0.7rem; }
+    .btn-edit { background: rgba(212, 175, 55, 0.15); color: var(--primary); border: 1px solid rgba(212, 175, 55, 0.3); }
+    .btn-del { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+
+    /* EMI Box */
+    .emi-box { background: #0f121a; border: 1px solid var(--card-border); border-radius: 6px; padding: 12px; margin-top: 10px; }
+    .emi-val { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-top: 4px; }
+
+    /* Pipeline / Stage Board */
+    .pipeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .stage-col { background: #0e1017; border: 1px solid var(--card-border); border-radius: 6px; padding: 10px; min-height: 250px; }
+    .stage-header { font-size: 0.78rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .stage-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 10px; margin-bottom: 8px; font-size: 0.78rem; }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>🚗 Heritage Auto Finance CRM Pro</h1>
+    <h1>🚗 Heritage Auto Finance CRM Ultimate</h1>
     <div class="header-actions">
-      <button class="btn-export" onclick="exportToCSV()">📥 Export to Excel</button>
-      <div style="color: var(--text-muted); font-size: 0.82rem;" id="current-date"></div>
+      <button class="btn-action" onclick="exportToCSV()">📥 Export Excel</button>
+      <button class="btn-action btn-ghost" onclick="backupJSON()">💾 Backup Data</button>
+      <button class="btn-action btn-ghost" onclick="document.getElementById('importFile').click()">📂 Restore</button>
+      <input type="file" id="importFile" style="display:none" onchange="restoreJSON(event)">
+      <div style="color: var(--text-muted); font-size: 0.8rem;" id="current-date"></div>
     </div>
   </header>
 
+  <!-- Metrics -->
   <div class="dashboard-grid">
     <div class="metric-card">
       <div class="metric-title">Today's Leads</div>
@@ -99,11 +122,7 @@
       <div class="metric-value" id="m-pending-followups">0</div>
     </div>
     <div class="metric-card">
-      <div class="metric-title">New Leads</div>
-      <div class="metric-value" id="m-new-leads">0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Login Done</div>
+      <div class="metric-title">Login Files</div>
       <div class="metric-value" id="m-login-leads">0</div>
     </div>
     <div class="metric-card">
@@ -115,7 +134,11 @@
       <div class="metric-value" id="m-disburse-leads">0</div>
     </div>
     <div class="metric-card">
-      <div class="metric-title">Total Loan Amount</div>
+      <div class="metric-title">Conversion Rate</div>
+      <div class="metric-value" style="color:#38bdf8;" id="m-conv-rate">0%</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">Total Pipeline</div>
       <div class="metric-value metric-gold" id="m-total-amount">₹0</div>
     </div>
     <div class="metric-card">
@@ -125,158 +148,206 @@
   </div>
 
   <div class="crm-container">
-    <div class="panel">
-      <div class="panel-title" id="form-heading">Add New Lead</div>
-      <form id="leadForm">
-        <input type="hidden" id="editIndex" value="-1">
-        <div class="form-group">
-          <label>Customer Name *</label>
-          <input type="text" id="custName" required placeholder="Full Name">
-        </div>
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Mobile Number *</label>
-            <input type="tel" id="mobile" required placeholder="10-digit number">
+    <!-- Left Sidebar: Lead Form & EMI Calculator -->
+    <div>
+      <div class="panel">
+        <div class="panel-title" id="form-heading">Add New Lead</div>
+        <form id="leadForm">
+          <input type="hidden" id="editIndex" value="-1">
+          <div class="form-group">
+            <label>Customer Name *</label>
+            <input type="text" id="custName" required placeholder="Full Name">
           </div>
-          <div style="flex: 1;">
-            <label>City</label>
-            <input type="text" id="city" placeholder="e.g. Mehsana">
+          <div class="form-group" style="display: flex; gap: 8px;">
+            <div style="flex: 1;">
+              <label>Mobile Number *</label>
+              <input type="tel" id="mobile" required placeholder="10-digit">
+            </div>
+            <div style="flex: 1;">
+              <label>City</label>
+              <input type="text" id="city" placeholder="e.g. Mehsana">
+            </div>
           </div>
-        </div>
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Vehicle Model</label>
-            <input type="text" id="vehModel" placeholder="e.g. Bolero Pik-Up / Swift">
+          <div class="form-group" style="display: flex; gap: 8px;">
+            <div style="flex: 1;">
+              <label>Vehicle Model</label>
+              <input type="text" id="vehModel" placeholder="e.g. Swift / Bolero">
+            </div>
+            <div style="flex: 1;">
+              <label>Vehicle Type</label>
+              <select id="vehType">
+                <option value="New">New</option>
+                <option value="Used">Used</option>
+                <option value="Commercial">Commercial</option>
+              </select>
+            </div>
           </div>
-          <div style="flex: 1;">
-            <label>Type</label>
-            <select id="vehType">
-              <option value="New">New</option>
-              <option value="Used">Used</option>
-              <option value="Commercial">Commercial</option>
+          <div class="form-group" style="display: flex; gap: 8px;">
+            <div style="flex: 1;">
+              <label>Loan Amount (₹) *</label>
+              <input type="number" id="loanAmount" required placeholder="e.g. 500000">
+            </div>
+            <div style="flex: 1;">
+              <label>Source</label>
+              <select id="source">
+                <option value="Calling">Calling</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="Reference">Reference</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Facebook">Facebook</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group" style="display: flex; gap: 8px;">
+            <div style="flex: 1;">
+              <label>Lead Date</label>
+              <input type="date" id="leadDate" required>
+            </div>
+            <div style="flex: 1;">
+              <label>Bank & NBFC (Login)</label>
+              <input type="text" id="bankNbfc" placeholder="e.g. AU / Chola / HDFC">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Lead Status</label>
+            <select id="status">
+              <option value="New">🟡 New</option>
+              <option value="Contacted">🔵 Contacted</option>
+              <option value="Documents Pending">🟠 Documents Pending</option>
+              <option value="Login Done">🟣 Login Done</option>
+              <option value="Sanctioned">🟢 Sanctioned</option>
+              <option value="Disbursed">✅ Disbursed</option>
+              <option value="Rejected">🔴 Rejected</option>
+              <option value="Not Interested">⚫ Not Interested</option>
             </select>
           </div>
-        </div>
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Loan Amount (₹) *</label>
-            <input type="number" id="loanAmount" required placeholder="e.g. 650000">
-          </div>
-          <div style="flex: 1;">
-            <label>Source</label>
-            <select id="source">
-              <option value="Calling">Calling</option>
-              <option value="WhatsApp">WhatsApp</option>
-              <option value="Reference">Reference</option>
-              <option value="Instagram">Instagram</option>
-              <option value="Facebook">Facebook</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Lead Date</label>
-            <input type="date" id="leadDate" required>
-          </div>
-          <div style="flex: 1;">
-            <label>Bank & NBFC (Login)</label>
-            <input type="text" id="bankNbfc" placeholder="e.g. AU / Chola / HDFC / Sundaram">
-          </div>
-        </div>
 
-        <div class="form-group">
-          <label>Lead Status</label>
-          <select id="status">
-            <option value="New">🟡 New</option>
-            <option value="Contacted">🔵 Contacted</option>
-            <option value="Documents Pending">🟠 Documents Pending</option>
-            <option value="Login Done">🟣 Login Done</option>
-            <option value="Sanctioned">🟢 Sanctioned</option>
-            <option value="Disbursed">✅ Disbursed</option>
-            <option value="Rejected">🔴 Rejected</option>
-            <option value="Not Interested">⚫ Not Interested</option>
-          </select>
-        </div>
-
-        <div class="form-group" style="display: flex; gap: 8px;">
-          <div style="flex: 1;">
-            <label>Next Follow-up Date</label>
-            <input type="date" id="followDate">
+          <div class="form-group" style="display: flex; gap: 8px;">
+            <div style="flex: 1;">
+              <label>Next Follow-up Date</label>
+              <input type="date" id="followDate">
+            </div>
+            <div style="flex: 1;">
+              <label>Time</label>
+              <input type="time" id="followTime">
+            </div>
           </div>
-          <div style="flex: 1;">
-            <label>Follow-up Time</label>
-            <input type="time" id="followTime">
+          <div class="form-group">
+            <label>Remarks</label>
+            <textarea id="lastConv" rows="2" placeholder="Discussion notes..."></textarea>
           </div>
-        </div>
-        <div class="form-group">
-          <label>Last Conversation / Remarks</label>
-          <textarea id="lastConv" rows="2" placeholder="Discussion details..."></textarea>
-        </div>
-        <div class="form-group">
-          <label>Next Action / Reminder</label>
-          <input type="text" id="nextAction" placeholder="e.g. Collect RC copy / File login">
-        </div>
-
-        <div class="form-group">
-          <label>Documents Collected</label>
-          <div class="checkbox-grid">
-            <label class="check-item"><input type="checkbox" id="docAadhaar"> Aadhaar</label>
-            <label class="check-item"><input type="checkbox" id="docPan"> PAN</label>
-            <label class="check-item"><input type="checkbox" id="docBank"> Bank Stmt</label>
-            <label class="check-item"><input type="checkbox" id="docRc"> RC Book</label>
-            <label class="check-item"><input type="checkbox" id="docIncome"> Income Proof</label>
-            <label class="check-item"><input type="checkbox" id="docOther"> Other Docs</label>
+          <div class="form-group">
+            <label>Next Action</label>
+            <input type="text" id="nextAction" placeholder="e.g. Collect RC / Valuation">
           </div>
-        </div>
 
-        <button type="submit" class="btn-submit" id="submitBtn">Save Lead</button>
-        <button type="button" class="btn-submit" id="cancelBtn" style="background:#334155; color:#fff; display:none; margin-top:6px;" onclick="resetForm()">Cancel Edit</button>
-      </form>
-    </div>
+          <div class="form-group">
+            <label>Documents Checklist</label>
+            <div class="checkbox-grid">
+              <label class="check-item"><input type="checkbox" id="docAadhaar"> Aadhaar</label>
+              <label class="check-item"><input type="checkbox" id="docPan"> PAN</label>
+              <label class="check-item"><input type="checkbox" id="docBank"> Bank Stmt</label>
+              <label class="check-item"><input type="checkbox" id="docRc"> RC Book</label>
+              <label class="check-item"><input type="checkbox" id="docIncome"> Income Proof</label>
+              <label class="check-item"><input type="checkbox" id="docOther"> Other Docs</label>
+            </div>
+          </div>
 
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-title">Active Pipeline & Search</div>
-        <div class="filter-bar">
-          <input type="text" id="searchQuery" placeholder="🔍 Search name, phone, bank..." onkeyup="renderTable()">
-          <select id="filterStatus" onchange="renderTable()">
-            <option value="All">All Statuses</option>
-            <option value="New">🟡 New</option>
-            <option value="Contacted">🔵 Contacted</option>
-            <option value="Documents Pending">🟠 Documents Pending</option>
-            <option value="Login Done">🟣 Login Done</option>
-            <option value="Sanctioned">🟢 Sanctioned</option>
-            <option value="Disbursed">✅ Disbursed</option>
-            <option value="Rejected">🔴 Rejected</option>
-            <option value="Not Interested">⚫ Not Interested</option>
-          </select>
-        </div>
+          <button type="submit" class="btn-submit" id="submitBtn">Save Lead</button>
+          <button type="button" class="btn-submit" id="cancelBtn" style="background:#334155; color:#fff; display:none; margin-top:6px;" onclick="resetForm()">Cancel Edit</button>
+        </form>
       </div>
 
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Customer</th>
-              <th>Vehicle & Type</th>
-              <th>Loan Amount (₹)</th>
-              <th>Bank & NBFC</th>
-              <th>Status</th>
-              <th>Follow-up</th>
-              <th>Docs</th>
-              <th>Manage</th>
-            </tr>
-          </thead>
-          <tbody id="leadsTableBody">
-          </tbody>
-        </table>
+      <!-- Live EMI Widget -->
+      <div class="panel">
+        <div class="panel-title">⚡ Quick EMI Calculator</div>
+        <div class="form-group" style="display:flex; gap:6px;">
+          <input type="number" id="emiAmt" placeholder="Loan ₹" value="500000" oninput="calcEMI()">
+          <input type="number" id="emiRoi" placeholder="ROI %" value="10.5" step="0.1" oninput="calcEMI()">
+          <input type="number" id="emiTenure" placeholder="Months" value="48" oninput="calcEMI()">
+        </div>
+        <div class="emi-box">
+          <div style="font-size:0.75rem; color:var(--text-muted);">Estimated Monthly EMI:</div>
+          <div class="emi-val" id="emiResult">₹0 / month</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side: Pipeline & Table View -->
+    <div>
+      <div class="panel">
+        <div class="panel-header">
+          <div style="display:flex; gap:10px; align-items:center;">
+            <div class="panel-title">Pipeline Leads</div>
+            <div class="view-toggle">
+              <button class="view-btn active" id="btnViewTable" onclick="switchView('table')">Table View</button>
+              <button class="view-btn" id="btnViewStage" onclick="switchView('stage')">Stages View</button>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="searchQuery" placeholder="🔍 Search name, phone, bank..." onkeyup="renderViews()" style="width:200px;">
+            <select id="filterStatus" onchange="renderViews()" style="width:140px;">
+              <option value="All">All Statuses</option>
+              <option value="New">🟡 New</option>
+              <option value="Contacted">🔵 Contacted</option>
+              <option value="Documents Pending">🟠 Documents Pending</option>
+              <option value="Login Done">🟣 Login Done</option>
+              <option value="Sanctioned">🟢 Sanctioned</option>
+              <option value="Disbursed">✅ Disbursed</option>
+              <option value="Rejected">🔴 Rejected</option>
+              <option value="Not Interested">⚫ Not Interested</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Table View -->
+        <div id="tableView" class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Vehicle & Type</th>
+                <th>Loan Amount</th>
+                <th>Bank & NBFC</th>
+                <th>Status</th>
+                <th>Follow-up</th>
+                <th>Docs</th>
+                <th>Manage</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Stage Kanban View -->
+        <div id="stageView" class="pipeline-grid" style="display:none;">
+          <div class="stage-col" id="col-LoginDone">
+            <div class="stage-header"><span>🟣 LOGIN DONE</span> <span id="cnt-login">0</span></div>
+            <div id="cards-LoginDone"></div>
+          </div>
+          <div class="stage-col" id="col-Sanctioned">
+            <div class="stage-header"><span>🟢 SANCTIONED</span> <span id="cnt-sanction">0</span></div>
+            <div id="cards-Sanctioned"></div>
+          </div>
+          <div class="stage-col" id="col-Disbursed">
+            <div class="stage-header"><span>✅ DISBURSED</span> <span id="cnt-disburse">0</span></div>
+            <div id="cards-Disbursed"></div>
+          </div>
+          <div class="stage-col" id="col-DocumentsPending">
+            <div class="stage-header"><span>🟠 DOCS PENDING</span> <span id="cnt-pending">0</span></div>
+            <div id="cards-DocumentsPending"></div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = 'heritage_crm_leads_pro';
+    const STORAGE_KEY = 'heritage_crm_leads_v3';
     let leads = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    let currentView = 'table';
 
     const todayStr = new Date().toISOString().split('T')[0];
     document.getElementById('leadDate').value = todayStr;
@@ -290,49 +361,65 @@
     function saveToStorage() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
       renderMetrics();
-      renderTable();
+      renderViews();
+    }
+
+    function switchView(view) {
+      currentView = view;
+      document.getElementById('btnViewTable').classList.toggle('active', view === 'table');
+      document.getElementById('btnViewStage').classList.toggle('active', view === 'stage');
+      document.getElementById('tableView').style.display = view === 'table' ? 'block' : 'none';
+      document.getElementById('stageView').style.display = view === 'stage' ? 'grid' : 'none';
+      renderViews();
+    }
+
+    function calcEMI() {
+      const p = parseFloat(document.getElementById('emiAmt').value) || 0;
+      const r = (parseFloat(document.getElementById('emiRoi').value) || 0) / 12 / 100;
+      const n = parseFloat(document.getElementById('emiTenure').value) || 0;
+      if (p <= 0 || r <= 0 || n <= 0) {
+        document.getElementById('emiResult').textContent = '₹0 / month';
+        return;
+      }
+      const emi = Math.round((p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1));
+      document.getElementById('emiResult').textContent = formatINR(emi) + ' / month';
     }
 
     function renderMetrics() {
       const now = new Date();
-      const currentMonth = now.getMonth();
-      const currentYear = now.getFullYear();
+      const curM = now.getMonth();
+      const curY = now.getFullYear();
 
-      let todayCount = 0, pendingFollowCount = 0, newCount = 0, loginCount = 0, sanctionCount = 0, disburseCount = 0, totalAmount = 0, monthlyBusiness = 0;
+      let todayCount = 0, pendingFollowCount = 0, loginCount = 0, sanctionCount = 0, disburseCount = 0, totalAmount = 0, monthlyBusiness = 0;
 
       leads.forEach(l => {
         const lDate = new Date(l.leadDate);
         if (l.leadDate === todayStr) todayCount++;
-        if (l.followDate && l.followDate <= todayStr && l.status !== 'Disbursed' && l.status !== 'Rejected') {
-          pendingFollowCount++;
-        }
-        if (l.status === 'New') newCount++;
+        if (l.followDate && l.followDate <= todayStr && l.status !== 'Disbursed' && l.status !== 'Rejected') pendingFollowCount++;
         if (l.status === 'Login Done') loginCount++;
         if (l.status === 'Sanctioned') sanctionCount++;
         if (l.status === 'Disbursed') {
           disburseCount++;
-          if (lDate.getMonth() === currentMonth && lDate.getFullYear() === currentYear) {
-            monthlyBusiness += Number(l.loanAmount || 0);
-          }
+          if (lDate.getMonth() === curM && lDate.getFullYear() === curY) monthlyBusiness += Number(l.loanAmount || 0);
         }
         totalAmount += Number(l.loanAmount || 0);
       });
 
+      const conversion = leads.length > 0 ? Math.round((disburseCount / leads.length) * 100) : 0;
+
       document.getElementById('m-today-leads').textContent = todayCount;
       document.getElementById('m-pending-followups').textContent = pendingFollowCount;
-      document.getElementById('m-new-leads').textContent = newCount;
       document.getElementById('m-login-leads').textContent = loginCount;
       document.getElementById('m-sanction-leads').textContent = sanctionCount;
       document.getElementById('m-disburse-leads').textContent = disburseCount;
+      document.getElementById('m-conv-rate').textContent = conversion + '%';
       document.getElementById('m-total-amount').textContent = formatINR(totalAmount);
       document.getElementById('m-month-business').textContent = formatINR(monthlyBusiness);
     }
 
-    function renderTable() {
-      const tbody = document.getElementById('leadsTableBody');
+    function renderViews() {
       const q = document.getElementById('searchQuery').value.toLowerCase();
       const statusFilter = document.getElementById('filterStatus').value;
-      tbody.innerHTML = '';
 
       const filtered = leads.map((item, idx) => ({ ...item, originalIdx: idx })).filter(l => {
         const matchesQuery = l.name.toLowerCase().includes(q) || l.mobile.includes(q) || (l.bankNbfc && l.bankNbfc.toLowerCase().includes(q)) || (l.city && l.city.toLowerCase().includes(q));
@@ -340,59 +427,76 @@
         return matchesQuery && matchesStatus;
       });
 
+      // Render Table
+      const tbody = document.getElementById('leadsTableBody');
+      tbody.innerHTML = '';
       if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color: var(--text-muted); padding: 24px;">Koi record match nahi hua.</td></tr>';
-        return;
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:24px;">Koi record match nahi hua.</td></tr>';
+      } else {
+        filtered.forEach(l => {
+          const row = document.createElement('tr');
+          const statusClass = 'badge-' + l.status.replace(/\s+/g, '');
+          const cleanMobile = l.mobile.replace(/\D/g, '');
+          const waText = encodeURIComponent(`Namaste ${l.name} ji, Heritage Auto Finance ke regarding aapka loan status: ${l.status}. Bank: ${l.bankNbfc || 'In Process'}.`);
+          const isOverdue = l.followDate && l.followDate < todayStr && l.status !== 'Disbursed' && l.status !== 'Rejected';
+
+          row.innerHTML = `
+            <td>
+              <strong>${l.name}</strong><br>
+              <span style="color:var(--text-muted); font-size:0.75rem;">${l.city || 'Mehsana'}</span>
+              <div class="quick-actions">
+                <a class="btn-quick btn-call" href="tel:${cleanMobile}">📞 Call</a>
+                <a class="btn-quick btn-wa" href="https://wa.me/91${cleanMobile}?text=${waText}" target="_blank">💬 WhatsApp</a>
+              </div>
+            </td>
+            <td>
+              ${l.vehModel || '-'}<br>
+              <span style="color:var(--text-muted); font-size:0.72rem;">${l.vehType} (${l.source})</span>
+            </td>
+            <td><strong style="color:var(--primary);">${formatINR(l.loanAmount)}</strong></td>
+            <td><span style="font-weight:600; color:#60a5fa;">${l.bankNbfc || 'Pending Login'}</span></td>
+            <td><span class="badge ${statusClass}">${l.status}</span></td>
+            <td>
+              ${l.followDate ? l.followDate + (l.followTime ? ' ' + l.followTime : '') : '-'}<br>
+              ${isOverdue ? '<span style="color:var(--danger); font-size:0.7rem; font-weight:600;">⚠️ Overdue</span><br>' : ''}
+              <span style="color:var(--text-muted); font-size:0.72rem;">${l.nextAction || ''}</span>
+            </td>
+            <td><span style="font-size:0.72rem; color:var(--text-muted);">${Object.keys(l.docs || {}).filter(k => l.docs[k]).join(', ') || 'Pending'}</span></td>
+            <td>
+              <div style="display:flex; gap:4px;">
+                <button class="btn-quick btn-edit" onclick="editLead(${l.originalIdx})">✏️</button>
+                <button class="btn-quick btn-del" onclick="deleteLead(${l.originalIdx})">🗑️</button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
       }
 
-      filtered.forEach(l => {
-        const row = document.createElement('tr');
-        const statusClass = 'badge-' + l.status.replace(/\s+/g, '');
+      // Render Stage Cards
+      ['LoginDone', 'Sanctioned', 'Disbursed', 'DocumentsPending'].forEach(stage => {
+        const container = document.getElementById('cards-' + stage);
+        const countSpan = document.getElementById('cnt-' + (stage === 'LoginDone' ? 'login' : stage === 'Sanctioned' ? 'sanction' : stage === 'Disbursed' ? 'disburse' : 'pending'));
+        container.innerHTML = '';
         
-        const docs = [];
-        if (l.docs.aadhaar) docs.push('Aadhaar');
-        if (l.docs.pan) docs.push('PAN');
-        if (l.docs.bank) docs.push('Bank');
-        if (l.docs.rc) docs.push('RC');
-        if (l.docs.income) docs.push('Income');
-        if (l.docs.other) docs.push('Other');
+        const stageStatus = stage === 'LoginDone' ? 'Login Done' : stage === 'DocumentsPending' ? 'Documents Pending' : stage;
+        const stageLeads = filtered.filter(l => l.status === stageStatus);
+        countSpan.textContent = stageLeads.length;
 
-        const cleanMobile = l.mobile.replace(/\D/g, '');
-        const waText = encodeURIComponent(`Namaste ${l.name} ji, Heritage Auto Finance ki taraf se aapke vehicle loan inquiry ke regarding contact kiya ja raha hai.`);
-        const isOverdue = l.followDate && l.followDate < todayStr && l.status !== 'Disbursed' && l.status !== 'Rejected';
-
-        row.innerHTML = `
-          <td>
-            <strong>${l.name}</strong><br>
-            <span style="color:var(--text-muted); font-size:0.75rem;">${l.city || 'N/A'}</span>
-            <div class="quick-actions">
-              <a class="btn-quick btn-call" href="tel:${cleanMobile}">📞 Call</a>
-              <a class="btn-quick btn-wa" href="https://wa.me/91${cleanMobile}?text=${waText}" target="_blank">💬 WhatsApp</a>
+        stageLeads.forEach(l => {
+          const card = document.createElement('div');
+          card.className = 'stage-card';
+          card.innerHTML = `
+            <strong>${l.name}</strong> • ${formatINR(l.loanAmount)}<br>
+            <span style="color:#60a5fa; font-size:0.72rem;">${l.bankNbfc || 'Bank pending'}</span><br>
+            <span style="color:var(--text-muted); font-size:0.72rem;">${l.vehModel || ''} (${l.city || ''})</span>
+            <div style="margin-top:6px; display:flex; justify-content:space-between;">
+              <a href="tel:${l.mobile}" style="color:var(--info); text-decoration:none;">📞 Call</a>
+              <button class="btn-quick btn-edit" onclick="editLead(${l.originalIdx})">Edit</button>
             </div>
-          </td>
-          <td>
-            ${l.vehModel || '-'}<br>
-            <span style="color:var(--text-muted); font-size:0.72rem;">${l.vehType} (${l.source})</span>
-          </td>
-          <td><strong style="color: var(--primary);">${formatINR(l.loanAmount)}</strong></td>
-          <td>
-            <span style="font-weight: 600; color: #60a5fa;">${l.bankNbfc || 'Pending Login'}</span>
-          </td>
-          <td><span class="badge ${statusClass}">${l.status}</span></td>
-          <td>
-            ${l.followDate ? l.followDate + (l.followTime ? ' ' + l.followTime : '') : '-'}<br>
-            ${isOverdue ? '<span class="overdue-alert">⚠️ Overdue</span><br>' : ''}
-            <span style="color:var(--text-muted); font-size:0.72rem;">${l.nextAction || ''}</span>
-          </td>
-          <td><span style="font-size: 0.72rem; color: var(--text-muted);">${docs.join(', ') || 'Pending'}</span></td>
-          <td>
-            <div style="display:flex; gap:4px;">
-              <button class="btn-quick btn-edit" onclick="editLead(${l.originalIdx})">✏️ Edit</button>
-              <button class="btn-quick btn-del" onclick="deleteLead(${l.originalIdx})">🗑️</button>
-            </div>
-          </td>
-        `;
-        tbody.appendChild(row);
+          `;
+          container.appendChild(card);
+        });
       });
     }
 
@@ -424,11 +528,8 @@
         }
       };
 
-      if (editIdx >= 0) {
-        leads[editIdx] = leadData;
-      } else {
-        leads.unshift(leadData);
-      }
+      if (editIdx >= 0) leads[editIdx] = leadData;
+      else leads.unshift(leadData);
 
       saveToStorage();
       resetForm();
@@ -482,24 +583,48 @@
     };
 
     window.exportToCSV = function() {
-      if (leads.length === 0) {
-        alert('Export karne ke liye koi lead available nahi hai.');
-        return;
-      }
-      let csv = 'Customer Name,Mobile,City,Vehicle Model,Type,Loan Amount,Source,Lead Date,Bank/NBFC,Status,Follow-up Date,Follow-up Time,Next Action\n';
+      if (leads.length === 0) return alert('Export ke liye koi lead nahi hai.');
+      let csv = 'Customer,Mobile,City,Vehicle,Type,Amount,Source,Date,Bank,Status,FollowDate,NextAction\n';
       leads.forEach(l => {
-        csv += `"${l.name}","${l.mobile}","${l.city || ''}","${l.vehModel || ''}","${l.vehType}","${l.loanAmount}","${l.source}","${l.leadDate}","${l.bankNbfc || ''}","${l.status}","${l.followDate || ''}","${l.followTime || ''}","${l.nextAction || ''}"\n`;
+        csv += `"${l.name}","${l.mobile}","${l.city || ''}","${l.vehModel || ''}","${l.vehType}","${l.loanAmount}","${l.source}","${l.leadDate}","${l.bankNbfc || ''}","${l.status}","${l.followDate || ''}","${l.nextAction || ''}"\n`;
       });
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
-      a.download = `Heritage_Auto_Finance_Leads_${todayStr}.csv`;
+      a.href = URL.createObjectURL(blob);
+      a.download = `Heritage_Auto_Finance_${todayStr}.csv`;
       a.click();
     };
 
+    window.backupJSON = function() {
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(leads));
+      const a = document.createElement('a');
+      a.href = dataStr;
+      a.download = `Heritage_CRM_Backup_${todayStr}.json`;
+      a.click();
+    };
+
+    window.restoreJSON = function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        try {
+          const imported = JSON.parse(evt.target.result);
+          if (Array.isArray(imported)) {
+            leads = imported;
+            saveToStorage();
+            alert('Data safaltapoorvak restore ho gaya hai!');
+          }
+        } catch (err) {
+          alert('Invalid backup file.');
+        }
+      };
+      reader.readAsText(file);
+    };
+
+    calcEMI();
     renderMetrics();
-    renderTable();
+    renderViews();
   </script>
 </body>
 </html>
