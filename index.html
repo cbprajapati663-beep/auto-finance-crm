@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>🚗 Heritage Auto Finance CRM Ultimate</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d4af37">
   <style>
     :root {
       --bg: #0b0d13;
@@ -11,7 +13,6 @@
       --card-border: #242938;
       --primary: #d4af37;
       --primary-hover: #b89628;
-      --accent-purple: #8b5cf6;
       --text: #f3f4f6;
       --text-muted: #8b92a5;
       --success: #10b981;
@@ -23,20 +24,21 @@
     header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid var(--card-border); flex-wrap: wrap; gap: 10px; }
     h1 { color: var(--primary); font-size: 1.45rem; display: flex; align-items: center; gap: 8px; }
     
+    .sync-status { font-size: 0.75rem; display: flex; align-items: center; gap: 6px; padding: 4px 8px; border-radius: 20px; background: rgba(16, 185, 129, 0.1); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .sync-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
     .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
     .btn-action { background: #1e2433; color: var(--primary); border: 1px solid var(--primary); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; text-decoration: none; }
     .btn-action:hover { background: var(--primary); color: #000; }
-    .btn-ghost { background: #1a1e2b; color: var(--text-muted); border: 1px solid var(--card-border); }
-    .btn-ghost:hover { background: #262c3f; color: var(--text); }
+    .btn-install { background: var(--primary); color: #000; border: none; font-weight: 700; display: none; }
 
-    /* Metrics */
     .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 10px; margin-bottom: 18px; }
     .metric-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 12px; text-align: center; }
     .metric-title { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
     .metric-value { font-size: 1.22rem; font-weight: 700; margin-top: 5px; color: var(--text); }
     .metric-gold { color: var(--primary); }
 
-    /* CRM Layout */
     .crm-container { display: grid; grid-template-columns: 370px 1fr; gap: 18px; }
     @media (max-width: 1080px) { .crm-container { grid-template-columns: 1fr; } }
     
@@ -44,7 +46,6 @@
     .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
     .panel-title { font-size: 1rem; color: var(--primary); font-weight: 600; }
 
-    /* Form Fields */
     .form-group { margin-bottom: 10px; }
     label { display: block; font-size: 0.76rem; color: var(--text-muted); margin-bottom: 3px; }
     input, select, textarea { width: 100%; padding: 7px 9px; background: #0f121a; border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); font-size: 0.82rem; }
@@ -57,18 +58,15 @@
     .btn-submit { width: 100%; background: var(--primary); color: #000; font-weight: 600; padding: 9px; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; font-size: 0.88rem; }
     .btn-submit:hover { background: var(--primary-hover); }
 
-    /* Quick Filter & View Switch */
     .view-toggle { display: flex; background: #0f121a; border-radius: 6px; border: 1px solid var(--card-border); padding: 2px; gap: 2px; }
     .view-btn { background: transparent; border: none; color: var(--text-muted); padding: 5px 10px; font-size: 0.76rem; border-radius: 4px; cursor: pointer; }
     .view-btn.active { background: var(--card-bg); color: var(--primary); font-weight: 600; }
 
-    /* Table */
     .table-responsive { overflow-x: auto; max-height: 600px; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.81rem; }
     th { background: #0f121a; padding: 9px; border-bottom: 1px solid var(--card-border); color: var(--text-muted); white-space: nowrap; position: sticky; top: 0; z-index: 2; }
     td { padding: 9px; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
 
-    /* Status Badges */
     .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
     .badge-New { background: rgba(234, 179, 8, 0.15); color: #eab308; }
     .badge-Contacted { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
@@ -79,7 +77,6 @@
     .badge-Rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; }
     .badge-NotInterested { background: rgba(107, 114, 128, 0.2); color: #9ca3af; }
 
-    /* Actions */
     .quick-actions { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
     .btn-quick { text-decoration: none; padding: 3px 6px; font-size: 0.7rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 3px; font-weight: 600; border: none; cursor: pointer; }
     .btn-call { background: #1e293b; color: #38bdf8; border: 1px solid #334155; }
@@ -87,31 +84,31 @@
     .btn-edit { background: rgba(212, 175, 55, 0.15); color: var(--primary); border: 1px solid rgba(212, 175, 55, 0.3); }
     .btn-del { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
-    /* EMI Box */
     .emi-box { background: #0f121a; border: 1px solid var(--card-border); border-radius: 6px; padding: 12px; margin-top: 10px; }
     .emi-val { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-top: 4px; }
 
-    /* Pipeline / Stage Board */
     .pipeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
     .stage-col { background: #0e1017; border: 1px solid var(--card-border); border-radius: 6px; padding: 10px; min-height: 250px; }
     .stage-header { font-size: 0.78rem; font-weight: 600; color: var(--primary); margin-bottom: 8px; display: flex; justify-content: space-between; }
     .stage-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 6px; padding: 10px; margin-bottom: 8px; font-size: 0.78rem; }
   </style>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
   <header>
-    <h1>🚗 Heritage Auto Finance CRM Ultimate</h1>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <h1>🚗 Heritage Auto Finance CRM Ultimate</h1>
+      <div class="sync-status"><span class="sync-dot"></span> Cloud Sync Active</div>
+    </div>
     <div class="header-actions">
+      <button class="btn-action btn-install" id="btnInstallApp" onclick="installPWA()">📲 Install App</button>
       <button class="btn-action" onclick="exportToCSV()">📥 Export Excel</button>
-      <button class="btn-action btn-ghost" onclick="backupJSON()">💾 Backup Data</button>
-      <button class="btn-action btn-ghost" onclick="document.getElementById('importFile').click()">📂 Restore</button>
-      <input type="file" id="importFile" style="display:none" onchange="restoreJSON(event)">
       <div style="color: var(--text-muted); font-size: 0.8rem;" id="current-date"></div>
     </div>
   </header>
 
-  <!-- Metrics -->
   <div class="dashboard-grid">
     <div class="metric-card">
       <div class="metric-title">Today's Leads</div>
@@ -148,12 +145,11 @@
   </div>
 
   <div class="crm-container">
-    <!-- Left Sidebar: Lead Form & EMI Calculator -->
     <div>
       <div class="panel">
         <div class="panel-title" id="form-heading">Add New Lead</div>
         <form id="leadForm">
-          <input type="hidden" id="editIndex" value="-1">
+          <input type="hidden" id="editDocId" value="">
           <div class="form-group">
             <label>Customer Name *</label>
             <input type="text" id="custName" required placeholder="Full Name">
@@ -254,12 +250,11 @@
             </div>
           </div>
 
-          <button type="submit" class="btn-submit" id="submitBtn">Save Lead</button>
+          <button type="submit" class="btn-submit" id="submitBtn">Save to Cloud</button>
           <button type="button" class="btn-submit" id="cancelBtn" style="background:#334155; color:#fff; display:none; margin-top:6px;" onclick="resetForm()">Cancel Edit</button>
         </form>
       </div>
 
-      <!-- Live EMI Widget -->
       <div class="panel">
         <div class="panel-title">⚡ Quick EMI Calculator</div>
         <div class="form-group" style="display:flex; gap:6px;">
@@ -274,20 +269,19 @@
       </div>
     </div>
 
-    <!-- Right Side: Pipeline & Table View -->
     <div>
       <div class="panel">
         <div class="panel-header">
           <div style="display:flex; gap:10px; align-items:center;">
-            <div class="panel-title">Pipeline Leads</div>
+            <div class="panel-title">Live Pipeline</div>
             <div class="view-toggle">
               <button class="view-btn active" id="btnViewTable" onclick="switchView('table')">Table View</button>
               <button class="view-btn" id="btnViewStage" onclick="switchView('stage')">Stages View</button>
             </div>
           </div>
           <div style="display:flex; gap:8px;">
-            <input type="text" id="searchQuery" placeholder="🔍 Search name, phone, bank..." onkeyup="renderViews()" style="width:200px;">
-            <select id="filterStatus" onchange="renderViews()" style="width:140px;">
+            <input type="text" id="searchQuery" placeholder="🔍 Search..." onkeyup="renderViews()" style="width:180px;">
+            <select id="filterStatus" onchange="renderViews()" style="width:130px;">
               <option value="All">All Statuses</option>
               <option value="New">🟡 New</option>
               <option value="Contacted">🔵 Contacted</option>
@@ -301,7 +295,6 @@
           </div>
         </div>
 
-        <!-- Table View -->
         <div id="tableView" class="table-responsive">
           <table>
             <thead>
@@ -320,7 +313,6 @@
           </table>
         </div>
 
-        <!-- Stage Kanban View -->
         <div id="stageView" class="pipeline-grid" style="display:none;">
           <div class="stage-col" id="col-LoginDone">
             <div class="stage-header"><span>🟣 LOGIN DONE</span> <span id="cnt-login">0</span></div>
@@ -345,23 +337,38 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'heritage_crm_leads_v3';
-    let leads = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const firebaseConfig = {
+      apiKey: "AIzaSyACLaRm5yH301JVqlvl8KYglANOc3uh6w",
+      authDomain: "heritage-crm-f179a.firebaseapp.com",
+      projectId: "heritage-crm-f179a",
+      storageBucket: "heritage-crm-f179a.firebasestorage.app",
+      messagingSenderId: "434634669830",
+      appId: "1:434634669830:web:afa939caa85df772066887"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const leadsCollection = db.collection('leads');
+
+    let leads = [];
     let currentView = 'table';
 
     const todayStr = new Date().toISOString().split('T')[0];
     document.getElementById('leadDate').value = todayStr;
     document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
 
+    leadsCollection.orderBy('leadDate', 'desc').onSnapshot((snapshot) => {
+      leads = [];
+      snapshot.forEach(doc => {
+        leads.push({ docId: doc.id, ...doc.data() });
+      });
+      renderMetrics();
+      renderViews();
+    });
+
     function formatINR(val) {
       if (!val || isNaN(val)) return '₹0';
       return '₹' + Number(val).toLocaleString('en-IN');
-    }
-
-    function saveToStorage() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
-      renderMetrics();
-      renderViews();
     }
 
     function switchView(view) {
@@ -421,13 +428,12 @@
       const q = document.getElementById('searchQuery').value.toLowerCase();
       const statusFilter = document.getElementById('filterStatus').value;
 
-      const filtered = leads.map((item, idx) => ({ ...item, originalIdx: idx })).filter(l => {
-        const matchesQuery = l.name.toLowerCase().includes(q) || l.mobile.includes(q) || (l.bankNbfc && l.bankNbfc.toLowerCase().includes(q)) || (l.city && l.city.toLowerCase().includes(q));
+      const filtered = leads.filter(l => {
+        const matchesQuery = (l.name || '').toLowerCase().includes(q) || (l.mobile || '').includes(q) || (l.bankNbfc && l.bankNbfc.toLowerCase().includes(q)) || (l.city && l.city.toLowerCase().includes(q));
         const matchesStatus = statusFilter === 'All' || l.status === statusFilter;
         return matchesQuery && matchesStatus;
       });
 
-      // Render Table
       const tbody = document.getElementById('leadsTableBody');
       tbody.innerHTML = '';
       if (filtered.length === 0) {
@@ -435,8 +441,8 @@
       } else {
         filtered.forEach(l => {
           const row = document.createElement('tr');
-          const statusClass = 'badge-' + l.status.replace(/\s+/g, '');
-          const cleanMobile = l.mobile.replace(/\D/g, '');
+          const statusClass = 'badge-' + (l.status || 'New').replace(/\s+/g, '');
+          const cleanMobile = (l.mobile || '').replace(/\D/g, '');
           const waText = encodeURIComponent(`Namaste ${l.name} ji, Heritage Auto Finance ke regarding aapka loan status: ${l.status}. Bank: ${l.bankNbfc || 'In Process'}.`);
           const isOverdue = l.followDate && l.followDate < todayStr && l.status !== 'Disbursed' && l.status !== 'Rejected';
 
@@ -464,8 +470,8 @@
             <td><span style="font-size:0.72rem; color:var(--text-muted);">${Object.keys(l.docs || {}).filter(k => l.docs[k]).join(', ') || 'Pending'}</span></td>
             <td>
               <div style="display:flex; gap:4px;">
-                <button class="btn-quick btn-edit" onclick="editLead(${l.originalIdx})">✏️</button>
-                <button class="btn-quick btn-del" onclick="deleteLead(${l.originalIdx})">🗑️</button>
+                <button class="btn-quick btn-edit" onclick="editLead('${l.docId}')">✏️</button>
+                <button class="btn-quick btn-del" onclick="deleteLead('${l.docId}')">🗑️</button>
               </div>
             </td>
           `;
@@ -473,7 +479,6 @@
         });
       }
 
-      // Render Stage Cards
       ['LoginDone', 'Sanctioned', 'Disbursed', 'DocumentsPending'].forEach(stage => {
         const container = document.getElementById('cards-' + stage);
         const countSpan = document.getElementById('cnt-' + (stage === 'LoginDone' ? 'login' : stage === 'Sanctioned' ? 'sanction' : stage === 'Disbursed' ? 'disburse' : 'pending'));
@@ -492,7 +497,7 @@
             <span style="color:var(--text-muted); font-size:0.72rem;">${l.vehModel || ''} (${l.city || ''})</span>
             <div style="margin-top:6px; display:flex; justify-content:space-between;">
               <a href="tel:${l.mobile}" style="color:var(--info); text-decoration:none;">📞 Call</a>
-              <button class="btn-quick btn-edit" onclick="editLead(${l.originalIdx})">Edit</button>
+              <button class="btn-quick btn-edit" onclick="editLead('${l.docId}')">Edit</button>
             </div>
           `;
           container.appendChild(card);
@@ -500,16 +505,16 @@
       });
     }
 
-    document.getElementById('leadForm').addEventListener('submit', (e) => {
+    document.getElementById('leadForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const editIdx = parseInt(document.getElementById('editIndex').value);
+      const editDocId = document.getElementById('editDocId').value;
       const leadData = {
         name: document.getElementById('custName').value,
         mobile: document.getElementById('mobile').value,
         city: document.getElementById('city').value,
         vehType: document.getElementById('vehType').value,
         vehModel: document.getElementById('vehModel').value,
-        loanAmount: document.getElementById('loanAmount').value,
+        loanAmount: Number(document.getElementById('loanAmount').value),
         source: document.getElementById('source').value,
         leadDate: document.getElementById('leadDate').value,
         bankNbfc: document.getElementById('bankNbfc').value || '',
@@ -525,19 +530,22 @@
           rc: document.getElementById('docRc').checked,
           income: document.getElementById('docIncome').checked,
           other: document.getElementById('docOther').checked,
-        }
+        },
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       };
 
-      if (editIdx >= 0) leads[editIdx] = leadData;
-      else leads.unshift(leadData);
-
-      saveToStorage();
+      if (editDocId) {
+        await leadsCollection.doc(editDocId).update(leadData);
+      } else {
+        await leadsCollection.add(leadData);
+      }
       resetForm();
     });
 
-    window.editLead = function(idx) {
-      const l = leads[idx];
-      document.getElementById('editIndex').value = idx;
+    window.editLead = function(docId) {
+      const l = leads.find(item => item.docId === docId);
+      if (!l) return;
+      document.getElementById('editDocId').value = docId;
       document.getElementById('custName').value = l.name;
       document.getElementById('mobile').value = l.mobile;
       document.getElementById('city').value = l.city;
@@ -560,25 +568,24 @@
       document.getElementById('docIncome').checked = !!l.docs?.income;
       document.getElementById('docOther').checked = !!l.docs?.other;
 
-      document.getElementById('form-heading').textContent = 'Update Lead Details';
-      document.getElementById('submitBtn').textContent = 'Update Changes';
+      document.getElementById('form-heading').textContent = 'Update Lead (Cloud)';
+      document.getElementById('submitBtn').textContent = 'Update in Cloud';
       document.getElementById('cancelBtn').style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     window.resetForm = function() {
       document.getElementById('leadForm').reset();
-      document.getElementById('editIndex').value = '-1';
+      document.getElementById('editDocId').value = '';
       document.getElementById('leadDate').value = todayStr;
       document.getElementById('form-heading').textContent = 'Add New Lead';
-      document.getElementById('submitBtn').textContent = 'Save Lead';
+      document.getElementById('submitBtn').textContent = 'Save to Cloud';
       document.getElementById('cancelBtn').style.display = 'none';
     };
 
-    window.deleteLead = function(idx) {
-      if (confirm('Kya aap is lead ko delete karna chahte hain?')) {
-        leads.splice(idx, 1);
-        saveToStorage();
+    window.deleteLead = async function(docId) {
+      if (confirm('Kya aap is lead ko Cloud se delete karna chahte hain?')) {
+        await leadsCollection.doc(docId).delete();
       }
     };
 
@@ -595,36 +602,26 @@
       a.click();
     };
 
-    window.backupJSON = function() {
-      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(leads));
-      const a = document.createElement('a');
-      a.href = dataStr;
-      a.download = `Heritage_CRM_Backup_${todayStr}.json`;
-      a.click();
-    };
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      const btn = document.getElementById('btnInstallApp');
+      if (btn) btn.style.display = 'inline-block';
+    });
 
-    window.restoreJSON = function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        try {
-          const imported = JSON.parse(evt.target.result);
-          if (Array.isArray(imported)) {
-            leads = imported;
-            saveToStorage();
-            alert('Data safaltapoorvak restore ho gaya hai!');
-          }
-        } catch (err) {
-          alert('Invalid backup file.');
+    window.installPWA = async function() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+          document.getElementById('btnInstallApp').style.display = 'none';
         }
-      };
-      reader.readAsText(file);
+        deferredPrompt = null;
+      }
     };
 
     calcEMI();
-    renderMetrics();
-    renderViews();
   </script>
 </body>
 </html>
