@@ -83,7 +83,6 @@
     .btn-del { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
     .btn-vault { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
 
-    /* Vault Modal */
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 99; align-items: center; justify-content: center; }
     .modal-content { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; width: 90%; max-width: 540px; padding: 18px; }
     .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
@@ -204,7 +203,6 @@
             </div>
           </div>
 
-          <!-- Feature 1: DSA Payout & Commission Tracker (Hidden until Disbursed) -->
           <div id="dsaPayoutSection" style="display: none; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); padding: 10px; border-radius: 6px; margin: 10px 0;">
             <div class="section-title" style="margin-top: 0;">💰 DSA Payout & Commission Tracker</div>
             <div class="form-group" style="display: flex; gap: 8px;">
@@ -308,7 +306,6 @@
     </div>
   </div>
 
-  <!-- Document Vault Modal with WhatsApp Sharing -->
   <div class="modal" id="vaultModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -338,6 +335,7 @@
 
     let leads = [];
     let currentVaultLead = null;
+    let editingLeadVault = null;
     const todayStr = new Date().toISOString().split('T')[0];
     document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
 
@@ -454,6 +452,18 @@
       });
     }
 
+    function base64ToFile(base64Data, fileName) {
+      const arr = base64Data.split(',');
+      const mime = arr[0].match(/:(.*?);/)[1];
+      const bstr = atob(arr[1]);
+      let n = bstr.length;
+      const u8arr = new Uint8Array(n);
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n);
+      }
+      return new File([u8arr], fileName, { type: mime });
+    }
+
     async function fileToBase64(file) {
       return new Promise((resolve) => {
         const reader = new FileReader();
@@ -467,7 +477,8 @@
       const editDocId = document.getElementById('editDocId').value;
       const currentStatus = document.getElementById('status').value;
 
-      const files = {};
+      // Preserve existing files if editing
+      const files = editingLeadVault ? { ...editingLeadVault } : {};
       const fA = document.getElementById('fileAadhaar').files[0];
       const fP = document.getElementById('filePan').files[0];
       const fB = document.getElementById('fileBank').files[0];
@@ -494,12 +505,9 @@
         status: currentStatus,
         followDate: document.getElementById('followDate').value,
         lastConv: document.getElementById('lastConv').value,
+        vault: files,
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       };
-
-      if (Object.keys(files).length > 0) {
-        leadData.vault = files;
-      }
 
       if (editDocId) {
         await leadsCollection.doc(editDocId).update(leadData);
@@ -556,49 +564,89 @@
       document.getElementById('vaultModal').style.display = 'flex';
     };
 
-    window.shareSingleDoc = function(docType, fileName) {
+    window.shareSingleDoc = async function(docType, fileName) {
       if (!currentVaultLead) return;
       const l = currentVaultLead;
+      const vault = l.vault || {};
+      const docKeys = ['aadhaar', 'pan', 'bank', 'rc'];
+      const docLabels = { aadhaar: 'Aadhaar Card', pan: 'PAN Card', bank: 'Bank Statement', rc: 'RC Book' };
+      
+      let targetKey = docKeys.find(k => docLabels[k] === docType);
+      let item = targetKey ? vault[targetKey] : null;
+
+      if (!item || !item.data) {
+        alert("Document file nahi mili!");
+        return;
+      }
+
+      if (navigator.canShare) {
+        try {
+          const realFile = base64ToFile(item.data, item.name || `${docType}.pdf`);
+          if (navigator.canShare({ files: [realFile] })) {
+            await navigator.share({
+              files: [realFile],
+              title: `${l.name} - ${docType}`,
+              text: `*🚗 Heritage Auto Finance*\nCustomer: ${l.name}\nDoc: ${docType}`
+            });
+            return;
+          }
+        } catch (err) {
+          console.log("Native share cancelled or failed:", err);
+        }
+      }
+
       const text = encodeURIComponent(
         `*🚗 Heritage Auto Finance - Customer Document*\n\n` +
         `*Customer:* ${l.name}\n` +
         `*Mobile:* ${l.mobile}\n` +
         `*Vehicle:* ${l.vehModel || '-'}\n` +
-        `*Bank:* ${l.bankNbfc || 'AU'}\n` +
-        `*Loan Amount:* ₹${Number(l.loanAmount || 0).toLocaleString('en-IN')}\n\n` +
-        `*Shared Document:* ${docType} (${fileName})\n\n` +
-        `_Sent via Heritage CRM Vault_`
+        `*Document:* ${docType} (${fileName})\n\n` +
+        `_Note: File download karke attach karein._`
       );
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     };
 
-    window.shareAllOnWhatsApp = function() {
+    window.shareAllOnWhatsApp = async function() {
       if (!currentVaultLead) return;
       const l = currentVaultLead;
       const vault = l.vault || {};
+      const docKeys = ['aadhaar', 'pan', 'bank', 'rc'];
       const docLabels = { aadhaar: 'Aadhaar Card', pan: 'PAN Card', bank: 'Bank Statement', rc: 'RC Book' };
 
-      let docsList = [];
-      ['aadhaar', 'pan', 'bank', 'rc'].forEach(k => {
+      let filesList = [];
+      docKeys.forEach(k => {
         if (vault[k] && vault[k].data) {
-          docsList.push(`• ${docLabels[k]} (${vault[k].name})`);
+          filesList.push(base64ToFile(vault[k].data, vault[k].name || `${docLabels[k]}.pdf`));
         }
+      });
+
+      if (filesList.length > 0 && navigator.canShare && navigator.canShare({ files: filesList })) {
+        try {
+          await navigator.share({
+            files: filesList,
+            title: `${l.name} - All Files`,
+            text: `*🚗 Heritage Auto Finance - Complete File*\nCustomer: ${l.name}\nVehicle: ${l.vehModel || '-'}\nLoan: ₹${Number(l.loanAmount || 0).toLocaleString('en-IN')}`
+          });
+          return;
+        } catch (e) {
+          console.log("Batch share failed:", e);
+        }
+      }
+
+      let docsList = [];
+      docKeys.forEach(k => {
+        if (vault[k] && vault[k].data) docsList.push(`• ${docLabels[k]} (${vault[k].name})`);
       });
 
       const summary = encodeURIComponent(
         `*🚗 Heritage Auto Finance - Complete Customer File*\n\n` +
-        `*Customer Name:* ${l.name}\n` +
-        `*Contact:* ${l.mobile}\n` +
-        `*City:* ${l.city || 'Mehsana'}\n` +
-        `*Vehicle Model:* ${l.vehModel || '-'}\n` +
+        `*Customer:* ${l.name}\n` +
+        `*Mobile:* ${l.mobile}\n` +
+        `*Vehicle:* ${l.vehModel || '-'}\n` +
         `*Loan Amount:* ₹${Number(l.loanAmount || 0).toLocaleString('en-IN')}\n` +
-        `*Financer / Bank:* ${l.bankNbfc || 'AU'}\n` +
-        `*File Status:* ${l.status}\n\n` +
-        `*Attached Vault Documents (${docsList.length}):*\n` +
-        docsList.join('\n') + `\n\n` +
-        `_Kripya file verify karke credit login proceed karein._`
+        `*Financer:* ${l.bankNbfc || 'AU'}\n\n` +
+        `*Attached Documents:*\n` + docsList.join('\n')
       );
-
       window.open(`https://api.whatsapp.com/send?text=${summary}`, '_blank');
     };
 
@@ -609,6 +657,7 @@
     window.editLead = function(docId) {
       const l = leads.find(item => item.docId === docId);
       if (!l) return;
+      editingLeadVault = l.vault || {};
       document.getElementById('editDocId').value = docId;
       document.getElementById('custName').value = l.name;
       document.getElementById('mobile').value = l.mobile;
@@ -637,6 +686,7 @@
     window.resetForm = function() {
       document.getElementById('leadForm').reset();
       document.getElementById('editDocId').value = '';
+      editingLeadVault = null;
       document.getElementById('form-heading').textContent = 'Add New Lead';
       document.getElementById('submitBtn').textContent = 'Save to Cloud';
       document.getElementById('cancelBtn').style.display = 'none';
