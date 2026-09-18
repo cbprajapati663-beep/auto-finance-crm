@@ -106,17 +106,22 @@
     </div>
   </header>
 
+  <!-- Metrics Grid: Total Leads aur Total Login Amount restored -->
   <div class="dashboard-grid">
     <div class="metric-card">
-      <div class="metric-title">Today's Leads</div>
-      <div class="metric-value" id="m-today-leads">0</div>
+      <div class="metric-title">Total Leads</div>
+      <div class="metric-value" id="m-total-leads">0</div>
     </div>
     <div class="metric-card">
       <div class="metric-title">Login Files</div>
       <div class="metric-value" id="m-login-leads">0</div>
     </div>
     <div class="metric-card">
-      <div class="metric-title">Disbursed</div>
+      <div class="metric-title">Total Login Amt (₹)</div>
+      <div class="metric-value metric-gold" id="m-login-amount">₹0</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-title">Disbursed Files</div>
       <div class="metric-value" id="m-disburse-leads">0</div>
     </div>
     <div class="metric-card">
@@ -126,10 +131,6 @@
     <div class="metric-card">
       <div class="metric-title">Total DSA Payout</div>
       <div class="metric-value" style="color:var(--success);" id="m-comm-earned">₹0</div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-title">Payout Pending</div>
-      <div class="metric-value" style="color:#fbbf24;" id="m-comm-pending">₹0</div>
     </div>
   </div>
 
@@ -339,7 +340,6 @@
       const payoutBox = document.getElementById('dsaPayoutSection');
       const docBox = document.getElementById('docChecklistSection');
 
-      // Payout section only when Disbursed
       if (status === 'Disbursed') {
         payoutBox.style.display = 'block';
         calcCommission();
@@ -347,7 +347,6 @@
         payoutBox.style.display = 'none';
       }
 
-      // Document Checklist ONLY when Documents Pending
       if (status === 'Documents Pending') {
         docBox.style.display = 'block';
       } else {
@@ -366,26 +365,32 @@
     }
 
     function renderMetrics() {
-      let todayCount = 0, loginCount = 0, disburseCount = 0, disbursedAmount = 0, totalEarned = 0, totalPending = 0;
+      let loginCount = 0, loginAmount = 0;
+      let disburseCount = 0, disbursedAmount = 0;
+      let totalEarned = 0;
 
       leads.forEach(l => {
-        if (l.leadDate === todayStr) todayCount++;
-        if (l.status === 'Login Done') loginCount++;
+        const amt = Number(l.loanAmount || 0);
+
+        if (l.status === 'Login Done') {
+          loginCount++;
+          loginAmount += amt;
+        }
+
         if (l.status === 'Disbursed') {
           disburseCount++;
-          disbursedAmount += Number(l.loanAmount || 0);
+          disbursedAmount += amt;
           const net = Number(l.netComm || 0);
           if (l.payoutStatus === 'Received') totalEarned += net;
-          else totalPending += net;
         }
       });
 
-      document.getElementById('m-today-leads').textContent = todayCount;
+      document.getElementById('m-total-leads').textContent = leads.length;
       document.getElementById('m-login-leads').textContent = loginCount;
+      document.getElementById('m-login-amount').textContent = formatINR(loginAmount);
       document.getElementById('m-disburse-leads').textContent = disburseCount;
       document.getElementById('m-month-business').textContent = formatINR(disbursedAmount);
       document.getElementById('m-comm-earned').textContent = formatINR(totalEarned);
-      document.getElementById('m-comm-pending').textContent = formatINR(totalPending);
     }
 
     function renderViews() {
@@ -418,7 +423,6 @@
           payoutDisplay += `<br><span style="color:var(--text-muted); font-size:0.72rem;">File in process</span>`;
         }
 
-        // Show Missing Documents ONLY if status is 'Documents Pending'
         let docStatusHtml = '';
         if (l.status === 'Documents Pending') {
           const docs = l.docsReceived || {};
