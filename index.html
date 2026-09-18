@@ -53,7 +53,6 @@
     input, select, textarea { width: 100%; padding: 7px 9px; background: #0f121a; border: 1px solid var(--card-border); border-radius: 6px; color: var(--text); font-size: 0.82rem; }
     input:focus, select:focus, textarea:focus { outline: 1px solid var(--primary); border-color: var(--primary); }
 
-    /* Checkbox Group Styling */
     .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #0f121a; padding: 10px; border-radius: 6px; border: 1px solid var(--card-border); }
     .checkbox-item { display: flex; align-items: center; gap: 7px; font-size: 0.78rem; cursor: pointer; color: var(--text); }
     .checkbox-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
@@ -187,7 +186,7 @@
           <div class="form-group" style="display: flex; gap: 8px;">
             <div style="flex: 1;">
               <label>Lead Status</label>
-              <select id="status" onchange="togglePayoutSection()">
+              <select id="status" onchange="handleStatusChange()">
                 <option value="New">🟡 New</option>
                 <option value="Contacted">🔵 Contacted</option>
                 <option value="Documents Pending">🟠 Documents Pending</option>
@@ -204,7 +203,7 @@
             </div>
           </div>
 
-          <!-- Feature 1: DSA Payout & Commission Tracker (Hidden until Disbursed) -->
+          <!-- Feature 1: DSA Payout & Commission Tracker (Visible only if Disbursed) -->
           <div id="dsaPayoutSection" style="display: none; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); padding: 10px; border-radius: 6px; margin: 10px 0;">
             <div class="section-title" style="margin-top: 0;">💰 DSA Payout & Commission Tracker</div>
             <div class="form-group" style="display: flex; gap: 8px;">
@@ -239,21 +238,23 @@
             </div>
           </div>
 
-          <!-- Feature 2: Clean Checkbox Document Checklist -->
-          <div class="section-title">📋 Document Received Checklist</div>
-          <div class="checkbox-grid">
-            <label class="checkbox-item">
-              <input type="checkbox" id="chkAadhaar"> Aadhaar Card
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" id="chkPan"> PAN Card
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" id="chkBank"> Bank Statement
-            </label>
-            <label class="checkbox-item">
-              <input type="checkbox" id="chkRc"> RC Book / Valuation
-            </label>
+          <!-- Feature 2: Document Received Checklist (Visible ONLY when Documents Pending) -->
+          <div id="docChecklistSection" style="display: none; margin: 10px 0;">
+            <div class="section-title">📋 Document Received Checklist</div>
+            <div class="checkbox-grid">
+              <label class="checkbox-item">
+                <input type="checkbox" id="chkAadhaar"> Aadhaar Card
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="chkPan"> PAN Card
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="chkBank"> Bank Statement
+              </label>
+              <label class="checkbox-item">
+                <input type="checkbox" id="chkRc"> RC Book / Valuation
+              </label>
+            </div>
           </div>
 
           <div class="form-group" style="margin-top: 10px;">
@@ -333,14 +334,24 @@
       return '₹' + Number(val).toLocaleString('en-IN');
     }
 
-    function togglePayoutSection() {
+    function handleStatusChange() {
       const status = document.getElementById('status').value;
       const payoutBox = document.getElementById('dsaPayoutSection');
+      const docBox = document.getElementById('docChecklistSection');
+
+      // Payout section only when Disbursed
       if (status === 'Disbursed') {
         payoutBox.style.display = 'block';
         calcCommission();
       } else {
         payoutBox.style.display = 'none';
+      }
+
+      // Document Checklist ONLY when Documents Pending
+      if (status === 'Documents Pending') {
+        docBox.style.display = 'block';
+      } else {
+        docBox.style.display = 'none';
       }
     }
 
@@ -407,23 +418,29 @@
           payoutDisplay += `<br><span style="color:var(--text-muted); font-size:0.72rem;">File in process</span>`;
         }
 
-        // Calculate Checkbox Documents
-        const docs = l.docsReceived || {};
-        let rCount = 0;
-        let pendingNames = [];
-        if (docs.aadhaar) rCount++; else pendingNames.push('Aadhaar');
-        if (docs.pan) rCount++; else pendingNames.push('PAN');
-        if (docs.bank) rCount++; else pendingNames.push('Bank');
-        if (docs.rc) rCount++; else pendingNames.push('RC');
-
+        // Show Missing Documents ONLY if status is 'Documents Pending'
         let docStatusHtml = '';
-        if (rCount === 4) {
-          docStatusHtml = `<span class="badge doc-badge-complete">✅ Complete (4/4)</span>`;
+        if (l.status === 'Documents Pending') {
+          const docs = l.docsReceived || {};
+          let rCount = 0;
+          let pendingNames = [];
+          if (docs.aadhaar) rCount++; else pendingNames.push('Aadhaar');
+          if (docs.pan) rCount++; else pendingNames.push('PAN');
+          if (docs.bank) rCount++; else pendingNames.push('Bank');
+          if (docs.rc) rCount++; else pendingNames.push('RC');
+
+          if (rCount === 4) {
+            docStatusHtml = `<span class="badge doc-badge-complete">✅ All Received (4/4)</span>`;
+          } else {
+            docStatusHtml = `
+              <span class="badge doc-badge-pending">⚠️ Pending (${rCount}/4)</span><br>
+              <span style="color:var(--text-muted); font-size:0.7rem;">Missing: ${pendingNames.join(', ')}</span>
+            `;
+          }
+        } else if (l.status === 'Login Done' || l.status === 'Sanctioned' || l.status === 'Disbursed') {
+          docStatusHtml = `<span style="color:var(--success); font-size:0.75rem;">✓ Verified for Login</span>`;
         } else {
-          docStatusHtml = `
-            <span class="badge doc-badge-pending">⚠️ Pending (${rCount}/4)</span><br>
-            <span style="color:var(--text-muted); font-size:0.7rem;">Missing: ${pendingNames.join(', ')}</span>
-          `;
+          docStatusHtml = `<span style="color:var(--text-muted); font-size:0.75rem;">-</span>`;
         }
 
         row.innerHTML = `
@@ -517,7 +534,7 @@
       document.getElementById('chkBank').checked = !!docs.bank;
       document.getElementById('chkRc').checked = !!docs.rc;
 
-      togglePayoutSection();
+      handleStatusChange();
 
       document.getElementById('form-heading').textContent = 'Update Lead & Details';
       document.getElementById('submitBtn').textContent = 'Update in Cloud';
@@ -531,7 +548,7 @@
       document.getElementById('form-heading').textContent = 'Add New Lead';
       document.getElementById('submitBtn').textContent = 'Save to Cloud';
       document.getElementById('cancelBtn').style.display = 'none';
-      togglePayoutSection();
+      handleStatusChange();
     };
 
     window.deleteLead = async function(docId) {
@@ -540,7 +557,7 @@
       }
     };
 
-    togglePayoutSection();
+    handleStatusChange();
   </script>
 </body>
 </html>
