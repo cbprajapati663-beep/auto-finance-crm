@@ -17,19 +17,12 @@
             --text-muted: #8b92a5;
             --success: #10b981;
             --danger: #ef4444;
+            --warning: #f59e0b;
             --info: #38bdf8;
         }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        body {
-            background: var(--bg);
-            color: var(--text);
-            padding: 18px;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 18px; }
+        
         header {
             display: flex;
             justify-content: space-between;
@@ -40,13 +33,7 @@
             flex-wrap: wrap;
             gap: 10px;
         }
-        h1 {
-            color: var(--primary);
-            font-size: 1.45rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        h1 { color: var(--primary); font-size: 1.45rem; display: flex; align-items: center; gap: 8px; }
         .sync-status {
             font-size: 0.75rem;
             display: flex;
@@ -66,16 +53,8 @@
             display: inline-block;
             animation: pulse 2s infinite;
         }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-        .header-actions {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
         .btn-action {
             background: #1e2433;
             color: var(--primary);
@@ -87,17 +66,48 @@
             font-weight: 600;
             text-decoration: none;
         }
-        .btn-action:hover {
-            background: var(--primary);
-            color: #000;
+        .btn-action:hover { background: var(--primary); color: #000; }
+        .btn-install { background: var(--primary); color: #000; border: none; font-weight: 700; display: none; }
+
+        /* Navigation Tabs */
+        .crm-nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 8px;
+            overflow-x: auto;
         }
-        .btn-install {
-            background: var(--primary);
-            color: #000;
+        .tab-link {
+            background: transparent;
             border: none;
-            font-weight: 700;
-            display: none;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
         }
+        .tab-link.active {
+            background: #1e2433;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+        .tab-badge {
+            background: var(--primary);
+            color: #000;
+            padding: 1px 6px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        /* Metrics */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
@@ -111,31 +121,13 @@
             padding: 12px;
             text-align: center;
         }
-        .metric-title {
-            font-size: 0.68rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .metric-value {
-            font-size: 1.18rem;
-            font-weight: 700;
-            margin-top: 5px;
-            color: var(--text);
-        }
-        .metric-gold {
-            color: var(--primary);
-        }
-        .crm-container {
-            display: grid;
-            grid-template-columns: 390px 1fr;
-            gap: 18px;
-        }
-        @media (max-width: 1080px) {
-            .crm-container {
-                grid-template-columns: 1fr;
-            }
-        }
+        .metric-title { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .metric-value { font-size: 1.18rem; font-weight: 700; margin-top: 5px; color: var(--text); }
+        .metric-gold { color: var(--primary); }
+
+        .crm-container { display: grid; grid-template-columns: 390px 1fr; gap: 18px; }
+        @media (max-width: 1080px) { .crm-container { grid-template-columns: 1fr; } }
+        
         .panel {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
@@ -143,19 +135,8 @@
             padding: 16px;
             margin-bottom: 18px;
         }
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .panel-title {
-            font-size: 1rem;
-            color: var(--primary);
-            font-weight: 600;
-        }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+        .panel-title { font-size: 1rem; color: var(--primary); font-weight: 600; }
         .section-title {
             font-size: 0.8rem;
             color: var(--primary);
@@ -164,15 +145,8 @@
             border-bottom: 1px solid #1f2536;
             padding-bottom: 3px;
         }
-        .form-group {
-            margin-bottom: 9px;
-        }
-        label {
-            display: block;
-            font-size: 0.74rem;
-            color: var(--text-muted);
-            margin-bottom: 3px;
-        }
+        .form-group { margin-bottom: 9px; }
+        label { display: block; font-size: 0.74rem; color: var(--text-muted); margin-bottom: 3px; }
         input, select, textarea {
             width: 100%;
             padding: 7px 9px;
@@ -182,10 +156,8 @@
             color: var(--text);
             font-size: 0.82rem;
         }
-        input:focus, select:focus, textarea:focus {
-            outline: 1px solid var(--primary);
-            border-color: var(--primary);
-        }
+        input:focus, select:focus, textarea:focus { outline: 1px solid var(--primary); border-color: var(--primary); }
+
         .checkbox-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -195,20 +167,9 @@
             border-radius: 6px;
             border: 1px solid var(--card-border);
         }
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 7px;
-            font-size: 0.78rem;
-            cursor: pointer;
-            color: var(--text);
-        }
-        .checkbox-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
+        .checkbox-item { display: flex; align-items: center; gap: 7px; font-size: 0.78rem; cursor: pointer; color: var(--text); }
+        .checkbox-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--primary); cursor: pointer; }
+
         .btn-submit {
             width: 100%;
             background: var(--primary);
@@ -221,19 +182,11 @@
             margin-top: 10px;
             font-size: 0.88rem;
         }
-        .btn-submit:hover {
-            background: var(--primary-hover);
-        }
-        .table-responsive {
-            overflow-x: auto;
-            max-height: 600px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.81rem;
-        }
+        .btn-submit:hover { background: var(--primary-hover); }
+
+        /* Tables */
+        .table-responsive { overflow-x: auto; max-height: 620px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.81rem; }
         th {
             background: #0f121a;
             padding: 9px;
@@ -244,19 +197,10 @@
             top: 0;
             z-index: 2;
         }
-        td {
-            padding: 9px;
-            border-bottom: 1px solid var(--card-border);
-            vertical-align: middle;
-        }
-        .badge {
-            display: inline-block;
-            padding: 2px 7px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
+        td { padding: 9px; border-bottom: 1px solid var(--card-border); vertical-align: middle; }
+
+        /* Badges */
+        .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; white-space: nowrap; }
         .badge-New { background: rgba(234, 179, 8, 0.15); color: #eab308; }
         .badge-Contacted { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
         .badge-DocumentsPending { background: rgba(249, 115, 22, 0.15); color: #fb923c; }
@@ -270,12 +214,14 @@
         .payout-Received { background: rgba(16, 185, 129, 0.2); color: #34d399; }
         .payout-Pending { background: rgba(234, 179, 8, 0.2); color: #fbbf24; }
         .payout-Disputed { background: rgba(239, 68, 68, 0.2); color: #f87171; }
-        .quick-actions {
-            display: flex;
-            gap: 4px;
-            margin-top: 4px;
-            flex-wrap: wrap;
-        }
+
+        .hold-badge-kept { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .hold-badge-released { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); }
+        .rto-badge-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+        .rto-badge-progress { background: rgba(56, 189, 248, 0.2); color: #38bdf8; }
+        .rto-badge-done { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+
+        .quick-actions { display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap; }
         .btn-quick {
             text-decoration: none;
             padding: 3px 6px;
@@ -291,14 +237,18 @@
         .btn-call { background: #1e293b; color: #38bdf8; border: 1px solid #334155; }
         .btn-wa { background: rgba(37, 211, 102, 0.15); color: #4ade80; border: 1px solid rgba(37, 211, 102, 0.3); }
         .btn-edit { background: rgba(212, 175, 55, 0.15); color: var(--primary); border: 1px solid rgba(212, 175, 55, 0.3); }
+        .btn-reopen { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.35); }
+        .btn-reopen:hover { background: #38bdf8; color: #000; }
+        .btn-do { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); }
+        .btn-do:hover { background: #a855f7; color: #000; }
         .btn-del { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
-        /* Remarks Tooltip Style */
+        /* Remarks Tooltip with Date/Time */
         .tooltip-wrapper {
             position: relative;
             display: inline-block;
             cursor: pointer;
-            max-width: 140px;
+            max-width: 155px;
         }
         .tooltip-label {
             color: #f4b41a;
@@ -308,23 +258,32 @@
             text-overflow: ellipsis;
             display: block;
         }
+        .remarks-time-sub {
+            color: var(--text-muted);
+            font-size: 0.68rem;
+            display: block;
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .tooltip-content {
             visibility: hidden;
             opacity: 0;
-            width: 250px;
-            background: #191e2b;
+            width: 270px;
+            background: #181d2a;
             color: #f3f4f6;
             text-align: left;
-            border-radius: 6px;
-            padding: 8px 12px;
+            border-radius: 8px;
+            padding: 10px 12px;
             position: absolute;
             z-index: 999;
             bottom: 125%;
             left: 50%;
             transform: translateX(-50%);
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.85);
             border: 1px solid var(--primary);
-            font-size: 0.78rem;
+            font-size: 0.79rem;
             line-height: 1.45;
             white-space: normal;
             word-break: break-word;
@@ -345,6 +304,57 @@
             visibility: visible;
             opacity: 1;
         }
+
+        /* Modals */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        .modal-card {
+            background: var(--card-bg);
+            border: 1px solid var(--primary);
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            padding: 22px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.9);
+        }
+
+        /* Printable Area (DO & Dealer Statement) */
+        @media print {
+            body * { visibility: hidden; }
+            .printable-section, .printable-section * { visibility: visible; }
+            .printable-section {
+                position: absolute;
+                left: 0; top: 0; width: 100%;
+                background: #fff !important;
+                color: #000 !important;
+                padding: 25px;
+                border: none !important;
+            }
+        }
+        .do-paper {
+            background: #ffffff;
+            color: #111111;
+            padding: 28px;
+            border-radius: 8px;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            border: 2px solid #d4af37;
+            box-shadow: 0 0 25px rgba(0,0,0,0.7);
+        }
+        .do-paper h2 { color: #000; font-size: 1.4rem; text-align: center; text-transform: uppercase; margin-bottom: 2px; }
+        .do-paper h4 { color: #b89628; text-align: center; font-size: 0.85rem; letter-spacing: 1px; margin-bottom: 20px; }
+        .do-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.86rem; margin-bottom: 20px; }
+        .do-grid-item { padding: 6px 10px; border-bottom: 1px dashed #ccc; }
+        .do-table { width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 0.86rem; }
+        .do-table th, .do-table td { border: 1px solid #ddd; padding: 8px 10px; text-align: left; }
+        .do-table th { background: #f9f9f9; color: #333; font-weight: 700; }
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -363,10 +373,20 @@
     </div>
 </header>
 
+<!-- Navigation Tabs -->
+<div class="crm-nav-tabs">
+    <button class="tab-link active" onclick="switchView('pipeline')">📊 Active Live Pipeline <span class="tab-badge" id="badge-live-count">0</span></button>
+    <button class="tab-link" onclick="switchView('disbursedhub')">📑 Disbursed Files & Clearance Hub <span class="tab-badge" id="badge-disbursed-count">0</span></button>
+    <button class="tab-link" onclick="switchView('dealers')">🤝 Dealer / Broker Ledger <span class="tab-badge" id="badge-dealers-count">0</span></button>
+    <button class="tab-link" onclick="switchView('payoutdesk')">🔒 Secret DSA Payouts</button>
+    <button class="tab-link" onclick="switchView('followups')">🔔 Today's Follow-ups <span class="tab-badge" id="badge-followup-count">0</span></button>
+</div>
+
+<!-- General Operational Stats Bar -->
 <div class="dashboard-grid">
     <div class="metric-card">
-        <div class="metric-title">Total Leads</div>
-        <div class="metric-value" id="m-total-leads">0</div>
+        <div class="metric-title">Live Open Files</div>
+        <div class="metric-value" id="m-live-leads">0</div>
     </div>
     <div class="metric-card">
         <div class="metric-title">Login Files</div>
@@ -377,7 +397,7 @@
         <div class="metric-value metric-gold" id="m-login-amount">₹0</div>
     </div>
     <div class="metric-card">
-        <div class="metric-title">Disbursed Files</div>
+        <div class="metric-title">Disbursed (Closed)</div>
         <div class="metric-value" id="m-disburse-leads">0</div>
     </div>
     <div class="metric-card">
@@ -385,12 +405,13 @@
         <div class="metric-value metric-gold" id="m-month-business">₹0</div>
     </div>
     <div class="metric-card">
-        <div class="metric-title">Total DSA Payout</div>
-        <div class="metric-value" style="color:var(--success);" id="m-comm-earned">₹0</div>
+        <div class="metric-title">Customer Hold Pending</div>
+        <div class="metric-value" style="color:var(--danger);" id="m-total-hold">₹0</div>
     </div>
 </div>
 
-<div class="crm-container">
+<!-- VIEW 1: Active Live Pipeline -->
+<div id="view-pipeline" class="crm-container">
     <div>
         <div class="panel">
             <div class="panel-title" id="form-heading">Add New Lead</div>
@@ -430,13 +451,27 @@
 
                 <div class="form-group" style="display: flex; gap: 8px;">
                     <div style="flex: 1;">
-                        <label>Loan Amount (₹) *</label>
-                        <input type="number" id="loanAmount" required placeholder="e.g. 500000" oninput="calcCommission()">
+                        <label>Requested Loan (₹) *</label>
+                        <input type="number" id="loanAmount" required placeholder="e.g. 500000" oninput="syncApproveAmountDefault()">
                     </div>
                     <div style="flex: 1;">
                         <label>Bank & NBFC (Login)</label>
                         <input type="text" id="bankNbfc" placeholder="e.g. AU / Chola / HDFC">
                     </div>
+                </div>
+
+                <!-- DYNAMIC DEALER SELECTION & MANAGEMENT -->
+                <div class="form-group">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                        <label style="color:#c084fc; margin-bottom:0;">Dealer / Sub-Broker (Sourcing Partner)</label>
+                        <div style="display:flex; gap:6px;">
+                            <button type="button" onclick="promptAddNewDealer()" style="background:none; border:none; color:#10b981; font-size:0.75rem; cursor:pointer; font-weight:700;">➕ Add New</button>
+                            <button type="button" onclick="openManageDealersModal()" style="background:none; border:none; color:#fbbf24; font-size:0.75rem; cursor:pointer;">⚙️ Manage/Delete</button>
+                        </div>
+                    </div>
+                    <select id="dealerNameSelect">
+                        <option value="Direct Customer">Direct Customer (No Dealer)</option>
+                    </select>
                 </div>
 
                 <div class="section-title">📌 Status & Follow-up</div>
@@ -450,7 +485,7 @@
                             <option value="Documents Pending">🟠 Documents Pending</option>
                             <option value="Login Done">🟣 Login Done</option>
                             <option value="Sanctioned">🟢 Sanctioned</option>
-                            <option value="Disbursed">✅ Disbursed</option>
+                            <option value="Disbursed">✅ Disbursed (Moves to Disbursed Hub)</option>
                             <option value="Rejected">🔴 Rejected</option>
                             <option value="Not Interested">⚫ Not Interested</option>
                         </select>
@@ -461,40 +496,28 @@
                     </div>
                 </div>
 
-                <!-- Feature 1: DSA Payout & Commission Tracker -->
-                <div id="dsaPayoutSection" style="display: none; background: rgba(212, 175, 55, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); padding: 10px; border-radius: 6px; margin: 10px 0;">
-                    <div class="section-title" style="margin-top: 0;">💰 DSA Payout & Commission Tracker</div>
+                <!-- SANCTIONED & DISBURSED DETAILS -->
+                <div id="sanctionedBox" style="display: none; background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(74, 222, 128, 0.35); padding: 12px; border-radius: 8px; margin: 10px 0;">
+                    <div class="section-title" style="margin-top: 0; color: #4ade80; border-color: rgba(74,222,128,0.3);">🟢 Sanctioned & Disbursed Details</div>
                     <div class="form-group" style="display: flex; gap: 8px;">
                         <div style="flex: 1;">
-                            <label>Bank Comm (%)</label>
-                            <input type="number" id="commRate" placeholder="e.g. 1.5" step="0.1" value="1.5" oninput="calcCommission()">
+                            <label style="color:#4ade80; font-weight:600;">Approved Amount (₹) *</label>
+                            <input type="number" id="approvedAmount" placeholder="Sanctioned Amt" style="border-color:#4ade80; color:#4ade80; font-weight:700;">
+                            <small style="color:var(--text-muted); font-size:0.68rem;">*Payout calculation base</small>
                         </div>
                         <div style="flex: 1;">
-                            <label>Gross Payout (₹)</label>
-                            <input type="number" id="commAmount" placeholder="Auto" readonly style="background:#1a1e2b; color:var(--primary); font-weight:700;">
+                            <label>Disbursed Amount (₹)</label>
+                            <input type="number" id="disbursedAmount" placeholder="Net Disbursed Amt">
+                            <small style="color:var(--text-muted); font-size:0.68rem;">Actual loan disbursed</small>
                         </div>
                     </div>
-                    <div class="form-group" style="display: flex; gap: 8px;">
-                        <div style="flex: 1;">
-                            <label>Broker / Dealer Cut (₹)</label>
-                            <input type="number" id="dealerCut" placeholder="0" value="0" oninput="calcCommission()">
-                        </div>
-                        <div style="flex: 1;">
-                            <label>Net DSA Payout (₹)</label>
-                            <input type="number" id="netComm" placeholder="Net Earning" readonly style="background:#1a1e2b; color:var(--success); font-weight:700;">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Bank Payout Status</label>
-                        <select id="payoutStatus">
-                            <option value="Pending">🟡 Pending from Bank</option>
-                            <option value="Received">🟢 Received in Account</option>
-                            <option value="Disputed">🔴 Disputed / Short Payment</option>
-                        </select>
+                    <div class="form-group" id="disbursedDateGroup" style="display: none;">
+                        <label style="color:var(--primary); font-weight:600;">Disbursement Date *</label>
+                        <input type="date" id="disbursedDate">
                     </div>
                 </div>
 
-                <!-- Feature 2: Document Received Checklist -->
+                <!-- Document Received Checklist -->
                 <div id="docChecklistSection" style="display: none; margin: 10px 0;">
                     <div class="section-title">📋 Document Received Checklist</div>
                     <div class="checkbox-grid">
@@ -514,7 +537,7 @@
                 </div>
 
                 <div class="form-group" style="margin-top: 10px;">
-                    <label>Remarks</label>
+                    <label>Remarks / Notes</label>
                     <textarea id="lastConv" rows="2" placeholder="Discussion notes..."></textarea>
                 </div>
 
@@ -527,15 +550,20 @@
     <div>
         <div class="panel">
             <div class="panel-header">
-                <div class="panel-title">Live Pipeline & Payouts</div>
-                <div style="display:flex; gap:8px;">
-                    <input type="text" id="searchQuery" placeholder="🔍 Search..." onkeyup="renderViews()" style="width:180px;">
+                <div class="panel-title">Active Live Pipeline (In-Process Files Only)</div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <div>
+                        <input type="month" id="liveMonthFilter" onchange="renderViews()" style="width:140px; padding:5px 8px;" title="Filter leads by month">
+                    </div>
+                    <button class="btn-action" onclick="document.getElementById('liveMonthFilter').value=''; renderViews();" style="padding:5px 10px;">All Months</button>
+                    <input type="text" id="searchQuery" placeholder="🔍 Search..." onkeyup="renderViews()" style="width:150px;">
                     <select id="filterStatus" onchange="renderViews()" style="width:130px;">
-                        <option value="All">All Statuses</option>
-                        <option value="Login Done">🟣 Login Done</option>
+                        <option value="All">All Live Files</option>
                         <option value="Sanctioned">🟢 Sanctioned</option>
-                        <option value="Disbursed">✅ Disbursed</option>
+                        <option value="Login Done">🟣 Login Done</option>
                         <option value="Documents Pending">🟠 Documents Pending</option>
+                        <option value="Contacted">🔵 Contacted</option>
+                        <option value="New">🟡 New</option>
                     </select>
                 </div>
             </div>
@@ -546,8 +574,10 @@
                         <tr>
                             <th>Customer</th>
                             <th>Vehicle</th>
-                            <th>Loan Amount</th>
-                            <th>Bank & Payout</th>
+                            <th>Lead Date</th>
+                            <th>Requested Loan</th>
+                            <th>Approved Amt</th>
+                            <th>Dealer/Partner</th>
                             <th>Status</th>
                             <th>Documents Status</th>
                             <th>Remarks</th>
@@ -558,6 +588,513 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- VIEW 2: Disbursed Files & Clearance Hub -->
+<div id="view-disbursedhub" style="display: none;">
+    <div class="panel">
+        <div class="panel-header">
+            <div>
+                <div class="panel-title">📑 Disbursed Files & Clearance Hub</div>
+                <div style="color:var(--text-muted); font-size:0.8rem; margin-top:3px;">Monitor RTO & Customer Hold with Month Filter</div>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <div>
+                    <label style="font-size:0.7rem; color:var(--text-muted); margin-bottom:2px;">Filter by Month:</label>
+                    <input type="month" id="disbursedMonthFilter" onchange="renderDisbursedHubTable()" style="width:150px; padding:5px 8px;">
+                </div>
+                <button class="btn-action" onclick="document.getElementById('disbursedMonthFilter').value=''; renderDisbursedHubTable();">All Months</button>
+                <div style="background:#1e2433; border:1px solid var(--danger); padding:6px 14px; border-radius:8px;">
+                    <span style="font-size:0.75rem; color:var(--text-muted);">Hold Pending: </span>
+                    <strong style="color:var(--danger); font-size:1rem;" id="tab-total-hold">₹0</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Vehicle & Financier</th>
+                        <th>Disbursed Date</th>
+                        <th>Approved Amt</th>
+                        <th>Disbursed Amt</th>
+                        <th>Customer Hold Amt</th>
+                        <th>Reason for Hold</th>
+                        <th>Hold Remarks</th>
+                        <th>Hold Status</th>
+                        <th>RTO Charges</th>
+                        <th>RTO Process Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="disbursedHubTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- VIEW 3: DEALER / BROKER LEDGER -->
+<div id="view-dealers" style="display: none;">
+    <div class="panel">
+        <div class="panel-header">
+            <div>
+                <div class="panel-title" style="color:#c084fc;">🤝 Sourcing Partner / Car Dealer Ledger</div>
+                <div style="color:var(--text-muted); font-size:0.8rem; margin-top:3px;">Track individual customer files and generate printable PDF statement</div>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <select id="dealerSelectFilter" onchange="renderDealerLedgerTable()" style="width:180px; padding:6px 10px; background:#0f121a; border:1px solid #a855f7; color:#f3f4f6; border-radius:6px;">
+                    <option value="All">All Dealers / Partners</option>
+                </select>
+                <button class="btn-action" onclick="openDealerStatementModal()" style="background:#a855f7; color:#000; font-weight:700;">📄 View & Print PDF Statement</button>
+                <div style="background:#1e2433; border:1px solid #a855f7; padding:6px 14px; border-radius:8px;">
+                    <span style="font-size:0.75rem; color:var(--text-muted);">Total Dealer Payable Cut: </span>
+                    <strong style="color:#c084fc; font-size:1.1rem;" id="tab-dealer-payout-total">₹0</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dealer / Partner</th>
+                        <th>Customer Name</th>
+                        <th>Vehicle Model</th>
+                        <th>File Status</th>
+                        <th>Approved Loan</th>
+                        <th>Disbursed Loan</th>
+                        <th>Dealer Cut / Payable (₹)</th>
+                    </tr>
+                </thead>
+                <tbody id="dealerLedgerTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- VIEW 4: SECRET DSA COMMISSIONS & PAYOUT DESK -->
+<div id="view-payoutdesk" style="display: none;">
+    <div class="panel">
+        <div class="panel-header">
+            <div>
+                <div class="panel-title" style="color:var(--primary);">🔒 Private DSA Commission & Bank Payout Desk</div>
+                <div style="color:var(--text-muted); font-size:0.8rem; margin-top:3px;">Payouts calculated on <strong>Approved Sanctioned Amount</strong></div>
+            </div>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <div>
+                    <input type="month" id="payoutMonthFilter" onchange="renderPayoutDeskTable()" style="width:150px; padding:5px 8px;">
+                </div>
+                <button class="btn-action" onclick="document.getElementById('payoutMonthFilter').value=''; renderPayoutDeskTable();">All Months</button>
+                <button class="btn-action" onclick="lockPayoutDesk()">🔒 Lock Desk</button>
+                <button class="btn-action" onclick="openChangePinModal()">🔑 Change PIN</button>
+            </div>
+        </div>
+
+        <div class="dashboard-grid" style="margin-bottom: 20px;">
+            <div class="metric-card" style="border-color: rgba(212,175,55,0.4);">
+                <div class="metric-title">Total Gross Commission</div>
+                <div class="metric-value metric-gold" id="sec-gross-comm">₹0</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(239,68,68,0.4);">
+                <div class="metric-title">Dealer / Broker Cuts</div>
+                <div class="metric-value" style="color:var(--danger);" id="sec-dealer-cuts">₹0</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(16,185,129,0.4);">
+                <div class="metric-title">Total Net Earning</div>
+                <div class="metric-value" style="color:var(--success);" id="sec-net-comm">₹0</div>
+            </div>
+            <div class="metric-card" style="border-color: rgba(56,189,248,0.4);">
+                <div class="metric-title">Received in Bank</div>
+                <div class="metric-value" style="color:var(--info);" id="sec-received-payout">₹0</div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Financier</th>
+                        <th>Dealer/Partner</th>
+                        <th>Disbursed Date</th>
+                        <th>Approved Amt (Base)</th>
+                        <th>Comm Rate</th>
+                        <th>Gross Payout</th>
+                        <th>Dealer Cut</th>
+                        <th>Net Earning</th>
+                        <th>Payout Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="payoutDeskTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- VIEW 5: Today's Follow-ups -->
+<div id="view-followups" style="display: none;">
+    <div class="panel">
+        <div class="panel-header">
+            <div class="panel-title">🔔 Urgent & Scheduled Follow-ups</div>
+            <div style="color:var(--text-muted); font-size:0.8rem;">Clients needing attention today</div>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Mobile & Action</th>
+                        <th>Loan Amount</th>
+                        <th>Status</th>
+                        <th>Follow-up Date</th>
+                        <th>Latest Remarks & Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="followupsTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: PRINTABLE DELIVERY ORDER (DO) -->
+<div id="doModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 680px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <button class="btn-action" style="background:#10b981; color:#000;" onclick="window.print()">🖨️ Print / Save as PDF</button>
+            <button class="btn-action" onclick="closeDoModal()">✕ Close</button>
+        </div>
+        
+        <div id="printableDOArea" class="do-paper printable-section">
+            <h2>HERITAGE AUTO FINANCE</h2>
+            <h4>HEAD OFFICE: MEHSANA, GUJARAT | CONTACT: +91 7600211085</h4>
+            <div style="text-align:center; font-weight:700; border: 1px solid #111; padding: 4px; margin-bottom: 18px; text-transform:uppercase; background:#f4f4f4;">
+                VEHICLE DELIVERY ORDER (D.O.) & PAYMENT ADVICE
+            </div>
+
+            <div class="do-grid">
+                <div class="do-grid-item"><strong>Date:</strong> <span id="do_date"></span></div>
+                <div class="do-grid-item"><strong>DO Reference No:</strong> <span id="do_ref"></span></div>
+                <div class="do-grid-item"><strong>Customer Name:</strong> <span id="do_cust"></span></div>
+                <div class="do-grid-item"><strong>Mobile Number:</strong> <span id="do_mobile"></span></div>
+                <div class="do-grid-item"><strong>Vehicle Model:</strong> <span id="do_vehicle"></span></div>
+                <div class="do-grid-item"><strong>Financier (Bank/NBFC):</strong> <span id="do_bank"></span></div>
+                <div class="do-grid-item"><strong>Dealer / Sub-broker:</strong> <span id="do_dealer"></span></div>
+                <div class="do-grid-item"><strong>City:</strong> <span id="do_city"></span></div>
+            </div>
+
+            <table class="do-table">
+                <thead>
+                    <tr>
+                        <th>Payment Particulars & Deductions</th>
+                        <th style="text-align:right;">Amount (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Sanctioned / Approved Loan Amount</strong></td>
+                        <td style="text-align:right; font-weight:700; color:#111;" id="do_approved">₹0</td>
+                    </tr>
+                    <tr>
+                        <td>Less: RTO Passing, Fitness & Registration Charges</td>
+                        <td style="text-align:right; color:#d9534f;" id="do_rto">₹0</td>
+                    </tr>
+                    <tr>
+                        <td>Less: Customer Payment Hold / Withheld (Docs/RC Pending)</td>
+                        <td style="text-align:right; color:#d9534f;" id="do_hold">₹0</td>
+                    </tr>
+                    <tr style="background:#f4fbf7; font-weight:700; border-top:2px solid #10b981;">
+                        <td style="color:#0f5132; font-size:0.95rem;">NET PAYABLE / DISBURSED AMOUNT TO DEALER</td>
+                        <td style="text-align:right; color:#0f5132; font-size:1.1rem;" id="do_disbursed">₹0</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="font-size:0.75rem; color:#444; line-height:1.4; margin-bottom: 30px;">
+                * This document authorizes the dealership to deliver the above mentioned vehicle to the customer. All applicable RTO registration and document hold charges have been deducted as per agreement. RTO hypothecation must be endorsed in favor of the financier bank.
+            </p>
+
+            <div style="display:flex; justify-content:space-between; margin-top:30px; font-size:0.82rem;">
+                <div style="text-align:center;">
+                    <div style="margin-bottom:40px;">_________________________</div>
+                    <strong>Customer Signature</strong>
+                </div>
+                <div style="text-align:center;">
+                    <div style="margin-bottom:40px;">_________________________</div>
+                    <strong>Authorized Signatory (Heritage Auto Finance)</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: PRINTABLE DEALER COMMISSION STATEMENT (PDF) -->
+<div id="dealerStatementModal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 780px;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+            <button class="btn-action" style="background:#10b981; color:#000;" onclick="window.print()">🖨️ Print / Save as PDF</button>
+            <button class="btn-action" onclick="closeDealerStatementModal()">✕ Close</button>
+        </div>
+        
+        <div id="printableDealerArea" class="do-paper printable-section">
+            <h2>HERITAGE AUTO FINANCE</h2>
+            <h4>HEAD OFFICE: MEHSANA, GUJARAT | CONTACT: +91 7600211085</h4>
+            <div style="text-align:center; font-weight:700; border: 1px solid #111; padding: 4px; margin-bottom: 18px; text-transform:uppercase; background:#f4f4f4;">
+                PARTNER COMMISSION STATEMENT & FILE SUMMARY
+            </div>
+
+            <div class="do-grid">
+                <div class="do-grid-item"><strong>Statement Date:</strong> <span id="stmt_date"></span></div>
+                <div class="do-grid-item"><strong>Dealer / Partner Name:</strong> <span id="stmt_dealer" style="color:#b89628; font-weight:700;"></span></div>
+                <div class="do-grid-item"><strong>Total Files Processed:</strong> <span id="stmt_total_files"></span></div>
+                <div class="do-grid-item"><strong>Total Approved Business:</strong> <span id="stmt_total_approved"></span></div>
+            </div>
+
+            <table class="do-table">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>Vehicle Model</th>
+                        <th>Status</th>
+                        <th style="text-align:right;">Approved Amt</th>
+                        <th style="text-align:right;">Disbursed Amt</th>
+                        <th style="text-align:right;">Dealer Cut (₹)</th>
+                    </tr>
+                </thead>
+                <tbody id="stmt_table_body"></tbody>
+                <tfoot>
+                    <tr style="background:#f4fbf7; font-weight:700; border-top:2px solid #10b981;">
+                        <td colspan="5" style="text-align:right; color:#0f5132;">TOTAL PAYABLE COMMISSION TO DEALER:</td>
+                        <td style="text-align:right; color:#0f5132; font-size:1.05rem;" id="stmt_total_payable">₹0</td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div style="display:flex; justify-content:space-between; margin-top:35px; font-size:0.82rem;">
+                <div style="text-align:center;">
+                    <div style="margin-bottom:40px;">_________________________</div>
+                    <strong>Dealer / Partner Signature</strong>
+                </div>
+                <div style="text-align:center;">
+                    <div style="margin-bottom:40px;">_________________________</div>
+                    <strong>Authorized Signatory (Heritage Auto Finance)</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: MANAGE & DELETE DEALERS -->
+<div id="manageDealersModal" class="modal-overlay">
+    <div class="modal-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--card-border); padding-bottom:8px;">
+            <div style="color:#c084fc; font-weight:700; font-size:1rem;">⚙️ Manage / Delete Dealers & Partners</div>
+            <button onclick="closeManageDealersModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;">✕</button>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.78rem; margin-bottom:12px;">Yahan se aap kisi bhi purane dealer ko list se hata sakte hain:</p>
+        <div id="dealersListContainer" style="max-height:260px; overflow-y:auto; margin-bottom:15px;"></div>
+        <button type="button" class="btn-submit" style="background:#334155; color:#fff;" onclick="closeManageDealersModal()">Close</button>
+    </div>
+</div>
+
+<!-- Password Gatekeeper Modal -->
+<div id="passwordGateModal" class="modal-overlay">
+    <div class="modal-card" style="text-align: center;">
+        <div style="font-size: 2.2rem; margin-bottom: 10px;">🔒</div>
+        <h3 style="color:var(--primary); margin-bottom: 6px;">Protected Payout Section</h3>
+        <p style="color:var(--text-muted); font-size: 0.82rem; margin-bottom: 18px;">Enter your Security PIN to view confidential commissions.</p>
+
+        <form id="pinUnlockForm" onsubmit="handlePinSubmit(event)">
+            <input type="password" id="secretPinInput" placeholder="Enter 4-Digit PIN" maxlength="6" style="text-align:center; font-size:1.4rem; letter-spacing: 5px; margin-bottom:12px;" required>
+            <div id="pinErrorMsg" style="color:var(--danger); font-size:0.75rem; margin-bottom:10px; display:none;">Incorrect PIN. Try again.</div>
+            <button type="submit" class="btn-submit" style="margin-top:0;">Unlock Payout Desk</button>
+        </form>
+
+        <div style="margin-top: 15px; display:flex; justify-content:space-between;">
+            <a href="javascript:void(0)" onclick="openForgotPinModal()" style="color:var(--info); font-size:0.78rem; text-decoration:none;">Forgot Password / PIN?</a>
+            <a href="javascript:void(0)" onclick="closePasswordGate()" style="color:var(--text-muted); font-size:0.78rem; text-decoration:none;">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<!-- Forgot Password Modal -->
+<div id="forgotPinModal" class="modal-overlay">
+    <div class="modal-card">
+        <h3 style="color:var(--primary); margin-bottom: 8px;">🔑 Reset Security PIN</h3>
+        <p style="color:var(--text-muted); font-size: 0.8rem; margin-bottom: 15px;">Verify your Registered Mobile Number to reset PIN.</p>
+        
+        <form onsubmit="handleForgotPinSubmit(event)">
+            <div class="form-group">
+                <label>Registered Mobile Number</label>
+                <input type="tel" id="recoveryPhone" placeholder="Enter 10-digit mobile" required>
+            </div>
+            <div class="form-group">
+                <label>Enter New 4-Digit PIN</label>
+                <input type="password" id="recoveryNewPin" maxlength="6" placeholder="New PIN" required>
+            </div>
+            <div id="forgotErrorMsg" style="color:var(--danger); font-size:0.75rem; margin-bottom:10px; display:none;">Invalid Mobile Number!</div>
+            <button type="submit" class="btn-submit">Reset & Set New PIN</button>
+            <button type="button" class="btn-submit" style="background:#334155; color:#fff; margin-top:6px;" onclick="closeForgotPinModal()">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<!-- Change PIN Modal -->
+<div id="changePinModal" class="modal-overlay">
+    <div class="modal-card">
+        <h3 style="color:var(--primary); margin-bottom: 8px;">Change Security PIN</h3>
+        <form onsubmit="handleChangePinSubmit(event)">
+            <div class="form-group">
+                <label>Current PIN</label>
+                <input type="password" id="oldPinInput" required>
+            </div>
+            <div class="form-group">
+                <label>New PIN</label>
+                <input type="password" id="newPinInput" maxlength="6" required>
+            </div>
+            <button type="submit" class="btn-submit">Save New PIN</button>
+            <button type="button" class="btn-submit" style="background:#334155; color:#fff; margin-top:6px;" onclick="document.getElementById('changePinModal').style.display='none';">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<!-- RTO & Hold Clearance Modal -->
+<div id="rtoHoldModal" class="modal-overlay">
+    <div class="modal-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--card-border); padding-bottom:8px;">
+            <div style="color:var(--primary); font-weight:700; font-size:1rem;" id="modalCustTitle">Manage Clearance</div>
+            <button onclick="closeRtoHoldModal()" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;">✕</button>
+        </div>
+        
+        <form id="rtoHoldForm">
+            <input type="hidden" id="modalDocId" value="">
+
+            <div class="section-title" style="color:#4ade80; margin-top:0;">💳 Sanctioned & Disbursed Amounts</div>
+            <div class="form-group" style="display: flex; gap: 8px;">
+                <div style="flex: 1;">
+                    <label>Approved Amount (₹)</label>
+                    <input type="number" id="m_approvedAmount" placeholder="Approved Amt">
+                </div>
+                <div style="flex: 1;">
+                    <label>Disbursed Amount (₹)</label>
+                    <input type="number" id="m_disbursedAmount" placeholder="Disbursed Amt">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label style="color:var(--primary);">Disbursement Date</label>
+                <input type="date" id="m_disbursedDate">
+            </div>
+
+            <div class="section-title" style="color:#fbbf24; margin-top:14px;">📑 RTO Work Management</div>
+            <div class="form-group" style="display: flex; gap: 8px;">
+                <div style="flex: 1;">
+                    <label>RTO Charges / Fee (₹)</label>
+                    <input type="number" id="m_rtoCharges" placeholder="0">
+                </div>
+                <div style="flex: 1;">
+                    <label>RTO Process Status</label>
+                    <select id="m_rtoStatus">
+                        <option value="Pending">🟡 Pending (Not Applied)</option>
+                        <option value="File Submitted">🔵 File Submitted to RTO</option>
+                        <option value="Passing In-Progress">🟠 Passing / Fitness In-Progress</option>
+                        <option value="RC Dispatched">🟣 RC Dispatched / Generated</option>
+                        <option value="Completed">✅ Completed & Cleared</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="section-title" style="color:#f87171; margin-top:14px;">🛑 Customer Payment Hold Management</div>
+            <div class="form-group" style="display: flex; gap: 8px;">
+                <div style="flex: 1;">
+                    <label>Hold Amount (₹)</label>
+                    <input type="number" id="m_holdAmount" placeholder="0">
+                </div>
+                <div style="flex: 1;">
+                    <label>Reason for Hold</label>
+                    <select id="m_holdReason">
+                        <option value="None">None (No Hold)</option>
+                        <option value="RC Book Transfer">RC Book Transfer</option>
+                        <option value="Original Invoice / Bill">Original Invoice / Bill</option>
+                        <option value="Insurance Policy">Insurance Policy</option>
+                        <option value="NOC / Form 35 Clearance">NOC / Form 35 Clearance</option>
+                        <option value="Other">Other Reason</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Hold Remarks (Kyu roka hai)</label>
+                <input type="text" id="m_holdRemarks" placeholder="e.g. RC transfer hone par 25k release karenge">
+            </div>
+
+            <div class="form-group">
+                <label>Hold Payment Status</label>
+                <select id="m_holdStatus">
+                    <option value="Hold Kept">🔴 Hold Kept (Payment Pending)</option>
+                    <option value="Released">🟢 Released to Customer</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit" style="margin-top:15px;">Update Clearance Records</button>
+        </form>
+    </div>
+</div>
+
+<!-- Payout Edit Modal (Inside Secret Tab) -->
+<div id="payoutEditModal" class="modal-overlay">
+    <div class="modal-card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid var(--card-border); padding-bottom:8px;">
+            <div style="color:var(--primary); font-weight:700; font-size:1rem;" id="payoutModalCustTitle">Update DSA Commission</div>
+            <button onclick="document.getElementById('payoutEditModal').style.display='none'" style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;">✕</button>
+        </div>
+        
+        <form id="payoutEditForm">
+            <input type="hidden" id="p_modalDocId" value="">
+
+            <div class="form-group" style="display: flex; gap: 8px;">
+                <div style="flex: 1;">
+                    <label>Approved Amount (₹) [Base]</label>
+                    <input type="number" id="p_approvedAmount" readonly style="background:#1a1e2b; color:#4ade80; font-weight:700;">
+                </div>
+                <div style="flex: 1;">
+                    <label>Bank Comm (%)</label>
+                    <input type="number" id="p_commRate" step="0.1" placeholder="1.5" oninput="calcSecretModalComm()">
+                </div>
+            </div>
+
+            <div class="form-group" style="display: flex; gap: 8px;">
+                <div style="flex: 1;">
+                    <label>Gross Payout (₹)</label>
+                    <input type="number" id="p_grossComm" readonly style="background:#1a1e2b; color:var(--primary); font-weight:700;">
+                </div>
+                <div style="flex: 1;">
+                    <label>Dealer Cut (₹)</label>
+                    <input type="number" id="p_dealerCut" placeholder="0" oninput="calcSecretModalComm()">
+                </div>
+            </div>
+
+            <div class="form-group" style="display: flex; gap: 8px;">
+                <div style="flex: 1;">
+                    <label>Net DSA Payout (₹)</label>
+                    <input type="number" id="p_netComm" readonly style="background:#1a1e2b; color:var(--success); font-weight:700;">
+                </div>
+                <div style="flex: 1;">
+                    <label>Payout Status</label>
+                    <select id="p_payoutStatus">
+                        <option value="Pending">🟡 Pending from Bank</option>
+                        <option value="Received">🟢 Received in Account</option>
+                        <option value="Disputed">🔴 Disputed / Short Payment</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit" style="margin-top:15px;">Save Payout Record</button>
+        </form>
     </div>
 </div>
 
@@ -576,14 +1113,205 @@
     const leadsCollection = db.collection('leads');
 
     let leads = [];
+    let pModalApprovedBase = 0;
+    let isPayoutDeskUnlocked = false;
     const todayStr = new Date().toISOString().split('T')[0];
     document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' });
+
+    // Stored Dealers List (With Default Seeds)
+    function getStoredDealers() {
+        const defaultDealers = ["Direct Customer", "Patel Motors", "Dipakbhai", "Ravibhai"];
+        try {
+            const saved = JSON.parse(localStorage.getItem('haf_saved_dealers'));
+            if (Array.isArray(saved) && saved.length > 0) return saved;
+        } catch(e) {}
+        return defaultDealers;
+    }
+
+    function saveStoredDealers(dealersArr) {
+        localStorage.setItem('haf_saved_dealers', JSON.stringify(dealersArr));
+        refreshDealerDropdowns();
+    }
+
+    function refreshDealerDropdowns() {
+        const dealers = getStoredDealers();
+        const formSelect = document.getElementById('dealerNameSelect');
+        const currentVal = formSelect.value;
+        formSelect.innerHTML = '';
+        dealers.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = d;
+            if (d === currentVal) opt.selected = true;
+            formSelect.appendChild(opt);
+        });
+    }
+
+    function promptAddNewDealer() {
+        const name = prompt("Naye Dealer / Sub-Broker ka naam darj karein:");
+        if (!name || name.trim() === '') return;
+        const clean = name.trim();
+        const dealers = getStoredDealers();
+        if (!dealers.includes(clean)) {
+            dealers.push(clean);
+            saveStoredDealers(dealers);
+            document.getElementById('dealerNameSelect').value = clean;
+            alert(`✓ Dealer "${clean}" safaltapoorvak add ho gaya!`);
+        } else {
+            document.getElementById('dealerNameSelect').value = clean;
+        }
+    }
+
+    function openManageDealersModal() {
+        const dealers = getStoredDealers();
+        const container = document.getElementById('dealersListContainer');
+        container.innerHTML = '';
+
+        dealers.forEach(d => {
+            const row = document.createElement('div');
+            row.style.cssText = "display:flex; justify-content:space-between; align-items:center; background:#0f121a; padding:8px 12px; margin-bottom:6px; border-radius:6px; border:1px solid #242938;";
+            
+            const isProtected = (d === 'Direct Customer');
+            const delBtn = isProtected ? '<span style="color:#555; font-size:0.7rem;">(Default)</span>' 
+                : `<button onclick="deleteDealerItem('${d.replace(/'/g, "\\'")}')" style="background:#ef4444; color:#fff; border:none; border-radius:4px; padding:3px 8px; cursor:pointer; font-size:0.72rem;">🗑️ Delete</button>`;
+
+            row.innerHTML = `<span style="font-weight:600; color:#c084fc;">🤝 ${d}</span> ${delBtn}`;
+            container.appendChild(row);
+        });
+
+        document.getElementById('manageDealersModal').style.display = 'flex';
+    }
+
+    function closeManageDealersModal() {
+        document.getElementById('manageDealersModal').style.display = 'none';
+    }
+
+    function deleteDealerItem(dealerName) {
+        if (!confirm(`Kya aap "${dealerName}" ko saved dealers list se delete karna chahte hain?`)) return;
+        let dealers = getStoredDealers();
+        dealers = dealers.filter(d => d !== dealerName);
+        saveStoredDealers(dealers);
+        openManageDealersModal();
+        renderDealerLedgerTable();
+    }
+
+    function getStoredPin() {
+        return localStorage.getItem('haf_payout_pin') || '7600';
+    }
+    function setStoredPin(newPin) {
+        localStorage.setItem('haf_payout_pin', newPin);
+    }
+
+    function syncApproveAmountDefault() {
+        const loan = document.getElementById('loanAmount').value;
+        const appInput = document.getElementById('approvedAmount');
+        if (!appInput.value || appInput.value === '0') {
+            appInput.value = loan;
+        }
+    }
+
+    window.switchView = function(viewKey) {
+        if (viewKey === 'payoutdesk' && !isPayoutDeskUnlocked) {
+            document.getElementById('passwordGateModal').style.display = 'flex';
+            document.getElementById('secretPinInput').value = '';
+            document.getElementById('pinErrorMsg').style.display = 'none';
+            return;
+        }
+
+        document.querySelectorAll('.tab-link').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = Array.from(document.querySelectorAll('.tab-link')).find(b => {
+            if (viewKey === 'pipeline') return b.textContent.includes('Live Pipeline');
+            if (viewKey === 'disbursedhub') return b.textContent.includes('Disbursed Files');
+            if (viewKey === 'dealers') return b.textContent.includes('Dealer / Broker');
+            if (viewKey === 'payoutdesk') return b.textContent.includes('Secret DSA Payouts');
+            if (viewKey === 'followups') return b.textContent.includes('Follow-ups');
+            return false;
+        });
+        if (activeBtn) activeBtn.classList.add('active');
+
+        document.getElementById('view-pipeline').style.display = viewKey === 'pipeline' ? 'grid' : 'none';
+        document.getElementById('view-disbursedhub').style.display = viewKey === 'disbursedhub' ? 'block' : 'none';
+        document.getElementById('view-dealers').style.display = viewKey === 'dealers' ? 'block' : 'none';
+        document.getElementById('view-payoutdesk').style.display = viewKey === 'payoutdesk' ? 'block' : 'none';
+        document.getElementById('view-followups').style.display = viewKey === 'followups' ? 'block' : 'none';
+
+        if (viewKey === 'dealers') renderDealerLedgerTable();
+        if (viewKey === 'payoutdesk') renderPayoutDeskTable();
+    };
+
+    function lockPayoutDesk() {
+        isPayoutDeskUnlocked = false;
+        switchView('pipeline');
+        alert("🔒 Payout Desk has been locked successfully.");
+    }
+
+    function closePasswordGate() {
+        document.getElementById('passwordGateModal').style.display = 'none';
+    }
+
+    function handlePinSubmit(e) {
+        e.preventDefault();
+        const entered = document.getElementById('secretPinInput').value;
+        if (entered === getStoredPin()) {
+            isPayoutDeskUnlocked = true;
+            document.getElementById('passwordGateModal').style.display = 'none';
+            switchView('payoutdesk');
+        } else {
+            document.getElementById('pinErrorMsg').style.display = 'block';
+        }
+    }
+
+    function openForgotPinModal() {
+        document.getElementById('passwordGateModal').style.display = 'none';
+        document.getElementById('forgotPinModal').style.display = 'flex';
+        document.getElementById('forgotErrorMsg').style.display = 'none';
+    }
+
+    function closeForgotPinModal() {
+        document.getElementById('forgotPinModal').style.display = 'none';
+    }
+
+    function handleForgotPinSubmit(e) {
+        e.preventDefault();
+        const phone = document.getElementById('recoveryPhone').value.trim();
+        const newPin = document.getElementById('recoveryNewPin').value.trim();
+
+        if (phone === '7600211085' || phone === '917600211085') {
+            setStoredPin(newPin);
+            alert("✓ Password / PIN successfully reset! You can now unlock using your new PIN.");
+            closeForgotPinModal();
+            document.getElementById('passwordGateModal').style.display = 'flex';
+        } else {
+            document.getElementById('forgotErrorMsg').style.display = 'block';
+        }
+    }
+
+    function openChangePinModal() {
+        document.getElementById('changePinModal').style.display = 'flex';
+    }
+
+    function handleChangePinSubmit(e) {
+        e.preventDefault();
+        const oldP = document.getElementById('oldPinInput').value;
+        const newP = document.getElementById('newPinInput').value;
+        if (oldP === getStoredPin()) {
+            setStoredPin(newP);
+            alert("✓ PIN changed successfully!");
+            document.getElementById('changePinModal').style.display = 'none';
+        } else {
+            alert("Current PIN is incorrect!");
+        }
+    }
 
     leadsCollection.orderBy('updatedAt', 'desc').onSnapshot((snapshot) => {
         leads = [];
         snapshot.forEach(doc => leads.push({ docId: doc.id, ...doc.data() }));
         renderMetrics();
         renderViews();
+        renderDisbursedHubTable();
+        renderDealerLedgerTable();
+        if (isPayoutDeskUnlocked) renderPayoutDeskTable();
+        renderFollowups();
     });
 
     function formatINR(val) {
@@ -593,69 +1321,91 @@
 
     function handleStatusChange() {
         const status = document.getElementById('status').value;
-        const payoutBox = document.getElementById('dsaPayoutSection');
         const docBox = document.getElementById('docChecklistSection');
-
-        if (status === 'Disbursed') {
-            payoutBox.style.display = 'block';
-            calcCommission();
-        } else {
-            payoutBox.style.display = 'none';
-        }
+        const sanctionedBox = document.getElementById('sanctionedBox');
+        const disbursedDateGroup = document.getElementById('disbursedDateGroup');
 
         if (status === 'Documents Pending') {
             docBox.style.display = 'block';
         } else {
             docBox.style.display = 'none';
         }
-    }
 
-    function calcCommission() {
-        const loan = Number(document.getElementById('loanAmount').value) || 0;
-        const rate = Number(document.getElementById('commRate').value) || 0;
-        const cut = Number(document.getElementById('dealerCut').value) || 0;
-
-        const gross = Math.round((loan * rate) / 100);
-        const net = Math.max(0, gross - cut);
-
-        document.getElementById('commAmount').value = gross;
-        document.getElementById('netComm').value = net;
+        if (status === 'Sanctioned' || status === 'Disbursed') {
+            sanctionedBox.style.display = 'block';
+            syncApproveAmountDefault();
+            if (status === 'Disbursed') {
+                disbursedDateGroup.style.display = 'block';
+                if (!document.getElementById('disbursedDate').value) {
+                    document.getElementById('disbursedDate').value = todayStr;
+                }
+            } else {
+                disbursedDateGroup.style.display = 'none';
+            }
+        } else {
+            sanctionedBox.style.display = 'none';
+        }
     }
 
     function renderMetrics() {
+        let liveCount = 0;
         let loginCount = 0, loginAmount = 0;
         let disburseCount = 0, disbursedAmount = 0;
-        let totalEarned = 0;
+        let totalHoldPending = 0;
 
         leads.forEach(l => {
             const amt = Number(l.loanAmount || 0);
+            const disAmt = Number(l.disbursedAmount || l.loanAmount || 0);
+
+            if (l.status !== 'Disbursed' && l.status !== 'Rejected' && l.status !== 'Not Interested') {
+                liveCount++;
+            }
             if (l.status === 'Login Done') {
                 loginCount++;
                 loginAmount += amt;
             }
             if (l.status === 'Disbursed') {
                 disburseCount++;
-                disbursedAmount += amt;
-                const net = Number(l.netComm || 0);
-                if (l.payoutStatus === 'Received') totalEarned += net;
+                disbursedAmount += disAmt;
+                if (l.holdStatus === 'Hold Kept') {
+                    totalHoldPending += Number(l.holdAmount || 0);
+                }
             }
         });
 
-        document.getElementById('m-total-leads').textContent = leads.length;
+        document.getElementById('m-live-leads').textContent = liveCount;
+        document.getElementById('badge-live-count').textContent = liveCount;
         document.getElementById('m-login-leads').textContent = loginCount;
         document.getElementById('m-login-amount').textContent = formatINR(loginAmount);
         document.getElementById('m-disburse-leads').textContent = disburseCount;
+        document.getElementById('badge-disbursed-count').textContent = disburseCount;
         document.getElementById('m-month-business').textContent = formatINR(disbursedAmount);
-        document.getElementById('m-comm-earned').textContent = formatINR(totalEarned);
+        document.getElementById('m-total-hold').textContent = formatINR(totalHoldPending);
+        document.getElementById('tab-total-hold').textContent = formatINR(totalHoldPending);
     }
 
+    // 1. Render Active Live Pipeline
     function renderViews() {
         const q = document.getElementById('searchQuery').value.toLowerCase();
         const statusFilter = document.getElementById('filterStatus').value;
+        const liveMonthVal = document.getElementById('liveMonthFilter') ? document.getElementById('liveMonthFilter').value : '';
 
-        const filtered = leads.filter(l => {
+        let liveLeads = leads.filter(l => l.status !== 'Disbursed');
+
+        if (liveMonthVal) {
+            liveLeads = liveLeads.filter(l => {
+                let dateStr = l.leadDate || '';
+                if (!dateStr && l.updatedAt && typeof l.updatedAt.toDate === 'function') {
+                    dateStr = l.updatedAt.toDate().toISOString().split('T')[0];
+                }
+                return dateStr.startsWith(liveMonthVal);
+            });
+        }
+
+        const filtered = liveLeads.filter(l => {
             const matchesQuery = (l.name || '').toLowerCase().includes(q) || 
                                  (l.mobile || '').includes(q) || 
+                                 (l.dealerName || '').toLowerCase().includes(q) || 
                                  (l.bankNbfc || '').toLowerCase().includes(q);
             const matchesStatus = statusFilter === 'All' || l.status === statusFilter;
             return matchesQuery && matchesStatus;
@@ -665,21 +1415,13 @@
         tbody.innerHTML = '';
 
         if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:20px;">Koi record match nahi hua.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:var(--text-muted); padding:20px;">Koi active live lead match nahi hui.</td></tr>';
             return;
         }
 
         filtered.forEach(l => {
             const row = document.createElement('tr');
             const cleanMobile = (l.mobile || '').replace(/\D/g, '');
-            const payoutClass = 'payout-' + (l.payoutStatus || 'Pending');
-
-            let payoutDisplay = `<span style="color:#60a5fa; font-weight:600;">${l.bankNbfc || 'Pending'}</span>`;
-            if (l.status === 'Disbursed') {
-                payoutDisplay += `<br><span class="badge ${payoutClass}">${formatINR(l.netComm)} (${l.payoutStatus || 'Pending'})</span>`;
-            } else {
-                payoutDisplay += `<br><span style="color:var(--text-muted); font-size:0.72rem;">File in process</span>`;
-            }
 
             let docStatusHtml = '';
             if (l.status === 'Documents Pending') {
@@ -699,19 +1441,51 @@
                         <span style="color:var(--text-muted); font-size:0.7rem;">Missing: ${pendingNames.join(', ')}</span>
                     `;
                 }
-            } else if (l.status === 'Login Done' || l.status === 'Sanctioned' || l.status === 'Disbursed') {
+            } else if (l.status === 'Login Done' || l.status === 'Sanctioned') {
                 docStatusHtml = `<span style="color:var(--success); font-size:0.75rem;">✓ Verified for Login</span>`;
             } else {
                 docStatusHtml = `<span style="color:var(--text-muted); font-size:0.75rem;">-</span>`;
             }
 
+            let timeStr = l.lastRemarksAt || '';
+            if (!timeStr && l.updatedAt && typeof l.updatedAt.toDate === 'function') {
+                timeStr = l.updatedAt.toDate().toLocaleString('en-IN', {
+                    day: '2-digit', month: 'short', year: 'numeric',
+                    hour: '2-digit', minute: '2-digit', hour12: true
+                });
+            }
+
             const safeRemarks = (l.lastConv || '').replace(/"/g, '&quot;');
-            const remarksDisplay = l.lastConv && l.lastConv.trim() !== ''
-                ? `<div class="tooltip-wrapper" title="${safeRemarks}">
-                     <span class="tooltip-label">💬 ${l.lastConv}</span>
-                     <div class="tooltip-content">${l.lastConv}</div>
-                   </div>`
-                : `<span style="color: var(--text-muted); font-size: 0.8rem;">-</span>`;
+            let remarksDisplay = '<span style="color: var(--text-muted); font-size: 0.8rem;">-</span>';
+
+            if (l.lastConv && l.lastConv.trim() !== '') {
+                remarksDisplay = `
+                    <div class="tooltip-wrapper">
+                        <span class="tooltip-label">💬 ${l.lastConv}</span>
+                        ${timeStr ? `<span class="remarks-time-sub">🕒 ${timeStr}</span>` : ''}
+                        <div class="tooltip-content">
+                            <div style="font-weight:600; color:var(--primary); margin-bottom:4px; font-size:0.75rem; border-bottom:1px solid #334155; padding-bottom:3px;">
+                                🕒 Last Updated: ${timeStr || 'Recent'}
+                            </div>
+                            <div>${l.lastConv}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const appAmt = Number(l.approvedAmount || 0);
+            const approvedDisplay = appAmt > 0 
+                ? `<strong style="color:#4ade80;">${formatINR(appAmt)}</strong>` 
+                : `<span style="color:var(--text-muted); font-size:0.75rem;">Pending</span>`;
+
+            let lDateDisplay = l.leadDate || '';
+            if (!lDateDisplay && l.updatedAt && typeof l.updatedAt.toDate === 'function') {
+                lDateDisplay = l.updatedAt.toDate().toISOString().split('T')[0];
+            }
+
+            const doButtonHtml = (l.status === 'Sanctioned' || l.status === 'Disbursed')
+                ? `<button class="btn-quick btn-do" onclick="generateDO('${l.docId}')" title="Print Delivery Order">📄 DO</button>`
+                : '';
 
             row.innerHTML = `
                 <td>
@@ -723,15 +1497,20 @@
                     </div>
                 </td>
                 <td>${l.vehModel || '-'}<br><span style="color:var(--text-muted); font-size:0.72rem;">${l.vehType}</span></td>
+                <td><small style="color:var(--primary);">📅 ${lDateDisplay || todayStr}</small></td>
                 <td><strong style="color:var(--primary);">${formatINR(l.loanAmount)}</strong></td>
-                <td>${payoutDisplay}</td>
+                <td>${approvedDisplay}</td>
+                <td><strong style="color:#c084fc;">${l.dealerName || 'Direct Customer'}</strong><br><small style="color:#60a5fa;">${l.bankNbfc || 'Pending'}</small></td>
                 <td><span class="badge badge-${(l.status || 'New').replace(/\s+/g, '')}">${l.status}</span></td>
                 <td>${docStatusHtml}</td>
-                <td style="max-width: 140px; position: relative;">${remarksDisplay}</td>
+                <td style="max-width: 155px; position: relative;">${remarksDisplay}</td>
                 <td>
-                    <div style="display:flex; gap:4px;">
-                        <button class="btn-quick btn-edit" onclick="editLead('${l.docId}')">✏️</button>
-                        <button class="btn-quick btn-del" onclick="deleteLead('${l.docId}')">🗑️</button>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <div style="display:flex; gap:4px;">
+                            <button class="btn-quick btn-edit" onclick="editLead('${l.docId}')">✏️</button>
+                            <button class="btn-quick btn-del" onclick="deleteLead('${l.docId}')">🗑️</button>
+                        </div>
+                        ${doButtonHtml}
                     </div>
                 </td>
             `;
@@ -739,6 +1518,437 @@
         });
     }
 
+    // 2. Render Disbursed Files & Clearance Hub
+    function renderDisbursedHubTable() {
+        let disbursedLeads = leads.filter(l => l.status === 'Disbursed');
+        const monthVal = document.getElementById('disbursedMonthFilter').value;
+
+        if (monthVal) {
+            disbursedLeads = disbursedLeads.filter(l => {
+                const dDate = l.disbursedDate || '';
+                return dDate.startsWith(monthVal);
+            });
+        }
+
+        const tbody = document.getElementById('disbursedHubTableBody');
+        tbody.innerHTML = '';
+
+        if (disbursedLeads.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="12" style="text-align:center; color:var(--text-muted); padding:25px;">Chune gaye filter me koi Disbursed file nahi mili.</td></tr>';
+            return;
+        }
+
+        disbursedLeads.forEach(l => {
+            const row = document.createElement('tr');
+            const appAmt = Number(l.approvedAmount || l.loanAmount || 0);
+            const disAmt = Number(l.disbursedAmount || l.loanAmount || 0);
+            const holdAmt = Number(l.holdAmount || 0);
+            const holdBadge = l.holdStatus === 'Hold Kept' ? 'hold-badge-kept' : 'hold-badge-released';
+            
+            let rtoBadgeClass = 'rto-badge-pending';
+            if (l.rtoStatus === 'Completed') rtoBadgeClass = 'rto-badge-done';
+            else if (l.rtoStatus === 'File Submitted' || l.rtoStatus === 'Passing In-Progress') rtoBadgeClass = 'rto-badge-progress';
+
+            row.innerHTML = `
+                <td><strong>${l.name}</strong><br><small style="color:var(--text-muted);">${l.city || 'Mehsana'}</small></td>
+                <td>${l.vehModel || '-'}<br><small style="color:#60a5fa;">${l.bankNbfc || '-'}</small><br><small style="color:#c084fc;">👤 ${l.dealerName || 'Direct'}</small></td>
+                <td><strong style="color:var(--primary); font-size:0.8rem;">📅 ${l.disbursedDate || 'Not Set'}</strong></td>
+                <td><strong style="color:#4ade80;">${formatINR(appAmt)}</strong></td>
+                <td><strong style="color:var(--primary);">${formatINR(disAmt)}</strong></td>
+                <td><strong style="color:${holdAmt > 0 && l.holdStatus === 'Hold Kept' ? '#f87171' : 'var(--text-muted)'}; font-size:0.95rem;">${formatINR(holdAmt)}</strong></td>
+                <td><span style="font-weight:600; color:var(--text);">${l.holdReason && l.holdReason !== 'None' ? l.holdReason : '-'}</span></td>
+                <td><span style="font-size:0.75rem; color:#f4b41a;">${l.holdRemarks || '-'}</span></td>
+                <td><span class="badge ${holdBadge}">${l.holdStatus || 'None'}</span></td>
+                <td><strong>${formatINR(l.rtoCharges || 0)}</strong></td>
+                <td><span class="badge ${rtoBadgeClass}">${l.rtoStatus || 'Pending'}</span></td>
+                <td>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <button class="btn-quick btn-edit" style="background:rgba(212,175,55,0.25); color:#f4b41a; border:1px solid #d4af37;" onclick="openRtoHoldModal('${l.docId}')">⚙️ Manage Clearance</button>
+                        <button class="btn-quick btn-do" onclick="generateDO('${l.docId}')">📄 Print DO</button>
+                        <button class="btn-quick btn-reopen" onclick="revertToLive('${l.docId}')" title="Galti se disbursed hua to wapas pipeline me bheje">↩ Revert to Live</button>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    // 3. Render Sourcing Partner / Dealer Ledger Table
+    function renderDealerLedgerTable() {
+        const dealerSet = new Set(getStoredDealers());
+        leads.forEach(l => {
+            const dName = (l.dealerName || 'Direct Customer').trim();
+            if (dName) dealerSet.add(dName);
+        });
+
+        const selectBox = document.getElementById('dealerSelectFilter');
+        const currentSelected = selectBox.value;
+        selectBox.innerHTML = '<option value="All">All Dealers / Partners</option>';
+        dealerSet.forEach(d => {
+            const opt = document.createElement('option');
+            opt.value = d;
+            opt.textContent = d;
+            if (d === currentSelected) opt.selected = true;
+            selectBox.appendChild(opt);
+        });
+
+        const selectedDealer = selectBox.value;
+        let displayedLeads = leads;
+        if (selectedDealer !== 'All') {
+            displayedLeads = leads.filter(l => (l.dealerName || 'Direct Customer').trim() === selectedDealer);
+        }
+
+        let totalPayable = 0;
+        const tbody = document.getElementById('dealerLedgerTableBody');
+        tbody.innerHTML = '';
+
+        if (displayedLeads.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:25px;">Chune gaye partner ke liye koi files nahi mili.</td></tr>';
+            document.getElementById('tab-dealer-payout-total').textContent = '₹0';
+            return;
+        }
+
+        displayedLeads.forEach(l => {
+            const dName = (l.dealerName || 'Direct Customer').trim();
+            const appAmt = Number(l.approvedAmount || l.loanAmount || 0);
+            const disAmt = l.status === 'Disbursed' ? Number(l.disbursedAmount || l.loanAmount || 0) : 0;
+            const cut = l.status === 'Disbursed' ? Number(l.dealerCut || 0) : 0;
+
+            totalPayable += cut;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong style="color:#c084fc;">🤝 ${dName}</strong></td>
+                <td><strong>${l.name}</strong><br><small style="color:var(--text-muted);">${l.city || 'Mehsana'}</small></td>
+                <td>${l.vehModel || '-'}<br><small style="color:var(--text-muted);">${l.vehType}</small></td>
+                <td><span class="badge badge-${(l.status || 'New').replace(/\s+/g, '')}">${l.status}</span></td>
+                <td><strong style="color:#4ade80;">${formatINR(appAmt)}</strong></td>
+                <td><strong style="color:var(--primary);">${formatINR(disAmt)}</strong></td>
+                <td><strong style="color:${cut > 0 ? 'var(--danger)' : 'var(--text-muted)'}; font-size:0.95rem;">${formatINR(cut)}</strong></td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.getElementById('tab-dealer-payout-total').textContent = formatINR(totalPayable);
+        document.getElementById('badge-dealers-count').textContent = dealerSet.size;
+    }
+
+    // Modal Control: Open Dealer Statement Modal for Print / PDF
+    window.openDealerStatementModal = function() {
+        const selectedDealer = document.getElementById('dealerSelectFilter').value;
+        let targetLeads = leads;
+        if (selectedDealer !== 'All') {
+            targetLeads = leads.filter(l => (l.dealerName || 'Direct Customer').trim() === selectedDealer);
+        }
+
+        if (targetLeads.length === 0) {
+            alert("Statement generate karne ke liye koi files nahi hain!");
+            return;
+        }
+
+        document.getElementById('stmt_date').textContent = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        document.getElementById('stmt_dealer').textContent = selectedDealer === 'All' ? 'All Channel Partners / Consolidated' : selectedDealer;
+        document.getElementById('stmt_total_files').textContent = targetLeads.length + ' Files';
+
+        let sumApproved = 0, sumPayable = 0;
+        const tbody = document.getElementById('stmt_table_body');
+        tbody.innerHTML = '';
+
+        targetLeads.forEach(l => {
+            const app = Number(l.approvedAmount || l.loanAmount || 0);
+            const dis = l.status === 'Disbursed' ? Number(l.disbursedAmount || l.loanAmount || 0) : 0;
+            const cut = l.status === 'Disbursed' ? Number(l.dealerCut || 0) : 0;
+
+            sumApproved += app;
+            sumPayable += cut;
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><strong>${l.name}</strong></td>
+                <td>${l.vehModel || '-'}</td>
+                <td>${l.status}</td>
+                <td style="text-align:right;">${formatINR(app)}</td>
+                <td style="text-align:right;">${formatINR(dis)}</td>
+                <td style="text-align:right; font-weight:700; color:#b89628;">${formatINR(cut)}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById('stmt_total_approved').textContent = formatINR(sumApproved);
+        document.getElementById('stmt_total_payable').textContent = formatINR(sumPayable);
+
+        document.getElementById('dealerStatementModal').style.display = 'flex';
+    };
+
+    window.closeDealerStatementModal = function() {
+        document.getElementById('dealerStatementModal').style.display = 'none';
+    };
+
+    // 4. Render Secret DSA Payouts Table
+    function renderPayoutDeskTable() {
+        let disbursedLeads = leads.filter(l => l.status === 'Disbursed');
+        const monthVal = document.getElementById('payoutMonthFilter').value;
+
+        if (monthVal) {
+            disbursedLeads = disbursedLeads.filter(l => {
+                const dDate = l.disbursedDate || '';
+                return dDate.startsWith(monthVal);
+            });
+        }
+
+        const tbody = document.getElementById('payoutDeskTableBody');
+        tbody.innerHTML = '';
+
+        let totalGross = 0, totalCuts = 0, totalNet = 0, totalReceived = 0;
+
+        if (disbursedLeads.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="11" style="text-align:center; color:var(--text-muted); padding:25px;">Chune gaye mahine me koi payout record nahi mila.</td></tr>';
+            return;
+        }
+
+        disbursedLeads.forEach(l => {
+            const row = document.createElement('tr');
+            
+            const approvedBase = Number(l.approvedAmount || l.loanAmount || 0);
+            const rate = Number(l.commRate || 1.5);
+            const cut = Number(l.dealerCut || 0);
+            
+            const gross = Math.round((approvedBase * rate) / 100);
+            const net = Math.max(0, gross - cut);
+            const payoutBadge = 'payout-' + (l.payoutStatus || 'Pending');
+
+            totalGross += gross;
+            totalCuts += cut;
+            totalNet += net;
+            if (l.payoutStatus === 'Received') totalReceived += net;
+
+            row.innerHTML = `
+                <td><strong>${l.name}</strong><br><small style="color:var(--text-muted);">${l.city || 'Mehsana'}</small></td>
+                <td><strong style="color:#60a5fa;">${l.bankNbfc || '-'}</strong></td>
+                <td><span style="color:#c084fc;">${l.dealerName || 'Direct'}</span></td>
+                <td><span style="color:var(--primary); font-size:0.8rem;">📅 ${l.disbursedDate || '-'}</span></td>
+                <td><strong style="color:#4ade80;">${formatINR(approvedBase)}</strong></td>
+                <td>${rate}%</td>
+                <td>${formatINR(gross)}</td>
+                <td style="color:var(--danger);">${formatINR(cut)}</td>
+                <td><strong style="color:var(--success); font-size:0.95rem;">${formatINR(net)}</strong></td>
+                <td><span class="badge ${payoutBadge}">${l.payoutStatus || 'Pending'}</span></td>
+                <td>
+                    <button class="btn-quick btn-edit" style="background:rgba(16,185,129,0.2); color:#34d399; border:1px solid #10b981;" onclick="openPayoutModal('${l.docId}')">💰 Edit Payout</button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.getElementById('sec-gross-comm').textContent = formatINR(totalGross);
+        document.getElementById('sec-dealer-cuts').textContent = formatINR(totalCuts);
+        document.getElementById('sec-net-comm').textContent = formatINR(totalNet);
+        document.getElementById('sec-received-payout').textContent = formatINR(totalReceived);
+    }
+
+    // Modal Control for Delivery Order (DO)
+    window.generateDO = function(docId) {
+        const l = leads.find(item => item.docId === docId);
+        if (!l) return;
+
+        if (l.status !== 'Sanctioned' && l.status !== 'Disbursed') {
+            alert(`⚠️ Delivery Order (DO) sirf Sanctioned ya Disbursed files ke liye generate ho sakta hai.\n\nIs file ka current status "${l.status}" hai.`);
+            return;
+        }
+
+        const appAmt = Number(l.approvedAmount || l.loanAmount || 0);
+        const rtoCharges = Number(l.rtoCharges || 0);
+        const holdAmt = Number(l.holdAmount || 0);
+
+        let netPayable = appAmt - rtoCharges - holdAmt;
+        if (netPayable < 0) netPayable = 0;
+
+        document.getElementById('do_date').textContent = new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+        document.getElementById('do_ref').textContent = 'HAF/DO/' + (l.docId ? l.docId.substring(0, 6).toUpperCase() : '001');
+        document.getElementById('do_cust').textContent = l.name || '-';
+        document.getElementById('do_mobile').textContent = l.mobile || '-';
+        document.getElementById('do_vehicle').textContent = (l.vehModel || '-') + ' (' + (l.vehType || 'Car') + ')';
+        document.getElementById('do_bank').textContent = l.bankNbfc || 'Heritage Auto Finance Partner Bank';
+        document.getElementById('do_dealer').textContent = l.dealerName || 'Direct Dealership';
+        document.getElementById('do_city').textContent = l.city || 'Mehsana';
+
+        document.getElementById('do_approved').textContent = formatINR(appAmt);
+        document.getElementById('do_rto').textContent = rtoCharges > 0 ? ('- ' + formatINR(rtoCharges)) : '₹0 (Nil)';
+        document.getElementById('do_hold').textContent = holdAmt > 0 ? ('- ' + formatINR(holdAmt)) : '₹0 (Nil)';
+        document.getElementById('do_disbursed').textContent = formatINR(netPayable);
+
+        document.getElementById('doModal').style.display = 'flex';
+    };
+
+    window.closeDoModal = function() {
+        document.getElementById('doModal').style.display = 'none';
+    };
+
+    // Modal Control for Secret Payout
+    window.openPayoutModal = function(docId) {
+        const l = leads.find(item => item.docId === docId);
+        if (!l) return;
+
+        pModalApprovedBase = Number(l.approvedAmount || l.loanAmount || 0);
+        document.getElementById('p_modalDocId').value = docId;
+        document.getElementById('payoutModalCustTitle').textContent = `Payout: ${l.name}`;
+        document.getElementById('p_approvedAmount').value = pModalApprovedBase;
+
+        document.getElementById('p_commRate').value = l.commRate || 1.5;
+        document.getElementById('p_dealerCut').value = l.dealerCut || 0;
+        document.getElementById('p_payoutStatus').value = l.payoutStatus || 'Pending';
+
+        calcSecretModalComm();
+        document.getElementById('payoutEditModal').style.display = 'flex';
+    };
+
+    function calcSecretModalComm() {
+        const rate = Number(document.getElementById('p_commRate').value) || 0;
+        const cut = Number(document.getElementById('p_dealerCut').value) || 0;
+        
+        const gross = Math.round((pModalApprovedBase * rate) / 100);
+        const net = Math.max(0, gross - cut);
+        
+        document.getElementById('p_grossComm').value = gross;
+        document.getElementById('p_netComm').value = net;
+    }
+
+    document.getElementById('payoutEditForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const docId = document.getElementById('p_modalDocId').value;
+        if (!docId) return;
+
+        const rate = Number(document.getElementById('p_commRate').value) || 0;
+        const cut = Number(document.getElementById('p_dealerCut').value) || 0;
+        const gross = Math.round((pModalApprovedBase * rate) / 100);
+        const net = Math.max(0, gross - cut);
+
+        await leadsCollection.doc(docId).update({
+            commRate: rate,
+            commAmount: gross,
+            dealerCut: cut,
+            netComm: net,
+            payoutStatus: document.getElementById('p_payoutStatus').value,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        document.getElementById('payoutEditModal').style.display = 'none';
+    });
+
+    // Revert accidental Disbursed file back to Live Pipeline
+    window.revertToLive = async function(docId) {
+        const l = leads.find(item => item.docId === docId);
+        if (!l) return;
+
+        const newStatus = prompt(
+            `Kya aap "${l.name}" ki file ko wapas Live Pipeline me bhejna chahte hain?\n\nNaya status type karein (Sanctioned / Login Done / Documents Pending):`,
+            "Sanctioned"
+        );
+
+        if (!newStatus || newStatus.trim() === "") return;
+
+        await leadsCollection.doc(docId).update({
+            status: newStatus.trim(),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        alert(`✓ File "${l.name}" successfully Live Pipeline me wapas transfer ho gayi (${newStatus.trim()}).`);
+        switchView('pipeline');
+    };
+
+    // Modal Control for RTO & Hold
+    window.openRtoHoldModal = function(docId) {
+        const l = leads.find(item => item.docId === docId);
+        if (!l) return;
+
+        document.getElementById('modalDocId').value = docId;
+        document.getElementById('modalCustTitle').textContent = `Clearance: ${l.name} (${l.vehModel || ''})`;
+        
+        document.getElementById('m_approvedAmount').value = l.approvedAmount || l.loanAmount || 0;
+        document.getElementById('m_disbursedAmount').value = l.disbursedAmount || l.loanAmount || 0;
+        document.getElementById('m_disbursedDate').value = l.disbursedDate || todayStr;
+
+        document.getElementById('m_rtoCharges').value = l.rtoCharges || 0;
+        document.getElementById('m_rtoStatus').value = l.rtoStatus || 'Pending';
+        
+        document.getElementById('m_holdAmount').value = l.holdAmount || 0;
+        document.getElementById('m_holdReason').value = l.holdReason || 'None';
+        document.getElementById('m_holdRemarks').value = l.holdRemarks || '';
+        document.getElementById('m_holdStatus').value = l.holdStatus || 'Hold Kept';
+
+        document.getElementById('rtoHoldModal').style.display = 'flex';
+    };
+
+    window.closeRtoHoldModal = function() {
+        document.getElementById('rtoHoldModal').style.display = 'none';
+    };
+
+    document.getElementById('rtoHoldForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const docId = document.getElementById('modalDocId').value;
+        if (!docId) return;
+
+        const newApp = Number(document.getElementById('m_approvedAmount').value) || 0;
+        const newDis = Number(document.getElementById('m_disbursedAmount').value) || 0;
+        const newDisDate = document.getElementById('m_disbursedDate').value || todayStr;
+
+        const l = leads.find(item => item.docId === docId);
+        const rate = l && l.commRate ? Number(l.commRate) : 1.5;
+        const cut = l && l.dealerCut ? Number(l.dealerCut) : 0;
+        const gross = Math.round((newApp * rate) / 100);
+        const net = Math.max(0, gross - cut);
+
+        await leadsCollection.doc(docId).update({
+            approvedAmount: newApp,
+            disbursedAmount: newDis,
+            disbursedDate: newDisDate,
+            commAmount: gross,
+            netComm: net,
+            rtoCharges: Number(document.getElementById('m_rtoCharges').value) || 0,
+            rtoStatus: document.getElementById('m_rtoStatus').value,
+            holdAmount: Number(document.getElementById('m_holdAmount').value) || 0,
+            holdReason: document.getElementById('m_holdReason').value,
+            holdRemarks: document.getElementById('m_holdRemarks').value,
+            holdStatus: document.getElementById('m_holdStatus').value,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        closeRtoHoldModal();
+    });
+
+    // Follow-ups View Renderer
+    function renderFollowups() {
+        const todayLeads = leads.filter(l => l.followDate === todayStr || (l.followDate && l.followDate < todayStr && l.status !== 'Disbursed' && l.status !== 'Rejected'));
+        document.getElementById('badge-followup-count').textContent = todayLeads.length;
+
+        const tbody = document.getElementById('followupsTableBody');
+        tbody.innerHTML = '';
+
+        if (todayLeads.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:25px;">Aaj ke liye koi follow-up pending nahi hai. Great job! 🎉</td></tr>';
+            return;
+        }
+
+        todayLeads.forEach(l => {
+            const cleanMobile = (l.mobile || '').replace(/\D/g, '');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td><strong>${l.name}</strong><br><small style="color:var(--text-muted);">${l.city || 'Mehsana'}</small></td>
+                <td>
+                    <a class="btn-quick btn-call" href="tel:${cleanMobile}">📞 Call</a>
+                    <a class="btn-quick btn-wa" href="https://wa.me/91${cleanMobile}" target="_blank">💬 WhatsApp</a>
+                </td>
+                <td>${formatINR(l.loanAmount)}</td>
+                <td><span class="badge badge-${(l.status || 'New').replace(/\s+/g, '')}">${l.status}</span></td>
+                <td style="color:#fbbf24; font-weight:600;">${l.followDate || 'Today'}</td>
+                <td><small style="color:var(--primary);">${l.lastConv || '-'}</small><br><span style="font-size:0.68rem; color:var(--text-muted);">${l.lastRemarksAt || ''}</span></td>
+                <td><button class="btn-quick btn-edit" onclick="editLead('${l.docId}'); switchView('pipeline');">✏️ Update</button></td>
+            `;
+            tbody.appendChild(row);
+        });
+    }
+
+    // CSV Export
     function exportToCSV() {
         if (!leads || leads.length === 0) {
             alert("Export karne ke liye koi leads nahi hain!");
@@ -747,8 +1957,9 @@
 
         const headers = [
             "Customer Name", "Mobile Number", "City", "Vehicle Model", "Vehicle Type", 
-            "Loan Amount", "Bank/NBFC", "Lead Status", "Bank Comm (%)", "Gross Comm (₹)", 
-            "Dealer Cut (₹)", "Net Payout (₹)", "Payout Status", "Follow-up Date", "Remarks"
+            "Dealer/Partner", "Lead Date", "Requested Loan", "Approved Loan", "Disbursed Loan", "Disbursed Date", "Bank/NBFC", "Lead Status", 
+            "Hold Amount (₹)", "Hold Reason", "Hold Remarks", "Hold Status", 
+            "RTO Charges (₹)", "RTO Status", "Follow-up Date", "Remarks", "Last Remarks Date & Time"
         ];
 
         const rows = leads.map(l => [
@@ -757,16 +1968,23 @@
             `"${(l.city || '').replace(/"/g, '""')}"`,
             `"${(l.vehModel || '').replace(/"/g, '""')}"`,
             `"${(l.vehType || '').replace(/"/g, '""')}"`,
+            `"${(l.dealerName || 'Direct Customer').replace(/"/g, '""')}"`,
+            `"${(l.leadDate || todayStr)}"`,
             l.loanAmount || 0,
+            l.approvedAmount || l.loanAmount || 0,
+            l.disbursedAmount || l.loanAmount || 0,
+            `"${(l.disbursedDate || '').replace(/"/g, '""')}"`,
             `"${(l.bankNbfc || '').replace(/"/g, '""')}"`,
             `"${(l.status || '').replace(/"/g, '""')}"`,
-            l.commRate || 0,
-            l.commAmount || 0,
-            l.dealerCut || 0,
-            l.netComm || 0,
-            `"${(l.payoutStatus || 'Pending').replace(/"/g, '""')}"`,
+            l.holdAmount || 0,
+            `"${(l.holdReason || 'None').replace(/"/g, '""')}"`,
+            `"${(l.holdRemarks || '').replace(/"/g, '""')}"`,
+            `"${(l.holdStatus || 'None').replace(/"/g, '""')}"`,
+            l.rtoCharges || 0,
+            `"${(l.rtoStatus || 'Pending').replace(/"/g, '""')}"`,
             `"${(l.followDate || '').replace(/"/g, '""')}"`,
-            `"${(l.lastConv || '').replace(/"/g, '""')}"`
+            `"${(l.lastConv || '').replace(/"/g, '""')}"`,
+            `"${(l.lastRemarksAt || '').replace(/"/g, '""')}"`
         ]);
 
         const csvContent = "data:text/csv;charset=utf-8,\uFEFF" 
@@ -781,10 +1999,21 @@
         document.body.removeChild(link);
     }
 
+    // Lead Form Submit
     document.getElementById('leadForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         const editDocId = document.getElementById('editDocId').value;
         const currentStatus = document.getElementById('status').value;
+        const currentRemarks = document.getElementById('lastConv').value.trim();
+
+        const requestedLoan = Number(document.getElementById('loanAmount').value) || 0;
+        let approvedLoan = Number(document.getElementById('approvedAmount').value) || 0;
+        let disbursedLoan = Number(document.getElementById('disbursedAmount').value) || 0;
+        let disbursedDateVal = document.getElementById('disbursedDate').value || (currentStatus === 'Disbursed' ? todayStr : '');
+        let dealerNameVal = document.getElementById('dealerNameSelect').value || 'Direct Customer';
+
+        if (approvedLoan <= 0) approvedLoan = requestedLoan;
+        if (disbursedLoan <= 0) disbursedLoan = approvedLoan;
 
         const docsReceived = {
             aadhaar: document.getElementById('chkAadhaar').checked,
@@ -793,29 +2022,57 @@
             rc: document.getElementById('chkRc').checked
         };
 
+        const nowFormatted = new Date().toLocaleString('en-IN', {
+            day: '2-digit', month: 'short', year: 'numeric',
+            hour: '2-digit', minute: '2-digit', hour12: true
+        });
+
+        const commRate = 1.5;
+        const grossComm = Math.round((approvedLoan * commRate) / 100);
+
         const leadData = {
             name: document.getElementById('custName').value,
             mobile: document.getElementById('mobile').value,
             city: document.getElementById('city').value,
             vehType: document.getElementById('vehType').value,
             vehModel: document.getElementById('vehModel').value,
-            loanAmount: Number(document.getElementById('loanAmount').value),
+            dealerName: dealerNameVal,
+            loanAmount: requestedLoan,
+            approvedAmount: approvedLoan,
+            disbursedAmount: disbursedLoan,
+            disbursedDate: disbursedDateVal,
             bankNbfc: document.getElementById('bankNbfc').value || '',
-            commRate: currentStatus === 'Disbursed' ? (Number(document.getElementById('commRate').value) || 0) : 0,
-            commAmount: currentStatus === 'Disbursed' ? (Number(document.getElementById('commAmount').value) || 0) : 0,
-            dealerCut: currentStatus === 'Disbursed' ? (Number(document.getElementById('dealerCut').value) || 0) : 0,
-            netComm: currentStatus === 'Disbursed' ? (Number(document.getElementById('netComm').value) || 0) : 0,
-            payoutStatus: currentStatus === 'Disbursed' ? document.getElementById('payoutStatus').value : 'Pending',
             status: currentStatus,
             followDate: document.getElementById('followDate').value,
-            lastConv: document.getElementById('lastConv').value,
+            lastConv: currentRemarks,
+            lastRemarksAt: currentRemarks ? nowFormatted : '',
             docsReceived: docsReceived,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         };
 
         if (editDocId) {
+            const existing = leads.find(l => l.docId === editDocId);
+            const currentRate = existing && existing.commRate ? Number(existing.commRate) : 1.5;
+            const currentCut = existing && existing.dealerCut ? Number(existing.dealerCut) : 0;
+            const recalculatedGross = Math.round((approvedLoan * currentRate) / 100);
+            
+            leadData.commAmount = recalculatedGross;
+            leadData.netComm = Math.max(0, recalculatedGross - currentCut);
+
             await leadsCollection.doc(editDocId).update(leadData);
         } else {
+            leadData.leadDate = todayStr;
+            leadData.commRate = commRate;
+            leadData.commAmount = grossComm;
+            leadData.dealerCut = 0;
+            leadData.netComm = grossComm;
+            leadData.payoutStatus = 'Pending';
+            leadData.holdAmount = 0;
+            leadData.holdReason = 'None';
+            leadData.holdRemarks = '';
+            leadData.holdStatus = 'None';
+            leadData.rtoCharges = 0;
+            leadData.rtoStatus = 'Pending';
             await leadsCollection.add(leadData);
         }
 
@@ -832,15 +2089,22 @@
         document.getElementById('city').value = l.city || '';
         document.getElementById('vehType').value = l.vehType;
         document.getElementById('vehModel').value = l.vehModel || '';
+        
+        // Match or append dealer if not present
+        const dName = l.dealerName || 'Direct Customer';
+        const dealers = getStoredDealers();
+        if (!dealers.includes(dName)) {
+            dealers.push(dName);
+            saveStoredDealers(dealers);
+        }
+        document.getElementById('dealerNameSelect').value = dName;
+
         document.getElementById('loanAmount').value = l.loanAmount;
+        document.getElementById('approvedAmount').value = l.approvedAmount || l.loanAmount;
+        document.getElementById('disbursedAmount').value = l.disbursedAmount || l.loanAmount;
+        document.getElementById('disbursedDate').value = l.disbursedDate || todayStr;
         document.getElementById('bankNbfc').value = l.bankNbfc || '';
         document.getElementById('status').value = l.status;
-        
-        document.getElementById('commRate').value = l.commRate || 1.5;
-        document.getElementById('commAmount').value = l.commAmount || 0;
-        document.getElementById('dealerCut').value = l.dealerCut || 0;
-        document.getElementById('netComm').value = l.netComm || 0;
-        document.getElementById('payoutStatus').value = l.payoutStatus || 'Pending';
 
         document.getElementById('followDate').value = l.followDate || '';
         document.getElementById('lastConv').value = l.lastConv || '';
@@ -864,6 +2128,7 @@
         document.getElementById('form-heading').textContent = 'Add New Lead';
         document.getElementById('submitBtn').textContent = 'Save to Cloud';
         document.getElementById('cancelBtn').style.display = 'none';
+        refreshDealerDropdowns();
         handleStatusChange();
     };
 
@@ -873,6 +2138,7 @@
         }
     };
 
+    refreshDealerDropdowns();
     handleStatusChange();
 </script>
 </body>
